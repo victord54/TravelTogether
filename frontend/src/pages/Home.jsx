@@ -1,9 +1,9 @@
-import "../styles/App.css";
+import Banner from "../components/Banner";
 
 function Home() {
-    return <div className="Home">
-        <p>Home</p>
-    </div>;
+    return (
+        <div>Here comes JSX !</div>
+    );
 }
 
 export default Home;

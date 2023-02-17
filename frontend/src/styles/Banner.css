@@ -1,0 +1,49 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1vh 0 0 1vh;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: 5vw;
+}
+
+/* nav ul li {
+    margin: 0 10px;
+    background-color: beige;
+    padding: 1vw;
+} */
+
+nav ul a {
+    margin: 0 10px;
+    background-color: beige;
+    padding: 1vw;
+    text-decoration: none;
+    color: black;
+    transition: 0.3s;
+}
+
+nav ul a:hover {
+    background-color: #3e8e41;
+    color: white;
+}
+
+nav img {
+    width: 5vw;
+}
+
+.search-bar {
+    margin-top: 2vh;
+    margin: 2vh 10vh 0vh 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4vh;
+
+    background-color: greenyellow;
+}
