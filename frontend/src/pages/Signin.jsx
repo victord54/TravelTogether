@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Navigate } from "react-router-dom";
 
 function Signin() {
     const initialValue = {lastName : "", firstName :"", mail:"", password:"", passwordConfirmation:"", phoneNumber:""}
@@ -9,6 +10,7 @@ function Signin() {
     function handleSubmit(e){
         e.preventDefault()
         setFormErrors(validateForm(formValues))
+        console.log(formErrors)
         setIsSubmit(true)
     }
     
@@ -69,7 +71,7 @@ function Signin() {
 
         //Vérication du mail
         if (!data.mail){
-            errors.mail = "L'e-mail est obligatoire."
+            errors.mail = "L'adresse email est obligatoire."
         }
 
         //Vérification du mot de passe
@@ -94,30 +96,34 @@ function Signin() {
         return errors
     }
     
-    return (
+    if (isSubmit && Object.keys(formErrors).length ===0 ) {
+        return <Navigate replace to="/login" />
+    }
 
+    return (
         <div>
-            <div><h1>Inscription</h1>
+            <div class="form-box">
+            <h1 class="inscription-titre">Inscription</h1>
             <form onSubmit={handleSubmit}>
-                <div>Nom :</div>
+                <div>Nom* :</div>
                 <input 
                     type="text" 
                     name="lastName"
                     value={formValues.lastName}
                     onChange={handleChange}>
                 </input>
-                <p>{formErrors.lastName}</p>
+                <p class="error-form">{formErrors.lastName}</p>
                 
-                <div>Prénom :</div>
+                <div>Prénom* :</div>
                 <input 
                     type="text" 
                     name="firstName"
                     value={formValues.firstName}
                     onChange={handleChange}>
                 </input>
-                <p>{formErrors.firstName}</p>
+                <p class="error-form">{formErrors.firstName}</p>
 
-                <div>Sélectionner votre genre : </div>
+                <div>Sélectionner votre genre* : </div>
                 <label>
                     <input 
                         type="radio" 
@@ -148,46 +154,46 @@ function Signin() {
                     </input>
                     Neutre
                 </label>
-                <p>{formErrors.gender}</p>
+                <p class="error-form">{formErrors.gender}</p>
 
 
-                <div>Numéro de téléphone : </div>
+                <div>Numéro de téléphone* : </div>
                 <input 
                     type="text" 
                     name="phoneNumber"
                     value={formValues.phoneNumber}
                     onChange={handleChange}>
                 </input>
-                <p>{formErrors.phoneNumber}</p>
+                <p class="error-form">{formErrors.phoneNumber}</p>
 
-                <div>Adresse e-mail : </div>
+                <div>Adresse e-mail* : </div>
                 <input 
                     type="mail" 
                     name="mail"
                     value={formValues.mail}
                     onChange={handleChange}>
                 </input>
-                <p>{formErrors.mail}</p>
+                <p class="error-form">{formErrors.mail}</p>
                 
-                <div>Mot de passe : </div>
+                <div>Mot de passe* : </div>
                 <input 
-                    type="text" 
+                    type="password" 
                     name="password"
                     value={formValues.password}
                     onChange={handleChange}>
                 </input>
-                <p>{formErrors.password}</p>
+                <p class="error-form">{formErrors.password}</p>
 
-                <div>Veuillez confirmer votre mot de passe : </div>
+                <div>Veuillez confirmer votre mot de passe* : </div>
                 <input 
-                    type="text" 
+                    type="password" 
                     name="passwordConfirmation"
                     value={formValues.passwordConfirmation}
                     onChange={handleChange}>
                 </input>
-                <p>{formErrors.passwordConfirmation}</p>
+                <p class="error-form">{formErrors.passwordConfirmation}</p>
 
-                <div>Possédez-vous une voiture ? </div>
+                <div>Possédez-vous une voiture ?* </div>
                 <label>
                     <input 
                         type="radio" 
@@ -208,8 +214,7 @@ function Signin() {
                     </input>
                     Non
                 </label>
-                <p>{formErrors.car}</p>
-
+                <p class="error-form">{formErrors.car}</p>                
                 
                 <label>
                     <input 
@@ -220,12 +225,14 @@ function Signin() {
                     </input>
                     Recevoir les notifications par e-mail.
                 </label>
-
+                <br/><br/>
                 <div>Choisissez une photo de profil :</div>
                 <input type="file"></input>
 
-                <br/>
-                <button type='submit'>Valider</button>
+                <br/><br/>
+                <div class="button-forms-wrap"><button type='submit' class="formulaire-submit">Valider</button></div>
+                <p class="info-obligatoire">* : Information obligatoire.</p>
+
             </form></div>
         </div>
     );

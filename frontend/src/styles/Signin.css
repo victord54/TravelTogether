@@ -1,0 +1,47 @@
+.form-box {
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 15vh 2vh 15vh;
+    border: 1px solid #f1f1f1;
+    padding-left: 1vh;
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.inscription-titre {
+    text-align: center;
+}
+
+.button-forms-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.formulaire-submit {
+    background-color: #b7a9eb;
+    color: white;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    width: 50%;
+
+}
+
+.formulaire-submit:hover {
+    background-color: rgb(235, 225, 225);
+    color: #2b2c2b;
+    border: 1px solid #000000;
+}
+
+.error-form {
+    color: red;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.info-obligatoire {
+    font-style: italic;
+    font-size: 10px;
+}
