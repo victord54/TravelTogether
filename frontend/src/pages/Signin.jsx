@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom"
 
 function Signin() {
     const initialValue = {lastName : "", firstName :"", mail:"", password:"", passwordConfirmation:"", phoneNumber:""}
@@ -85,7 +85,7 @@ function Signin() {
         }
 
         //Vérification de la confirmation du mot de passe
-        if (data.password != data.passwordConfirmation){
+        if (data.password !== data.passwordConfirmation){
             errors.passwordConfirmation = "Les mots de passes ne sont pas identiques."
         }
 

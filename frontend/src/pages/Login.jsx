@@ -1,13 +1,22 @@
 import { useEffect, useState } from "react";
 import "../styles/Signin.css"
+import axios from "axios"
+
 
 function Login() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
+    useEffect(() => {
+        axios.get("http://localhost/PPIL/TravelTogether/backend/login.php").then((response) => {
+            setItems(response.data)
+            console.log(response.data)
+        })
+    },[])
+
     /*useEffect( () => {
-        fetch("http://travel-together/")
+        get("http://travel-together/")
         .then( (res) => res.json())
         .then(
             (result) => {
@@ -19,9 +28,9 @@ function Login() {
                 setError(error);
             }
         );
-    }, []);
+    }, []);*/
 
-    if (error) {
+    /*if (error) {
         return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
         return <div>Loading...</div>;
@@ -35,7 +44,13 @@ function Login() {
         )
     }*/
 
-    return (<div>Hello</div>);
+    return (
+        <div>
+            <div>{items.title}</div>
+            <div>{items.recipe}</div> 
+            <div>{items.author}</div>
+        </div>       
+    );
 }
 
 export default Login;
