@@ -11,7 +11,6 @@ function Login() {
     useEffect(() => {
         axios.get("http://localhost/PPIL/TravelTogether/backend/login.php").then((response) => {
             setItems(response.data)
-            console.log(response.data)
         })
     },[])
 
