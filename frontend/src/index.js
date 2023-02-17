@@ -10,9 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <React.StrictMode>
         <Router>
-            <Route path="/">
-                <Home />
-            </Route>
+            <Signin />
         </Router>
     </React.StrictMode>
 );
