@@ -7,7 +7,7 @@ function Login() {
     const [items, setItems] = useState([]);
 
     useEffect( () => {
-        fetch("api.medvitech.fr")
+        fetch("http://api.medvitech.fr")
         .then( (res) => res.json())
         .then(
             (result) => {
