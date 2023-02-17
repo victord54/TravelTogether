@@ -85,7 +85,7 @@ function Signin() {
         }
 
         //Vérification de la confirmation du mot de passe
-        if (data.password != data.passwordConfirmation){
+        if (data.password !== data.passwordConfirmation){
             errors.passwordConfirmation = "Les mots de passes ne sont pas identiques."
         }
 
@@ -102,8 +102,8 @@ function Signin() {
 
     return (
         <div>
-            <div class="form-box">
-            <h1 class="inscription-titre">Inscription</h1>
+            <div className="form-box">
+            <h1 className="inscription-titre">Inscription</h1>
             <form onSubmit={handleSubmit}>
                 <div>Nom* :</div>
                 <input 
@@ -112,7 +112,7 @@ function Signin() {
                     value={formValues.lastName}
                     onChange={handleChange}>
                 </input>
-                <p class="error-form">{formErrors.lastName}</p>
+                <p className="error-form">{formErrors.lastName}</p>
                 
                 <div>Prénom* :</div>
                 <input 
@@ -121,14 +121,14 @@ function Signin() {
                     value={formValues.firstName}
                     onChange={handleChange}>
                 </input>
-                <p class="error-form">{formErrors.firstName}</p>
+                <p className="error-form">{formErrors.firstName}</p>
 
                 <div>Sélectionner votre genre* : </div>
                 <label>
                     <input 
                         type="radio" 
                         name="gender"
-                        class="not-text-input radiobutton"
+                        className="not-text-input radiobutton"
                         value="f"
                         onChange={handleChange}
                         >
@@ -139,7 +139,7 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="gender"
-                        class="not-text-input radiobutton"
+                        className="not-text-input radiobutton"
                         value="h"
                         onChange={handleChange}
                         >
@@ -150,14 +150,14 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="gender"
-                        class="not-text-input radiobutton"
+                        className="not-text-input radiobutton"
                         value="n"
                         onChange={handleChange}
                         >
                     </input>
                     Neutre
                 </label>
-                <p class="error-form">{formErrors.gender}</p>
+                <p className="error-form">{formErrors.gender}</p>
 
 
                 <div>Numéro de téléphone* : </div>
@@ -167,7 +167,7 @@ function Signin() {
                     value={formValues.phoneNumber}
                     onChange={handleChange}>
                 </input>
-                <p class="error-form">{formErrors.phoneNumber}</p>
+                <p className="error-form">{formErrors.phoneNumber}</p>
 
                 <div>Adresse e-mail* : </div>
                 <input 
@@ -176,7 +176,7 @@ function Signin() {
                     value={formValues.mail}
                     onChange={handleChange}>
                 </input>
-                <p class="error-form">{formErrors.mail}</p>
+                <p className="error-form">{formErrors.mail}</p>
                 
                 <div>Mot de passe* : </div>
                 <input 
@@ -185,7 +185,7 @@ function Signin() {
                     value={formValues.password}
                     onChange={handleChange}>
                 </input>
-                <p class="error-form">{formErrors.password}</p>
+                <p className="error-form">{formErrors.password}</p>
 
                 <div>Veuillez confirmer votre mot de passe* : </div>
                 <input 
@@ -194,14 +194,14 @@ function Signin() {
                     value={formValues.passwordConfirmation}
                     onChange={handleChange}>
                 </input>
-                <p class="error-form">{formErrors.passwordConfirmation}</p>
+                <p className="error-form">{formErrors.passwordConfirmation}</p>
 
                 <div>Possédez-vous une voiture ?* </div>
                 <label>
                     <input 
                         type="radio" 
                         name="car"
-                        class="not-text-input radiobutton"
+                        className="not-text-input radiobutton"
                         value="yes"
                         onChange={handleChange}
                         >
@@ -212,20 +212,20 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="car"
-                        class="not-text-input radiobutton"
+                        className="not-text-input radiobutton"
                         value="no"
                         onChange={handleChange}
                         >
                     </input>
                     Non
                 </label>
-                <p class="error-form">{formErrors.car}</p>                
+                <p className="error-form">{formErrors.car}</p>                
                 
                 <label>
                     <input 
                         type="checkbox" 
                         name="notification"
-                        class="not-text-input"
+                        className="not-text-input"
                         onChange={handleChange}
                         >
                     </input>
@@ -233,11 +233,11 @@ function Signin() {
                 </label>
                 <br/><br/>
                 <div>Choisissez une photo de profil :</div>
-                <input type="file" class="not-text-input"></input>
+                <input type="file" className="not-text-input"></input>
 
                 <br/><br/>
-                <div class="button-forms-wrap"><button type='submit' class="formulaire-submit">Valider</button></div>
-                <p class="info-obligatoire">* : Information obligatoire.</p>
+                <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
+                <p className="info-obligatoire">* : Information obligatoire.</p>
 
             </form></div>
         </div>

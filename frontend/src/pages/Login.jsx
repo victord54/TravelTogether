@@ -6,7 +6,7 @@ function Login() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
-    /*useEffect( () => {
+    useEffect( () => {
         fetch("http://travel-together/")
         .then( (res) => res.json())
         .then(
@@ -33,9 +33,7 @@ function Login() {
                 ))}
             </ul>
         )
-    }*/
-
-    return (<div>Hello</div>);
+    }
 }
 
 export default Login;

@@ -1,7 +1,6 @@
 import "../styles/Banner.css"
 import logo from "../assets/travelTogether.png"
 import { Link } from "react-router-dom";
-import Signin from "../pages/Signin";
 
 function Banner() {
     return (
@@ -19,7 +18,14 @@ function Banner() {
                     <Link to="login">Connexion</Link>
                 </ul>
             </nav>
-            <div className="search-bar">Barre de recherche</div>
+            <div className="search-bar">
+                <div>From</div>
+                <div>To</div>
+                <div>Date</div>
+                <div>Heure</div>
+                <div>Passagers</div>
+                <button>Valider</button>
+            </div>
         </header>
     );
 }
