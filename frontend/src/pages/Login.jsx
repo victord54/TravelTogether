@@ -7,7 +7,7 @@ function Login() {
     const [items, setItems] = useState([]);
 
     useEffect( () => {
-        fetch("http://travel-together/")
+        fetch("api.medvitech.fr")
         .then( (res) => res.json())
         .then(
             (result) => {
