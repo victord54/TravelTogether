@@ -1,0 +1,19 @@
+article {
+    margin: 5vh 2vw 0 2vw;
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+section {
+    margin: 2vh 5vw;
+    width: 1500px;
+    height: 150px;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -41,9 +41,19 @@ nav img {
     margin-top: 2vh;
     margin: 2vh 10vh 0vh 10vh;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 10vw 0 10vw;
     align-items: center;
-    height: 4vh;
-
+    height: 6vh;
     background-color: greenyellow;
+}
+
+.search-bar div {
+    width: 4vw;
+    padding: 0.3vw;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aquamarine;
 }
