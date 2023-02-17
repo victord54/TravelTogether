@@ -45,3 +45,21 @@
     font-style: italic;
     font-size: 10px;
 }
+
+label {
+    text-align: center;
+    padding-right: 15px;
+}
+
+.radiobutton {
+    margin : 15px 8px 5px 15px;
+}
+
+input:not(.not-text-input){
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}

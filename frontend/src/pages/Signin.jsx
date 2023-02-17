@@ -17,7 +17,7 @@ function Signin() {
     function handleChange(e){
         setInputValues({ ...formValues, [e.target.name] : e.target.value})
     }
-    
+
     function validateForm(data){
         console.log(data)
         const errors = {}
@@ -128,6 +128,7 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="gender"
+                        class="not-text-input radiobutton"
                         value="f"
                         onChange={handleChange}
                         >
@@ -138,6 +139,7 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="gender"
+                        class="not-text-input radiobutton"
                         value="h"
                         onChange={handleChange}
                         >
@@ -148,6 +150,7 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="gender"
+                        class="not-text-input radiobutton"
                         value="n"
                         onChange={handleChange}
                         >
@@ -198,6 +201,7 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="car"
+                        class="not-text-input radiobutton"
                         value="yes"
                         onChange={handleChange}
                         >
@@ -208,6 +212,7 @@ function Signin() {
                     <input 
                         type="radio" 
                         name="car"
+                        class="not-text-input radiobutton"
                         value="no"
                         onChange={handleChange}
                         >
@@ -220,6 +225,7 @@ function Signin() {
                     <input 
                         type="checkbox" 
                         name="notification"
+                        class="not-text-input"
                         onChange={handleChange}
                         >
                     </input>
@@ -227,7 +233,7 @@ function Signin() {
                 </label>
                 <br/><br/>
                 <div>Choisissez une photo de profil :</div>
-                <input type="file"></input>
+                <input type="file" class="not-text-input"></input>
 
                 <br/><br/>
                 <div class="button-forms-wrap"><button type='submit' class="formulaire-submit">Valider</button></div>
