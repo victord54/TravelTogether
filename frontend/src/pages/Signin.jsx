@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Navigate } from "react-router-dom"
+import axios from 'axios'
 
 function Signin() {
     const initialValue = {lastName : "", firstName :"", mail:"", password:"", passwordConfirmation:"", phoneNumber:""}
@@ -16,6 +17,20 @@ function Signin() {
     
     function handleChange(e){
         setInputValues({ ...formValues, [e.target.name] : e.target.value})
+    }
+
+    function sendDataToServer(){
+        axios.post('http://localhost/PPIL/TravelTogether/backend/signin.php', {
+            data: {
+              inputValue: formValues
+            }
+          })
+          .then(function (response) {
+            console.log('Response :' + response.data);
+          })
+          .catch(function (error) {
+            console.log('Error :' + error);
+          });
     }
 
     function validateForm(data){
@@ -39,7 +54,7 @@ function Signin() {
         }
 
         //Vérication prénom
-        if (!data.firstName){
+        /*if (!data.firstName){
             errors.firstName = "Le prénom est obligatoire."
         } else {
             if (data.firstName.length < 2) {
@@ -92,12 +107,13 @@ function Signin() {
         //Vérification possession d'une voiture
         if (!data.car){
             errors.car = "La réponse est obligatoire."
-        }
+        }*/
         return errors
     }
     
     if (isSubmit && Object.keys(formErrors).length ===0 ) {
-        return <Navigate replace to="/login" />
+        sendDataToServer()
+        //return <Navigate replace to="/login" />
     }
 
     return (
