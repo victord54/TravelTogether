@@ -1,25 +1,16 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Disposition, Content-Type, Content-Length, Accept-Encoding");
-header("Content-type:application/json");
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
     $inputValue = $data['data']['inputValue'];
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
 
-    $login = "root";
-    $password = "";
-    $dbname = 'travel_together';
-    try {
-        // Connexion à la bdd.
-        $pdo = new PDO("mysql:host=localhost;dbname=$dbname;charset=utf8", $login, $password);
-    } catch (Exception $e) {
-        die('Erreur connexion à MySQL : ' . $e->getMessage());
-    }
-
-    $sqlInsert = "INSERT INTO utilisateur(email, nom, prenom, numTel, genre, motDePasse, aUneVoiture, notificationParMail, photo)
-                VALUES (:email, :nom, :prenom, :numTel, :genre, :motDePasse, :aUneVoiture, :notificationParMail, :photo);";
+    $sqlInsert = "INSERT INTO UTILISATEUR(email, nom, prenom, numTel, genre, motDePasse, aUneVoiture, notificationParMail)
+                VALUES (:email, :nom, :prenom, :numTel, :genre, :motDePasse, :aUneVoiture, :notificationParMail)";
     $statement = $pdo->prepare($sqlInsert);
     $statement->bindValue(':nom', $inputValue['lastName']);
     $statement->bindValue(':email', $inputValue['mail']);
@@ -28,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $hash = password_hash($inputValue['password'], PASSWORD_DEFAULT);
     $statement->bindValue(':motDePasse', $hash);
     $statement->bindValue(':genre', $inputValue['gender']);
-    if (strcmp($inputValue['car'], 'yes') == 0){
+    if (strcmp($inputValue['car'], 'yes') == 0) {
         $statement->bindValue(':aUneVoiture', true);
     } else {
         $statement->bindValue(':aUneVoiture', false);
@@ -38,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $statement->bindValue(':notificationParMail', false);
     }
-    $statement->bindValue(':photo', NULL);
-    $statement->execute();
+    // $statement->bindValue(':photo', NULL);
+    $statement->execute() or die(print_r($statement->errorInfo(), true));;
     echo $inputValue['lastName'];
 }
