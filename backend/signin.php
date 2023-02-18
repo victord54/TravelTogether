@@ -25,10 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindValue(':email', $inputValue['mail']);
     $statement->bindValue(':prenom', $inputValue['firstName']);
     $statement->bindValue(':numTel', $inputValue['phoneNumber']);
-    $statement->bindValue(':motDePasse', $inputValue['password']);
+    $hash = password_hash($inputValue['password'], PASSWORD_DEFAULT);
+    $statement->bindValue(':motDePasse', $hash);
     $statement->bindValue(':genre', $inputValue['gender']);
-    $statement->bindValue(':aUneVoiture', false);
-    $statement->bindValue(':notificationParMail', false);
+    if (strcmp($inputValue['car'], 'yes') == 0){
+        $statement->bindValue(':aUneVoiture', true);
+    } else {
+        $statement->bindValue(':aUneVoiture', false);
+    }
+    if (isset($inputValue['notification'])) {
+        $statement->bindValue(':notificationParMail', true);
+    } else {
+        $statement->bindValue(':notificationParMail', false);
+    }
     $statement->bindValue(':photo', NULL);
     $statement->execute();
     echo $inputValue['lastName'];

@@ -1,53 +1,53 @@
 import { useEffect, useState } from "react";
-import "../styles/Signin.css"
 import axios from "axios"
 
 
 function Login() {
+    const initialValue = {mail:"", password:""}
+    const [formValues, setInputValues] = useState(initialValue)
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
 
-    useEffect(() => {
+    function handleSubmit(e){
+        e.preventDefault();
+    }
+
+    function handleChange(e){
+        setInputValues({ ...formValues, [e.target.name] : e.target.value})
+    }
+
+    /*useEffect(() => {
         axios.get("http://localhost/PPIL/TravelTogether/backend/login.php").then((response) => {
             setItems(response.data)
         })
-    },[])
-
-    /*useEffect( () => {
-        get("http://travel-together/")
-        .then( (res) => res.json())
-        .then(
-            (result) => {
-                setIsLoaded(true);
-                setItems(result.results);
-            },
-            (error) => {
-                setIsLoaded(true);
-                setError(error);
-            }
-        );
-    }, []);*/
-
-    /*if (error) {
-        return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-        return <div>Loading...</div>;
-    } else {
-        return (
-            <ul>
-                {items.map((item, index) => (
-                    <li key={index}>{item.title}</li>
-                ))}
-            </ul>
-        )
-    }*/
+    },[])*/
 
     return (
         <div>
-            <div>{items.title}</div>
-            <div>{items.recipe}</div> 
-            <div>{items.author}</div>
+            <div>
+                <h1>S'identifier : </h1>
+                <form onSubmit={handleSubmit}>
+                    <div>Adresse mail :</div>
+                    <input 
+                        type="text" 
+                        name="mail"
+                        value={formValues.mail}
+                        onChange={handleChange}>
+                    </input>
+
+                    <div>Mot de passe :</div>
+                    <input 
+                        type="password" 
+                        name="password"
+                        value={formValues.password}
+                        onChange={handleChange}>
+                    </input>
+                    <br/><br/>
+                    <div><button type='submit'>Se connecter</button></div>
+
+                </form>
+            </div>
         </div>       
     );
 }

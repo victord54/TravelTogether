@@ -8,9 +8,13 @@ function Signin() {
     const [formErrors, setFormErrors] = useState({})
     const [isSubmit, setIsSubmit] = useState(false);
 
+    function getExtension(filename) {
+        return filename.split('.').pop()
+    }
+
     function handleSubmit(e){
         e.preventDefault()
-        setFormErrors(validateForm(formValues))
+        //setFormErrors(validateForm(formValues))
         console.log(formErrors)
         setIsSubmit(true)
     }
@@ -54,7 +58,7 @@ function Signin() {
         }
 
         //Vérication prénom
-        /*if (!data.firstName){
+        if (!data.firstName){
             errors.firstName = "Le prénom est obligatoire."
         } else {
             if (data.firstName.length < 2) {
@@ -107,13 +111,14 @@ function Signin() {
         //Vérification possession d'une voiture
         if (!data.car){
             errors.car = "La réponse est obligatoire."
-        }*/
+        }
+
         return errors
     }
     
     if (isSubmit && Object.keys(formErrors).length ===0 ) {
         sendDataToServer()
-        //return <Navigate replace to="/login" />
+        return <Navigate replace to="/login" />
     }
 
     return (
@@ -249,7 +254,8 @@ function Signin() {
                 </label>
                 <br/><br/>
                 <div>Choisissez une photo de profil :</div>
-                <input type="file" className="not-text-input"></input>
+                <input type="file" name="picture" className="not-text-input" accept="image/png, image/jpeg"></input>
+                <p className="error-form">{formErrors.picture}</p>                
 
                 <br/><br/>
                 <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
