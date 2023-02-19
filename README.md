@@ -56,6 +56,19 @@ export const url_api = {
 };
 ```
 
+### Install Node.js
+
+### For Windows
+
+Download Node.js from https://nodejs.org/en/download/
+
+### For Linux
+
+```bash
+wget -qO- https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+
 ### Start the local server
 
 ```shell
