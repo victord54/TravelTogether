@@ -144,14 +144,11 @@ function Signin() {
             errors.mail = "L'adresse email est obligatoire.";
         } else {
             axios
-                .get(
-                    "http://localhost/TravelTogether/backend/controllers/signin.php",
-                    {
-                        params: {
-                            mail: data.mail,
-                        },
-                    }
-                )
+                .get(url_api.url + "/signin", {
+                    params: {
+                        mail: data.mail,
+                    },
+                })
                 .then((response) => {
                     console.log("Rep " + response.data);
                     if (!(response.data == null)) {
