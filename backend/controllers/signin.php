@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -32,4 +32,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // $statement->bindValue(':photo', NULL);
     $statement->execute() or die(print_r($statement->errorInfo(), true));;
     echo $inputValue['lastName'];
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
+    $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :mail");
+    $statement->setFetchMode(PDO::FETCH_ASSOC);
+    $statement->bindValue(":mail", $_GET['mail']);
+    $statement->execute();
+    $data = $statement->fetch();
+
+    $reponse = null;
+    if ($data){
+        $reponse = $data;
+        
+    }
+
+    echo json_encode($reponse);
+
 }
