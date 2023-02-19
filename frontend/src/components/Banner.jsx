@@ -16,6 +16,7 @@ function Banner() {
                     <Link to="profile">Profil</Link>
                     <Link to="signin">Inscription</Link>
                     <Link to="login">Connexion</Link>
+                    <Link to="logout">Déconnexion</Link>
                 </ul>
             </nav>
             <div className="search-bar">
