@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
+import { url_api } from "../data/url_api";
 
 function Signin() {
     const initialValue = {
@@ -40,7 +41,7 @@ function Signin() {
     function sendDataToServer() {
         console.log("on envoie");
         axios
-            .post("http://localhost/TravelTogether/backend/", {
+            .post(url_api.url, {
                 data: {
                     inputValue: formValues,
                 },
