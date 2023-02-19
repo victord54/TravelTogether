@@ -15,9 +15,15 @@ cd TravelTogether
 
 ### Create the database and the user
 
--   dbname = travel_together
--   user = \_
--   password = \_
+The dbname must be **travel_together**.
+You can create a user for this db or use the root one.
+In the folder that contains script.sql :
+
+```sql
+CREATE DATABASE travel_together;
+USE travel_together;
+SOURCE script.sql;
+```
 
 ### Create the config files
 
