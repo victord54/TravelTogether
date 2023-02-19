@@ -43,11 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = $statement->fetch();
 
     $reponse = null;
-    if ($data){
+    if ($data) {
         $reponse = $data;
-        
     }
 
     echo json_encode($reponse);
-
 }

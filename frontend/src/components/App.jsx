@@ -8,16 +8,16 @@ import Banner from "./Banner";
 
 function App() {
     return (
-    <div>
-        <Banner />
-        <Routes>
-            <Route path="/" element={<Home />}/>
-            <Route path="/signin" element={<Signin />}/>
-            <Route path="/login" element={<Login />}/>
-            <Route path="/logout" element={<Logout />}/>
-            <Route path="*" element={<Unknow />} />
-        </Routes>
-    </div>
+        <div>
+            <Banner />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="*" element={<Unknow />} />
+            </Routes>
+        </div>
     );
 }
 

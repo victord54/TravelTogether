@@ -1,3 +1,0 @@
-SIGNIN :
-    - Check si email pas déjà dans la bdd --> affichage de l'erreur si existe déjà
-    - Check picture size + comment on la save ?

@@ -13,10 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = $statement->fetch();
 
     $reponse = null;
-    if ($data){
+    if ($data) {
         if (password_verify($_GET['password'], $data['motDePasse'])) {
             $reponse = $data;
-        } 
+        }
     }
 
     echo json_encode($reponse);

@@ -13,6 +13,12 @@ git pull github
 cd TravelTogether
 ```
 
+### Create the database and the user
+
+-   dbname = travel_together
+-   user = \_
+-   password = \_
+
 ### Create the config files
 
 #### DB config file
@@ -43,8 +49,6 @@ export const url_api = {
     url: "http(s)://domain_to_api_root",
 };
 ```
-
-### Create the database
 
 ### Start the local server
 

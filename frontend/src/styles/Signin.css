@@ -26,7 +26,6 @@
     cursor: pointer;
     transition: all 0.5s;
     width: 50%;
-
 }
 
 .formulaire-submit:hover {
@@ -52,10 +51,10 @@ label {
 }
 
 .radiobutton {
-    margin : 15px 8px 5px 15px;
+    margin: 15px 8px 5px 15px;
 }
 
-input:not(.not-text-input){
+input:not(.not-text-input) {
     width: 50%;
     padding: 12px 20px;
     margin: 8px 0;
