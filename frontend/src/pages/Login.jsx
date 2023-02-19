@@ -20,7 +20,7 @@ function Login() {
 
     const getUser = async () => {
         try {
-            const reponse = await axios.get(url_api.url, {
+            const reponse = await axios.get(url_api.url + "/login", {
                 params: {
                     mail: formValues["mail"],
                     password: formValues["password"],
