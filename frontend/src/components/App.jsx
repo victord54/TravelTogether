@@ -16,7 +16,6 @@ function App() {
             <Route path="/login" element={<Login />}/>
             <Route path="/logout" element={<Logout />}/>
             <Route path="*" element={<Unknow />} />
-
         </Routes>
     </div>
     );

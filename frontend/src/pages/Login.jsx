@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios"
 import { Navigate } from "react-router-dom";
 
-
 function Login() {
     const initialValue = {mail:"", password:""}
     const [formValues, setInputValues] = useState(initialValue)
@@ -24,6 +23,7 @@ function Login() {
                 mail : formValues['mail'],
                 password : formValues['password']
             }});
+
             if (reponse.data == null){
                 setError("Identifiant et/ou mot de passe incorrect.")
                 setIsLoaded(false)
