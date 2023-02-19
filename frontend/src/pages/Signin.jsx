@@ -16,10 +16,6 @@ function Signin() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
 
-    function getExtension(filename) {
-        return filename.split(".").pop();
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
         //setFormErrors(validateForm(formValues))
@@ -43,7 +39,7 @@ function Signin() {
     function sendDataToServer() {
         console.log("on envoie");
         axios
-            .post("http://api.medvitech.lo", {
+            .post("http://localhost/TravelTogether/backend/", {
                 data: {
                     inputValue: formValues,
                 },

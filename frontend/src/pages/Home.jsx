@@ -1,9 +1,17 @@
 import "../styles/Home.css"
+import { useState } from "react";
 
 function Home() {
+    var isUser = false;
+    const [user, setUser] = useState([])
+    if (localStorage.length > 0){
+        isUser = true
+    }
+    
     return (
         <main>
-            <article>
+            {isUser ? <p>Bienvenue {localStorage.getItem('nom')} {localStorage.getItem('prenom')} !</p> : <p> Bienvenue !</p>}
+             <article>
                 <section>a</section> {/* A remplacer par un component pour afficher les trajets récents*/}
                 <section>b</section>
                 <section>c</section>
