@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
@@ -16,10 +16,11 @@ function Signin() {
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
+    const [exist, setExist] = useState(false)
 
     function handleSubmit(e) {
         e.preventDefault();
-        //setFormErrors(validateForm(formValues))
+        setFormErrors(validateForm(formValues))
         console.log(Object.keys(formErrors));
         setIsSubmit(true);
         console.log(
@@ -46,12 +47,27 @@ function Signin() {
                 },
             })
             .then(function (response) {
-                console.log("Response :" + response.data);
+                //console.log("Response :" + response.data);
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
     }
+
+       async function isUserExist() {
+                try {
+                    const reponse = await axios.get("http://localhost/TravelTogether/backend/controllers/signin.php", { params : {
+                        mail : formValues['mail']
+                    }});
+                    console.log('REPONSE ' + reponse.data)
+                    if ((reponse.data == null)){
+                        return false
+                    }
+                    return true
+                }catch (errors){
+                    console.log(errors)
+                }
+            }
 
     function validateForm(data) {
         console.log(data);
@@ -124,6 +140,25 @@ function Signin() {
         //Vérication du mail
         if (!data.mail) {
             errors.mail = "L'adresse email est obligatoire.";
+        } else {
+                axios.get("http://localhost/TravelTogether/backend/controllers/signin.php", { params : {
+                    mail : data.mail,
+                }}).then(response => {
+                    console.log('Rep ' + response.data)
+                    if (!(response.data == null)){
+                        setExist(true)
+                        errors.mail = "L'adresse mail est déjà utilisée."
+                    } else {
+                        setExist(false)
+                        errors.mail =""
+                    }
+                });
+              
+            // Oui c'est bizarre mais y'a des bugs sinon mdr
+            if (exist){
+                errors.mail = "L'adresse mail est déjà utilisée."
+            } 
+            
         }
 
         //Vérification du mot de passe
