@@ -58,11 +58,11 @@ export const url_api = {
 
 ### Install Node.js
 
-### For Windows
+#### For Windows
 
 Download Node.js from https://nodejs.org/en/download/
 
-### For Linux
+#### For Linux
 
 ```bash
 wget -qO- https://deb.nodesource.com/setup_18.x | sudo -E bash -
