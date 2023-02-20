@@ -16,7 +16,7 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
-                <Route path="/Create_offer" element={<Logout />} />
+                <Route path="/create-offer" element={<Create_offer />} />
                 <Route path="*" element={<Unknow />} />
             </Routes>
         </div>

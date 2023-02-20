@@ -66,8 +66,11 @@ function Create_offer() {
             formErrors.inter = "La ville d'arrivée ne peut pas être ajoutée dans la liste des arrêts intermédiaires."
             setFormErrors(formErrors);
         } else {
+            formErrors.inter = "";
+            setFormErrors(formErrors);
             setInputValues({...formValues, [formValues.interList.name] : formValues.interList.push(formValues.inter)});
         }
+        setInputValues({...formValues, [formValues.interList.name] : formValues.interList});
     }
 
     function remove(i) {
