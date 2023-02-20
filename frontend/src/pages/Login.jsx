@@ -54,8 +54,6 @@ function Login() {
     };
 
     if (isLoaded) {
-        
-        sessionStorage.setItem('refresh', 'true')
         return <Navigate replace to="/" />;
     } else {
         return (

@@ -2,11 +2,6 @@ import "../styles/Home.css";
 import { useState } from "react";
 
 function Home() {
-    if (sessionStorage.getItem("refresh") == "true"){
-        sessionStorage.setItem('refresh','false')
-        window.location.reload()
-    }
-
     var isUser = false;
     const [user, setUser] = useState([]);
     if (localStorage.length > 0) {
