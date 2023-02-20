@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { url_api } from "../data/url_api";
+import "../styles/Create-offer.css";
 
 function Create_offer() {
     const initialValue = {
@@ -141,12 +142,14 @@ function Create_offer() {
                 </datalist>
                 <p className="error-form">{formErrors.end}</p>
 
-                <div>Arrêtes intermédiaires* : </div>
-                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" onClick={add}>+</button>
+                <div>Arrêtes intermédiaires : </div>
+                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" class="citieButton" onClick={add}>+</button>
                 <datalist id="proposition_inter">
                     {proposition.inter}
                 </datalist>
-                <ul>{formValues.interList.map((city, i) => <li key={city}>{city}<button type="button" value={i} onClick={remove}>-</button></li>)}</ul>
+                <table class="cityList">
+                    {formValues.interList.map((city, i) => <tr> <td>{city}</td><td><button type="button" class="citieButton" value={i} onClick={remove}>-</button></td></tr>)}
+                </table>
                 <p className="error-form">{formErrors.inter}</p>
 
                 <div>Date de départ* : </div>

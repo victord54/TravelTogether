@@ -1,0 +1,26 @@
+td, th {
+    text-align: center;
+    padding: 8px;
+}
+
+td {
+    border-right: 1px solid #f8f8f8;
+}
+
+th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.citieButton {
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: beige;
+    font-size: 150%;
+    text-align: center;
+}
+
+.citieButton:hover {
+    background-color: #3e8e41;
+}
