@@ -5,6 +5,7 @@ import Signin from "../pages/Signin";
 import Logout from "../pages/Logout";
 import Unknow from "../pages/Unknow";
 import Banner from "./Banner";
+import Create_offer from "../pages/Create-offer";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
+                <Route path="/Create_offer" element={<Logout />} />
                 <Route path="*" element={<Unknow />} />
             </Routes>
         </div>
