@@ -195,9 +195,9 @@ function Signin() {
         return errors;
     }
 
-    //if (isSubmit && Object.keys(formErrors).length === 0) {
-        //return <Navigate replace to="/login" />;
-    //} else
+    if (isSubmit && Object.keys(formErrors).length === 0) {
+        return <Navigate replace to="/login" />;
+    } else
         return (
             <div>
                 <div className="form-box">
