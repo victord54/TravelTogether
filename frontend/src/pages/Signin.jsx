@@ -17,10 +17,17 @@ function Signin() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [exist, setExist] = useState(false);
+    const [file, setFile] = useState(null)
+
+    function handleFile(e){
+        if (e.target.files){
+            setFile(e.target.files[0])
+        }
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        setFormErrors(validateForm(formValues));
+        //setFormErrors(validateForm(formValues));
         console.log(Object.keys(formErrors));
         setIsSubmit(true);
         console.log(
@@ -40,35 +47,31 @@ function Signin() {
 
     function sendDataToServer() {
         console.log("on envoie");
+        
+        const formData = new FormData()
+        formData.append("mail", formValues.mail)
+        formData.append("lastName", formValues.lastName)
+        formData.append("firstName", formValues.firstName)
+        formData.append("phoneNumber", formValues.phoneNumber)
+        formData.append("password", formValues.password)
+        formData.append("gender", formValues.gender)
+        formData.append("car", formValues.car)
+
+        if (formValues.notification){
+            formData.append("notification", formValues.notification)
+        }
+        if (file){
+            formData.append("file",file)
+        } 
+        
         axios
-            .post(url_api.url + "/signin", {
-                data: {
-                    inputValue: formValues,
-                },
-            })
+        .post(url_api.url + "/signin", formData)    
             .then(function (response) {
-                //console.log("Response :" + response.data);
+                console.log("Response1 :" + response.data);
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
-    }
-
-    async function isUserExist() {
-        try {
-            const reponse = await axios.get(url_api.url + "/signin", {
-                params: {
-                    mail: formValues["mail"],
-                },
-            });
-            console.log("REPONSE " + reponse.data);
-            if (reponse.data == null) {
-                return false;
-            }
-            return true;
-        } catch (errors) {
-            console.log(errors);
-        }
     }
 
     function validateForm(data) {
@@ -192,9 +195,9 @@ function Signin() {
         return errors;
     }
 
-    if (isSubmit && Object.keys(formErrors).length === 0) {
-        return <Navigate replace to="/login" />;
-    } else
+    //if (isSubmit && Object.keys(formErrors).length === 0) {
+        //return <Navigate replace to="/login" />;
+    //} else
         return (
             <div>
                 <div className="form-box">
@@ -329,6 +332,7 @@ function Signin() {
                             name="picture"
                             className="not-text-input"
                             accept="image/png, image/jpeg"
+                            onChange={handleFile}
                         ></input>
                         <p className="error-form">{formErrors.picture}</p>
 
