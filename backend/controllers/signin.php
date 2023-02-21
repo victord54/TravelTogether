@@ -41,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $file_name;
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $file_name)) {
-            echo "The file has been uploaded successfully";
             $statement->bindValue(':photo', $file_name);
         } else {
             echo "There was an error uploading the file";
