@@ -34,21 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $statement->bindValue(':notificationParMail', false);
     }
 
-    if (isset($_FILES['file'])){
+    if (isset($_FILES['file'])) {
         $uploaddir = dirname(__FILE__, 2) . '/pictures';
-        $ext = explode('/',$_FILES['file']['type']);
+        $ext = explode('/', $_FILES['file']['type']);
         $file_name = $uploaddir . '/' . $_POST['mail'] . '.' . $ext[1];
         echo $file_name;
 
-        if(move_uploaded_file($_FILES['file']['tmp_name'], $file_name))
-        {
-          echo "The file has been uploaded successfully";
-          $statement->bindValue(':photo', $file_name);
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $file_name)) {
+            echo "The file has been uploaded successfully";
+            $statement->bindValue(':photo', $file_name);
+        } else {
+            echo "There was an error uploading the file";
         }
-        else
-        {
-          echo "There was an error uploading the file";
-        } 
     } else {
         $statement->bindValue(':photo', NULL);
     }
