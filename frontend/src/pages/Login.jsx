@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { url_api } from "../data/url_api";
+import "../styles/Login.css";
+
 
 function Login() {
     const initialValue = { mail: "", password: "" };
@@ -58,34 +60,34 @@ function Login() {
         return <Navigate replace to="/" />;
     } else {
         return (
-            <div>
-                <div>
-                    <h1>S'identifier : </h1>
-                    <p>{error}</p>
+                <div className="form--connexion-box">
                     <form onSubmit={handleSubmit}>
-                        <div>Adresse mail :</div>
+                    <h1 className="bienvenue">Bienvenue ! </h1>
+                    <p className="error">{error}</p>
                         <input
+                            className="input-connexion"
                             type="text"
                             name="mail"
                             value={formValues.mail}
+                            placeholder="Email"
                             onChange={handleChange}
                         ></input>
-
-                        <div>Mot de passe :</div>
+                        <br/>
                         <input
+                            className="input-connexion"
                             type="password"
                             name="password"
                             value={formValues.password}
+                            placeholder = "Mot de passe"
                             onChange={handleChange}
                         ></input>
                         <br />
                         <br />
-                        <div>
-                            <button type="submit">Se connecter</button>
+                        <div className="button-wrap">
+                            <button type="submit" className="button-connexion">Se connecter</button>
                         </div>
                     </form>
                 </div>
-            </div>
         );
     }
 }
