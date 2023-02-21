@@ -143,12 +143,12 @@ function Create_offer() {
                 <p className="error-form">{formErrors.end}</p>
 
                 <div>Arrêtes intermédiaires : </div>
-                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" class="citieButton" onClick={add}>+</button>
+                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" className="citieButton" onClick={add}>+</button>
                 <datalist id="proposition_inter">
                     {proposition.inter}
                 </datalist>
-                <table class="cityList">
-                    {formValues.interList.map((city, i) => <tr> <td>{city}</td><td><button type="button" class="citieButton" value={i} onClick={remove}>-</button></td></tr>)}
+                <table className="cityList">
+                    {formValues.interList.map((city, i) => <tr> <td>{city}</td><td><button type="button" className="citieButton" value={i} onClick={remove}>-</button></td></tr>)}
                 </table>
                 <p className="error-form">{formErrors.inter}</p>
 
