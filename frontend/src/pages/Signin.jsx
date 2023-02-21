@@ -27,7 +27,7 @@ function Signin() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        //setFormErrors(validateForm(formValues));
+        setFormErrors(validateForm(formValues));
         console.log(Object.keys(formErrors));
         setIsSubmit(true);
         console.log(
@@ -47,7 +47,7 @@ function Signin() {
 
     function sendDataToServer() {
         console.log("on envoie");
-        
+
         const formData = new FormData()
         formData.append("mail", formValues.mail)
         formData.append("lastName", formValues.lastName)
