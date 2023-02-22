@@ -24,13 +24,6 @@ CREATE TABLE
     );
 
 CREATE TABLE
-    VILLE(
-        nomVille VARCHAR(50),
-        codePostal VARCHAR(5),
-        PRIMARY KEY(nomVille, codePostal)
-    );
-
-CREATE TABLE
     GROUPE(
         idfGroupe INT PRIMARY KEY AUTO_INCREMENT,
         nomDeGroupe VARCHAR(50) NOT NULL,
@@ -41,21 +34,16 @@ CREATE TABLE
 CREATE TABLE
     OFFRE(
         idfOffre INT PRIMARY KEY AUTO_INCREMENT,
+        email VARCHAR(50),
         dateDepart DATE NOT NULL,
         heureDepart TIME NOT NULL,
         prix FLOAT NOT NULL,
         nbPlaceDisponible INT NOT NULL,
         precisions TEXT,
         infos TEXT,
-        nomVilleDepart VARCHAR(50) NOT NULL,
-        codePostalDepart VARCHAR(5) NOT NULL,
-        nomVilleFin VARCHAR(50) NOT NULL,
-        codePostalFin VARCHAR(5) NOT NULL,
-        FOREIGN KEY (
-            nomVilleDepart,
-            codePostalDepart
-        ) REFERENCES VILLE(nomVille, codePostal),
-        FOREIGN KEY (nomVilleFin, codePostalFin) REFERENCES VILLE(nomVille, codePostal)
+        villeDepart INT NOT NULL,
+        villeArrivee INT NOT NULL,
+        FOREIGN KEY (email) REFERENCES UTILISATEUR(email)
     );
 
 CREATE TABLE
@@ -121,11 +109,9 @@ CREATE TABLE
 CREATE TABLE
     PASSE_PAR(
         idfOffre INT,
-        nomVille VARCHAR(50),
-        codePostal VARCHAR(5),
-        PRIMARY KEY(idfOffre, nomVille, CodePostal),
-        FOREIGN KEY (idfOffre) REFERENCES OFFRE(idfOffre),
-        FOREIGN KEY (nomVille, codePostal) REFERENCES VILLE(nomVille, codePostal)
+        ville INT,
+        PRIMARY KEY(idfOffre, ville),
+        FOREIGN KEY (idfOffre) REFERENCES OFFRE(idfOffre)
     );
 
 CREATE TABLE
