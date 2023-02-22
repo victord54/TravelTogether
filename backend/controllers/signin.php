@@ -24,14 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindValue(':motDePasse', $hash);
     $statement->bindValue(':genre', $_POST['gender']);
     if (strcmp($_POST['car'], 'yes') == 0) {
-        $statement->bindValue(':aUneVoiture', true);
+        $statement->bindValue(':aUneVoiture', 1);
     } else {
-        $statement->bindValue(':aUneVoiture', false);
+        $statement->bindValue(':aUneVoiture', 0);
     }
     if (isset($_POST['notification'])) {
-        $statement->bindValue(':notificationParMail', true);
+        $statement->bindValue(':notificationParMail', 1);
     } else {
-        $statement->bindValue(':notificationParMail', false);
+        $statement->bindValue(':notificationParMail', 0);
     }
 
     if (isset($_FILES['file'])) {
