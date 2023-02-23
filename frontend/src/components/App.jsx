@@ -1,5 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import {useAuth} from "../components/AuthProvider"
+import { PrivateRoute } from "./PrivateRoute";
+import { PrivateRouteAuth} from "./PrivateRouteAuth";
 import Banner from "./Banner";
 import NotAuthBanner from "./NotAuthBanner";
 import Home from "../pages/Home";
@@ -19,11 +21,11 @@ function App() {
 
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/signin" element={<Signin />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/profile" element={<Profil />} />
-                <Route path="/create-offer" element={<Create_offer />} />
+                <Route path="/signin" element={<PrivateRouteAuth><Signin /></PrivateRouteAuth>} />
+                <Route path="/login" element={<PrivateRouteAuth><Login /></PrivateRouteAuth>} />
+                <Route path="/logout" element={<PrivateRoute><Logout /></PrivateRoute>} />
+                <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
+                <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
                 <Route path="*" element={<Unknow />} />
             </Routes>
         </div>

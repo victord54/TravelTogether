@@ -1,16 +1,13 @@
 import "../styles/Home.css";
 import { useState } from "react";
+import {useAuth} from "../components/AuthProvider"
 
 function Home() {
-    var isUser = false;
-    const [user, setUser] = useState([]);
-    if (localStorage.length > 0) {
-        isUser = true;
-    }
-
+    const { auth } = useAuth();
+    
     return (
         <main>
-            {isUser ? (
+            {auth ? (
                 <p>
                     Bienvenue {localStorage.getItem("nom")}{" "}
                     {localStorage.getItem("prenom")} !
