@@ -19,10 +19,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindValue(':nbPlaceDisponible', $_POST['nbPlaceDisponible']);
     $statement->bindValue(':precisions', $_POST['precisions']);
     $statement->bindValue(':infos', $_POST['infos']);
-    $statement->bindValue(':villeDepart', 54274);
-    $statement->bindValue(':villeArrivee', 54274);
+    $statement->bindValue(':villeDepart', $_POST['villeDepart']);
+    $statement->bindValue(':villeArrivee', $_POST['villeArrivee']);
+    $citiesInter = explode(",", $_POST['arretIntermediaire']);
 
     $statement->execute() or die(print_r($statement->errorInfo(), true));
+
+    $idfOffre = $pdo->lastInsertId();
+    echo $idfOffre;
+    if($idfOffre != false) {
+        if(!isset($_POST['groupe'])) {
+            $statement = $pdo->prepare("INSERT INTO OFFREPUBLIC(idfOffre) VALUES (:idfOffre)");
+            $statement->bindValue(':idfOffre', $idfOffre);
+            $statement->execute() or die(print_r($statement->errorInfo(), true));
+        } else {
+            $statement = $pdo->prepare("INSERT INTO OFFREPRIVEE(idfOffre, idfGroupe) VALUES (:idfOffre, :idfGroupe)");
+            $statement->bindValue(':idfOffre', $idfOffre);
+            $statement->bindValue(':idfGroupe', $_POST['groupe']);
+            $statement->execute() or die(print_r($statement->errorInfo(), true));
+        } 
+        foreach($citiesInter as $city) {
+            $statement = $pdo->prepare("INSERT INTO PASSE_PAR(idfOffre, ville) VALUES (:idfOffre, :ville)");
+            $statement->bindValue(':idfOffre', $idfOffre);
+            $statement->bindValue(':ville', $city);
+            $statement->execute() or die(print_r($statement->errorInfo(), true));
+        }
+    }
 }
 
 ?>

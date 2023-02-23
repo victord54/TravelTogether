@@ -12,7 +12,7 @@ th:nth-child(odd) {
     background: #324960;
 }
 
-.citieButton {
+.cityButton {
     border: none;
     cursor: pointer;
     appearance: none;
@@ -21,6 +21,6 @@ th:nth-child(odd) {
     text-align: center;
 }
 
-.citieButton:hover {
+.cityButton:hover {
     background-color: #3e8e41;
 }

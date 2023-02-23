@@ -15,37 +15,38 @@ function Create_offer() {
         size:0, 
         precisions:"", 
         informations:""
-    }
-
+    };
+    const [citiesCodes, setCodes] = useState({start:0, end:0, inter:[]});
     const [proposition, setProposition] = useState({start : "", end : "", inter : ""})
     const [formValues, setInputValues] = useState(initialValue)
     const [formErrors, setFormErrors] = useState({})
-    const [isSubmit, setIsSubmit] = useState(false);
     const regExCodePostal = new RegExp("[0-9]{5}")
 
     async function handleSubmit(e){
         e.preventDefault();
-        setFormErrors(await validateForm(formValues));
-        console.log(formErrors);
-        setIsSubmit(true);
-        if (isSubmit && Object.keys(formErrors).length ===0 ) {
+        var errors = await validateForm(formValues);
+        console.log("ici1 !");
+        setFormErrors(errors);
+        console.log("ici2 !");
+        if (Object.keys(formErrors).length === 0 ) {
             sendDataToServer();
+            console.log("ici3 !");
         }
     }
     
     function handleChange(e){
-        setInputValues({ ...formValues, [e.target.name] : e.target.value})
+        setInputValues({ ...formValues, [e.target.name] : e.target.value});
     }
 
     function handleCity(e) {
         handleChange(e);
         if(regExCodePostal.test(e.target.value))
-            fetch('https://geo.api.gouv.fr/communes?codePostal='+ e.target.value +'&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map(elem => <option key={elem.code} value={elem.nom + " (" +  elem.codesPostaux.map(code => code) + ")"}>{e.target.value}</option>)}))); 
+            fetch('https://geo.api.gouv.fr/communes?codePostal='+ e.target.value +'&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map((elem,index) => <option key={index} value={elem.nom + " (" +  elem.codesPostaux.map(code => code) + ")"}>{e.target.value}</option>)}))); 
         else
-            fetch('https://geo.api.gouv.fr/communes?nom="'+ e.target.value +'"&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map(elem => <option key={elem.code} value={elem.nom + " (" + elem.codesPostaux.map(code => code) + ")"}>{elem.nom}</option>)}))); 
+            fetch('https://geo.api.gouv.fr/communes?nom="'+ e.target.value +'"&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map((elem, index) => <option key={index} value={elem.nom + " (" + elem.codesPostaux.map(code => code) + ")"}>{elem.nom}</option>)}))); 
     }
 
-    async function sendDataToServer(){
+    function sendDataToServer(){
         const formData = new FormData();
         formData.append("dateDepart", formValues.date);
         formData.append("heureDepart", formValues.time);
@@ -53,10 +54,10 @@ function Create_offer() {
         formData.append("precisions", formValues.precisions);
         formData.append("infos", formValues.informations);
         formData.append("nbPlaceDisponible", formValues.size);
-        formData.append("nomVilleDepart", formValues.start);
-        formData.append("nomVilleFin", formValues.end);
-        formData.append("arretIntermediaire", formValues.interList);
-
+        formData.append("villeDepart", citiesCodes.start);
+        formData.append("villeArrivee", citiesCodes.end);
+        formData.append("arretIntermediaire", citiesCodes.inter);
+        console.log("on envoie !");
         axios.post(url_api.url + "/create_offer.php", formData)
           .then(function (response) {
             console.log('Response :' + response.data);
@@ -76,7 +77,6 @@ function Create_offer() {
     }
 
     async function validateForm(data){
-        console.log(data)
         const errors = {}
         
         // Vérification des champs obligatoires
@@ -112,13 +112,17 @@ function Create_offer() {
         var pregMatchCity = /([a-zA-Z0-9\u00C0-\u017F'\s-]+) [(]([0-9]+)/;
         var matchStart = data.start.match(pregMatchCity);
         var start;
+        var codes = citiesCodes;
         if(matchStart == null) {
             errors.start = "La ville de départ n'est pas correctement remplie : nom-de-la-ville (codePostal).";
         } else {
             var nomStart = matchStart[1];
             var cPStart = matchStart[2];
             start = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomStart+"'&codePostal="+cPStart+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));
-            if(start == undefined || start.length != 1) errors.start = "La ville de départ ne peut pas être detectée !";
+            if(start === undefined || start.length !== 1) errors.start = "La ville de départ ne peut pas être detectée !";
+            else {
+                codes.start = start[0].code;
+            }
         }
 
         var matchEnd = data.end.match(pregMatchCity);
@@ -129,22 +133,25 @@ function Create_offer() {
             var nomEnd = matchEnd[1];
             var cPSEnd = matchEnd[2];
             end = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomEnd+"'&codePostal="+cPSEnd+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
-            if(end == undefined || end.length != 1) errors.end = "La ville d'arrivée ne peut pas être detectée !";
+            if(end === undefined || end.length !== 1) errors.end = "La ville d'arrivée ne peut pas être detectée !";
+            else {
+                codes.end = end[0].code;
+            }
         }
 
-        if(start != undefined && start.length == 1 && end != undefined && end.length == 1 && start[0].code == end[0].code) errors.end = "Le lieu de départ et le lieu d'arrivé ne peuvent être le même.";
+        if(start !== undefined && start.length === 1 && end !== undefined && end.length === 1 && start[0].code === end[0].code) errors.end = "Le lieu de départ et le lieu d'arrivé ne peuvent être le même.";
 
-        var codeInter = new Array();
+        var codeInter = [];
         for (const city of data.interList) {
             var matchInter = city.match(pregMatchCity);
-            if(matchInter == null) {
+            if(matchInter === null) {
                 errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : nom-de-la-ville (codePostal).";
             } else {
                 var nomInter = matchInter[1];
                 var cPInter = matchInter[2];
                 var inter = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomInter+"'&codePostal="+cPInter+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
-                if(inter == undefined || inter.length != 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
-                if(inter != undefined) if(codeInter.includes(inter[0].code)) {
+                if(inter === undefined || inter.length != 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
+                if(inter !== undefined) if(codeInter.includes(inter[0].code)) {
                     errors.inter = "Vous ne pouvez pas passer deux fois par le même arrêts intermédiaire.";
                 } else {
                     codeInter.push(inter[0].code);
@@ -152,10 +159,14 @@ function Create_offer() {
             }
         } 
 
-        if(start != undefined && start.length == 1 && codeInter.includes(start[0].code)) errors.inter = "La ville de départ ne doit pas être dans les arrêts intermédiaires.";
-        if(end != undefined && end.length == 1 && codeInter.includes(end[0].code)) errors.inter = "La ville d'arrivée ne doit pas être dans les arrêts intermédiaires.";
+        if(start !== undefined && start.length === 1 && codeInter.includes(start[0].code)) errors.inter = "La ville de départ ne doit pas être dans les arrêts intermédiaires.";
+        else if(end !== undefined && end.length === 1 && codeInter.includes(end[0].code)) errors.inter = "La ville d'arrivée ne doit pas être dans les arrêts intermédiaires.";
+        else {
+            codes.inter = codeInter;
+            setCodes(codes);
+        }
 
-        return errors
+        return errors;
     }
 
     return (
@@ -178,12 +189,12 @@ function Create_offer() {
                 <p className="error-form">{formErrors.end}</p>
 
                 <div>Arrêtes intermédiaires : </div>
-                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" className="citieButton" onClick={add}>+</button>
+                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" className="cityButton" onClick={add}>+</button>
                 <datalist id="proposition_inter">
                     {proposition.inter}
                 </datalist>
                 <table className="cityList">
-                    {formValues.interList.map((city, i) => <tr> <td>{city}</td><td><button type="button" className="citieButton" value={i} onClick={remove}>-</button></td></tr>)}
+                    {formValues.interList.map((city, i) => <tr> <td>{city}</td><td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td></tr>)}
                 </table>
                 <p className="error-form">{formErrors.inter}</p>
 
