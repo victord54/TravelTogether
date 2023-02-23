@@ -23,11 +23,14 @@ function Create_offer() {
     const [isSubmit, setIsSubmit] = useState(false);
     const regExCodePostal = new RegExp("[0-9]{5}")
 
-    function handleSubmit(e){
-        e.preventDefault()
-        setFormErrors(validateForm(formValues))
-        console.log(formErrors)
-        setIsSubmit(true)
+    async function handleSubmit(e){
+        e.preventDefault();
+        setFormErrors(await validateForm(formValues));
+        console.log(formErrors);
+        setIsSubmit(true);
+        if (isSubmit && Object.keys(formErrors).length ===0 ) {
+            sendDataToServer();
+        }
     }
     
     function handleChange(e){
@@ -37,17 +40,24 @@ function Create_offer() {
     function handleCity(e) {
         handleChange(e);
         if(regExCodePostal.test(e.target.value))
-            fetch('https://geo.api.gouv.fr/communes?codePostal='+ e.target.value +'&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map(elem => <option key={elem.code} value={elem.nom + " (" + elem.codesPostaux[0] + ")"}>{elem.codesPostaux[0]}</option>)}))); 
+            fetch('https://geo.api.gouv.fr/communes?codePostal='+ e.target.value +'&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map(elem => <option key={elem.code} value={elem.nom + " (" +  elem.codesPostaux.map(code => code) + ")"}>{e.target.value}</option>)}))); 
         else
-            fetch('https://geo.api.gouv.fr/communes?nom="'+ e.target.value +'"&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map(elem => <option key={elem.code} value={elem.nom + " (" + elem.codesPostaux[0] + ")"}>{elem.nom}</option>)}))); 
+            fetch('https://geo.api.gouv.fr/communes?nom="'+ e.target.value +'"&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map(elem => <option key={elem.code} value={elem.nom + " (" + elem.codesPostaux.map(code => code) + ")"}>{elem.nom}</option>)}))); 
     }
 
-    function sendDataToServer(){
-        axios.post(url_api.url + "/create_offer", {
-            data: {
-              inputValue: formValues
-            }
-          })
+    async function sendDataToServer(){
+        const formData = new FormData();
+        formData.append("dateDepart", formValues.date);
+        formData.append("heureDepart", formValues.time);
+        formData.append("prix", formValues.price);
+        formData.append("precisions", formValues.precisions);
+        formData.append("infos", formValues.informations);
+        formData.append("nbPlaceDisponible", formValues.size);
+        formData.append("nomVilleDepart", formValues.start);
+        formData.append("nomVilleFin", formValues.end);
+        formData.append("arretIntermediaire", formValues.interList);
+
+        axios.post(url_api.url + "/create_offer.php", formData)
           .then(function (response) {
             console.log('Response :' + response.data);
           })
@@ -57,30 +67,15 @@ function Create_offer() {
     }
 
     function add() {
-        if(formValues.interList.includes(formValues.inter)) {
-            formErrors.inter = "Une ville ne peut pas être ajoutée deux fois dans la liste des arrêts intermédiaires."
-            setFormErrors(formErrors);
-        } else if (formValues.inter == formValues.start) {
-            formErrors.inter = "La ville de départ ne peut pas être ajoutée dans la liste des arrêts intermédiaires."
-            setFormErrors(formErrors);
-        } else if (formValues.inter == formValues.end) {
-            formErrors.inter = "La ville d'arrivée ne peut pas être ajoutée dans la liste des arrêts intermédiaires."
-            setFormErrors(formErrors);
-        } else {
-            formErrors.inter = "";
-            setFormErrors(formErrors);
-            setInputValues({...formValues, [formValues.interList.name] : formValues.interList.push(formValues.inter)});
-        }
-        setInputValues({...formValues, [formValues.interList.name] : formValues.interList});
+        setInputValues({...formValues, [formValues.interList.name] : formValues.interList.push(formValues.inter)});
     }
 
     function remove(i) {
         formValues.interList.splice(parseInt(i.target.value), 1);
-        console.log(parseInt(i.target.value));
         setInputValues({...formValues, [formValues.interList.name] : formValues.interList});
     }
 
-    function validateForm(data){
+    async function validateForm(data){
         console.log(data)
         const errors = {}
         
@@ -114,13 +109,53 @@ function Create_offer() {
         if(data.size <= 0) errors.size = "Le nombre de place doit être strictement positif.";
 
         // Vérification lieux
-        if(data.start == data.end) errors.end = "Le lieu de départ et le lieu d'arrivé ne peuvent être le même.";
+        var pregMatchCity = /([a-zA-Z0-9\u00C0-\u017F'\s-]+) [(]([0-9]+)/;
+        var matchStart = data.start.match(pregMatchCity);
+        var start;
+        if(matchStart == null) {
+            errors.start = "La ville de départ n'est pas correctement remplie : nom-de-la-ville (codePostal).";
+        } else {
+            var nomStart = matchStart[1];
+            var cPStart = matchStart[2];
+            start = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomStart+"'&codePostal="+cPStart+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));
+            if(start == undefined || start.length != 1) errors.start = "La ville de départ ne peut pas être detectée !";
+        }
+
+        var matchEnd = data.end.match(pregMatchCity);
+        var end;
+        if(matchEnd == null) {
+            errors.end = "La ville d'arrivée n'est pas correctement remplie : nom-de-la-ville (codePostal).";
+        } else {
+            var nomEnd = matchEnd[1];
+            var cPSEnd = matchEnd[2];
+            end = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomEnd+"'&codePostal="+cPSEnd+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
+            if(end == undefined || end.length != 1) errors.end = "La ville d'arrivée ne peut pas être detectée !";
+        }
+
+        if(start != undefined && start.length == 1 && end != undefined && end.length == 1 && start[0].code == end[0].code) errors.end = "Le lieu de départ et le lieu d'arrivé ne peuvent être le même.";
+
+        var codeInter = new Array();
+        for (const city of data.interList) {
+            var matchInter = city.match(pregMatchCity);
+            if(matchInter == null) {
+                errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : nom-de-la-ville (codePostal).";
+            } else {
+                var nomInter = matchInter[1];
+                var cPInter = matchInter[2];
+                var inter = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomInter+"'&codePostal="+cPInter+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
+                if(inter == undefined || inter.length != 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
+                if(inter != undefined) if(codeInter.includes(inter[0].code)) {
+                    errors.inter = "Vous ne pouvez pas passer deux fois par le même arrêts intermédiaire.";
+                } else {
+                    codeInter.push(inter[0].code);
+                }
+            }
+        } 
+
+        if(start != undefined && start.length == 1 && codeInter.includes(start[0].code)) errors.inter = "La ville de départ ne doit pas être dans les arrêts intermédiaires.";
+        if(end != undefined && end.length == 1 && codeInter.includes(end[0].code)) errors.inter = "La ville d'arrivée ne doit pas être dans les arrêts intermédiaires.";
 
         return errors
-    }
-    
-    if (isSubmit && Object.keys(formErrors).length ===0 ) {
-        sendDataToServer()
     }
 
     return (
