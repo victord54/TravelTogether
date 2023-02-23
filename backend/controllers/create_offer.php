@@ -51,4 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Offre : ".$idfOffre." créé."; 
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
+    $statement = $pdo->prepare("SELECT DISTINCT(idfGroupe), nomDeGroupe FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE email = :mail");
+    $statement->setFetchMode(PDO::FETCH_ASSOC);
+    $statement->bindValue(":mail", $_GET['mail']);
+    $statement->execute();
+    $data = $statement->fetchAll();
+
+    $reponse = $data;
+
+    echo json_encode($reponse);
+}
+
 ?>

@@ -14,13 +14,16 @@ function Create_offer() {
         price:0, 
         size:0, 
         precisions:"", 
-        informations:""
+        informations:"",
+        groupe:""
     };
     const [citiesCodes, setCodes] = useState({start:0, end:0, inter:[]});
-    const [proposition, setProposition] = useState({start : "", end : "", inter : ""})
-    const [formValues, setInputValues] = useState(initialValue)
-    const [formErrors, setFormErrors] = useState({})
-    const regExCodePostal = new RegExp("[0-9]{5}")
+    const [proposition, setProposition] = useState({start : "", end : "", inter : "", groupes : []});
+    const [privateOffer, setPrivate] = useState(false);
+    const [formValues, setInputValues] = useState(initialValue);
+    const [formErrors, setFormErrors] = useState({});
+    const regExCodePostal = new RegExp("[0-9]{5}");
+
 
     async function handleSubmit(e){
         e.preventDefault();
@@ -31,7 +34,7 @@ function Create_offer() {
         }
     }
     
-    function handleChange(e){
+    async function handleChange(e){
         setInputValues({ ...formValues, [e.target.name] : e.target.value});
     }
 
@@ -41,6 +44,23 @@ function Create_offer() {
             fetch('https://geo.api.gouv.fr/communes?codePostal='+ e.target.value +'&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map((elem,index) => <option key={index} value={elem.nom + " (" +  elem.codesPostaux.map(code => code) + ")"}>{e.target.value}</option>)}))); 
         else
             fetch('https://geo.api.gouv.fr/communes?nom="'+ e.target.value +'"&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map((elem, index) => <option key={index} value={elem.nom + " (" + elem.codesPostaux.map(code => code) + ")"}>{elem.nom}</option>)}))); 
+    }
+
+    async function handleGroupe(e) {
+        if(!privateOffer) {
+            var reponse = await axios.get(url_api.url + "/create_offer.php", {
+                params: {
+                    mail: localStorage.mail
+                }
+            });
+        
+            if(reponse.data !== null && reponse.data.length >= 1) {
+                var groupes = reponse.data;
+                setProposition({...proposition, ['groupes'] : groupes});
+                setInputValues({...formValues, ['groupe'] : groupes[0]['idfGroupe']});
+            }
+        }
+        setPrivate(!privateOffer);
     }
 
     function sendDataToServer(){
@@ -55,12 +75,13 @@ function Create_offer() {
         formData.append("villeDepart", citiesCodes.start);
         formData.append("villeArrivee", citiesCodes.end);
         formData.append("arretIntermediaire", citiesCodes.inter);
+        if(privateOffer) formData.append("groupe", formValues.groupe);
         axios.post(url_api.url + "/create_offer.php", formData)
           .then(function (response) {
-            console.log('Response :' + response.data);
+            console.log('Response : ' + response.data);
           })
           .catch(function (error) {
-            console.log('Error :' + error);
+            console.log('Error : ' + error);
           });
     }
 
@@ -224,7 +245,10 @@ function Create_offer() {
                 <div>Commentaires / informations supplémentaires : </div>
                 <input type="text" name="informations" value={formValues.informations} onChange={handleChange} />
                 <p className="error-form">{formErrors.informations}</p>
+                
+                <label><input type="checkbox" name="private" className='not-text-input' onChange={handleGroupe}/>Offre privée</label><br></br>
 
+                <select disabled={!privateOffer} name="groupe" onChange={handleChange}>{proposition.groupes.map(groupe => <option key={groupe['idfGroupe']} value={groupe['idfGroupe']}>{groupe['nomDeGroupe']}</option>)}</select>
 
                 <br/><br/>
                 <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
