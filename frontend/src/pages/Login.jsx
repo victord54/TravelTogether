@@ -3,6 +3,7 @@ import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { url_api } from "../data/url_api";
 import "../styles/Login.css";
+import {useAuth} from "../components/AuthProvider"
 
 
 function Login() {
@@ -10,6 +11,7 @@ function Login() {
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
+    const { setAuth } = useAuth();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -56,7 +58,7 @@ function Login() {
     };
 
     if (isLoaded) {
-        sessionStorage.setItem("reload", "true")
+        setAuth(true);
         return <Navigate replace to="/" />;
     } else {
         return (

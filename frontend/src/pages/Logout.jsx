@@ -1,8 +1,10 @@
 import { Navigate } from "react-router-dom";
+import {useAuth} from "../components/AuthProvider"
 
 function Logout() {
     localStorage.clear();
-    sessionStorage.setItem("reload", "true")
+    const { setAuth } = useAuth();
+    setAuth(false);
     return <Navigate replace to="/" />;
 }
 
