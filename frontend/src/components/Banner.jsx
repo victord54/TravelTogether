@@ -19,7 +19,7 @@ function Banner() {
                         <Link to="create-offer">Créer une offre</Link>
                         <Link to="search-offer">Rechercher une offre</Link>
                         <Link to="notifications">Notifications</Link>
-                        <Link to="profile">Profil</Link>
+                        <Link to="profile">Mon profil</Link>
                         <Link to="logout">Déconnexion</Link>
                     </ul>
                 )}

@@ -63,9 +63,9 @@ function Signin() {
         if (file){
             formData.append("file",file)
         } 
-        
+        console.log(formData);
         axios
-        .post(url_api.url + "/signin", formData)    
+        .post(url_api.url + "/signin.php", formData)    
             .then(function (response) {
                 console.log("Response1 :" + response.data);
             })
@@ -147,7 +147,7 @@ function Signin() {
             errors.mail = "L'adresse email est obligatoire.";
         } else {
             axios
-                .get(url_api.url + "/signin", {
+                .get(url_api.url + "/signin.php", {
                     params: {
                         mail: data.mail,
                     },
