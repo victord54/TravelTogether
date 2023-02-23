@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
     $idfOffre = $pdo->lastInsertId();
-    echo $_POST['arretIntermediaire'];
     if($idfOffre != false) {
         if(!isset($_POST['groupe'])) {
             $statement = $pdo->prepare("INSERT INTO OFFREPUBLIC(idfOffre) VALUES (:idfOffre)");
@@ -48,6 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+
+    echo "Offre : ".$idfOffre." créé."; 
 }
 
 ?>

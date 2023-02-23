@@ -55,7 +55,6 @@ function Create_offer() {
         formData.append("villeDepart", citiesCodes.start);
         formData.append("villeArrivee", citiesCodes.end);
         formData.append("arretIntermediaire", citiesCodes.inter);
-        console.log("on envoie !");
         axios.post(url_api.url + "/create_offer.php", formData)
           .then(function (response) {
             console.log('Response :' + response.data);
