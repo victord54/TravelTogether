@@ -34,7 +34,7 @@ CREATE TABLE
 CREATE TABLE
     OFFRE(
         idfOffre INT PRIMARY KEY AUTO_INCREMENT,
-        email VARCHAR(50),
+        email VARCHAR(50) NOT NULL,
         dateDepart DATE NOT NULL,
         heureDepart TIME NOT NULL,
         prix FLOAT NOT NULL,
