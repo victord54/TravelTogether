@@ -12,6 +12,11 @@ th:nth-child(odd) {
     background: #324960;
 }
 
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .cityButton {
     border: none;
     cursor: pointer;

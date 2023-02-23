@@ -89,6 +89,26 @@ function Create_offer() {
         setInputValues({...formValues, [formValues.interList.name] : formValues.interList.push(formValues.inter)});
     }
 
+    function move(fromIndex, toIndex) {
+        let arr = formValues.interList;
+        [arr[fromIndex], arr[toIndex]] = [arr[toIndex], arr[fromIndex]];
+        setInputValues({...formValues, [formValues.interList.name] : arr});
+    }
+
+    function moveUp(i) {
+        if(i.target.value !== 0) {
+            var index = parseInt(i.target.value);
+            move(index, index-1);
+        }
+    }
+
+    function moveDown(i) {
+        if(i.target.value !== formValues.interList.length - 1) {
+            var index = parseInt(i.target.value);
+            move(index, index+1);
+        }
+    }
+
     function remove(i) {
         formValues.interList.splice(parseInt(i.target.value), 1);
         setInputValues({...formValues, [formValues.interList.name] : formValues.interList});
@@ -215,7 +235,11 @@ function Create_offer() {
                     <tbody>
                     {formValues.interList.map((city, i) => 
                         <tr key={i}>
-                            <td>{city}</td><td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td>
+                            <td>{i}</td>
+                            <td>{city}</td>
+                            <td><button type="button" className='cityButton' value={i} onClick={moveUp} disabled={i===0}>&#8593;</button></td>
+                            <td><button type="button" className='cityButton' value={i} onClick={moveDown} disabled={i===formValues.interList.length-1}>&#8595;</button></td>
+                            <td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td>
                         </tr>)}
                     </tbody>
                 </table>

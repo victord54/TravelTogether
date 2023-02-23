@@ -110,6 +110,7 @@ CREATE TABLE
     PASSE_PAR(
         idfOffre INT,
         ville INT,
+        position INT NOT NULL,
         PRIMARY KEY(idfOffre, ville),
         FOREIGN KEY (idfOffre) REFERENCES OFFRE(idfOffre)
     );
