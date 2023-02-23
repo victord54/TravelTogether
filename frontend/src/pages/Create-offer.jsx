@@ -25,12 +25,9 @@ function Create_offer() {
     async function handleSubmit(e){
         e.preventDefault();
         var errors = await validateForm(formValues);
-        console.log("ici1 !");
         setFormErrors(errors);
-        console.log("ici2 !");
-        if (Object.keys(formErrors).length === 0 ) {
+        if (Object.keys(errors).length === 0 ) {
             sendDataToServer();
-            console.log("ici3 !");
         }
     }
     
@@ -48,6 +45,7 @@ function Create_offer() {
 
     function sendDataToServer(){
         const formData = new FormData();
+        formData.append("email", localStorage.mail);
         formData.append("dateDepart", formValues.date);
         formData.append("heureDepart", formValues.time);
         formData.append("prix", formValues.price);
@@ -194,7 +192,12 @@ function Create_offer() {
                     {proposition.inter}
                 </datalist>
                 <table className="cityList">
-                    {formValues.interList.map((city, i) => <tr> <td>{city}</td><td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td></tr>)}
+                    <tbody>
+                    {formValues.interList.map((city, i) => 
+                        <tr key={i}>
+                            <td>{city}</td><td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td>
+                        </tr>)}
+                    </tbody>
                 </table>
                 <p className="error-form">{formErrors.inter}</p>
 
