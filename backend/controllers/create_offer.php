@@ -39,11 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statement->execute() or die(print_r($statement->errorInfo(), true));
         } 
         if(strcmp($_POST['arretIntermediaire'], '') != 0) {
+            $cpt = 0;
             foreach($citiesInter as $city) {
-                $statement = $pdo->prepare("INSERT INTO PASSE_PAR(idfOffre, ville) VALUES (:idfOffre, :ville)");
+                $statement = $pdo->prepare("INSERT INTO PASSE_PAR(idfOffre, ville, position) VALUES (:idfOffre, :ville, :position)");
                 $statement->bindValue(':idfOffre', $idfOffre);
                 $statement->bindValue(':ville', $city);
+                $statement->bindValue(':position', $cpt);
                 $statement->execute() or die(print_r($statement->errorInfo(), true));
+                $cpt++;
             }
         }
     }
