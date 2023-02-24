@@ -4,6 +4,8 @@ import {useAuth} from "../components/AuthProvider"
 import React from "react"
 import axios from "axios";
 import { url_api } from "../data/url_api";
+import { Link } from "react-router-dom";
+
 
 function Profil(){
 
@@ -26,7 +28,14 @@ function Profil(){
     function affichageBienvenue(){
         var message;
         if(auth){
-            message = <h3 className="par-pitié-sois-centré"> Modification du profil de {localStorage.getItem("nom")} {localStorage.getItem("prenom")} </h3>;
+            message = 
+            <nav>
+                <ul>
+                    <Link to="../">Retour</Link>
+                    <Link to="etPafCaFaitDesChocapic">Mes Groupes</Link>
+                </ul>
+            </nav>
+            ;
         }
         else{
             message = <h3 className="par-pitié-sois-centré"> Il semblerait que vous ne soyez pas connecté. </h3>;
