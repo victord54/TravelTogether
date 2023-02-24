@@ -11,7 +11,8 @@ function Friends_groupe_list() {
         // On récupère tout les groupes où l'utilisateur appartient (ou dirige).
         var reponse = await axios.get(url_api.url + "/friends_group.php", {
             params: {
-                mail: localStorage.mail
+                mail: localStorage.mail,
+                type: 'list'
             }
         });
     

@@ -14,7 +14,7 @@ else {
     $password = 'mysql';
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, dirigeant FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE email = :mail UNION SELECT idfGroupe, nomDeGroupe, dirigeant FROM GROUPE WHERE dirigeant = :mail");
@@ -31,8 +31,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $member = $statement->fetchAll();
 
         $memberText = "";
-        foreach($member as $memberStr) $memberText = $memberText.$memberStr["email"].", ";
+        $var = 0;
+        foreach($member as $memberStr) {
+            if($var < 2) {
+                $memberText = $memberText.$memberStr["email"].", ";
+                $var += 1;
+          } else {
+            $var += 1;
+          }
+        } 
         if(strcmp($memberText, '') != 0) $memberText = mb_substr($memberText, 0, -2);
+        if($var >= 2) $memberText = $memberText."...";
         $data[$key]['members'] = $memberText;
     }
 
@@ -40,5 +49,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     echo json_encode($reponse);
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'one') == 0) {
+
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, dirigeant FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE idfGroupe = :idfGroupe AND email = :mail UNION SELECT idfGroupe, nomDeGroupe, dirigeant FROM GROUPE WHERE idfGroupe = :idfGroupe AND dirigeant = :mail");
+    $statement->setFetchMode(PDO::FETCH_ASSOC);
+    $statement->bindValue(":idfGroupe", $_GET['idfGroupe']);
+    $statement->bindValue(":mail", $_GET['mail']);
+    $statement->execute();
+    $data = $statement->fetch();
+
+    if($data == false) {
+        echo "";
+    } else {
+        $statement = $pdo->prepare("SELECT email FROM APPARTIENT WHERE idfGroupe = :idfGroupe");
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->bindValue(":idfGroupe", $_GET['idfGroupe']);
+        $statement->execute();
+        $member = $statement->fetchAll();
+    
+        $memberText = "";
+        foreach($member as $memberStr) $memberText = $memberText.$memberStr["email"].", ";
+        if(strcmp($memberText, '') != 0) $memberText = mb_substr($memberText, 0, -2);
+        $data['members'] = $memberText;
+    
+        $reponse = $data;
+    
+        echo json_encode($reponse);
+    }
+}
+
 
 ?>
