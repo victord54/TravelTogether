@@ -8,4 +8,6 @@ if ($_GET["request"] == "login") {
     require_once('controllers/login.php');
 } else if ($_GET["request"] == "signin") {
     require_once('controllers/signin.php');
+}else if ($_GET["request"] == "Create_group") {
+    require_once('controllers/create_group.php');
 }

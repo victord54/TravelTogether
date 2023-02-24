@@ -11,6 +11,7 @@ import Logout from "../pages/Logout";
 import Profil from "../pages/Profil";
 import Unknow from "../pages/Unknow";
 import Create_offer from "../pages/Create-offer";
+import Create_group from "../pages/Create_group";
 
 function App() {
     const { auth } = useAuth();
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/logout" element={<PrivateRoute><Logout /></PrivateRoute>} />
                 <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
+                <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
                 <Route path="*" element={<Unknow />} />
             </Routes>
         </div>
