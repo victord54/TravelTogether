@@ -2,7 +2,7 @@ import axios from 'axios'
 import { url_api } from "../data/url_api";
 import "../styles/Friends-groupe-list.css";
 import { useState } from 'react';
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
 
 function Groupe() {
     let { id } = useParams();
@@ -38,6 +38,11 @@ function Groupe() {
     )
     else return (
             <div>
+                <nav>
+                <ul>
+                    <Link to={"../delete_groupe/"+id}>Supprimer un groupe</Link>
+                </ul>
+                </nav>
                 <h1>{groupe.value['nomDeGroupe']}</h1>
                 <div className='groupe-box'>
                     <h2 className='titre-groupe'>{groupe.value['nomDeGroupe']}</h2>
