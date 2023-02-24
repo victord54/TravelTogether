@@ -34,6 +34,11 @@ function Friends_groupe_list() {
     }
     if(groupes.values.length == 0) return (
         <div>
+            <nav>
+            <ul>
+                <Link to="../create_group">Créer un group</Link>
+            </ul>
+            </nav>
             <h1>Vos groupes d'amis</h1>
             <p>Vous n'êtes dans aucun groupe d'amis</p>
         </div>
