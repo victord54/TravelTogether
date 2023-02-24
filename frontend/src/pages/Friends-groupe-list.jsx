@@ -50,9 +50,9 @@ function Friends_groupe_list() {
                     groupes.values.map(groupe => <li key={groupe['idfGroupe']}>
                         <div className='groupe-box'>
                         <Link className='groupe-link' to={'../groupe/'+groupe['idfGroupe']}>
-                            <h3 className='titre-groupe'>{groupe['nomDeGroupe']}</h3>
-                            <p className='membre-list'><h4>Dirigeant : </h4>{groupe['dirigeant']}</p>
-                            <p className='membre-list'><h4>Membre(s) : </h4>{groupe['members']}</p>
+                            <h2 className='titre-groupe'>{groupe['nomDeGroupe']}</h2>
+                            <h3 className='membre-list'>Dirigeant : </h3><p className='membre-list'>{groupe['dirigeant']}</p>
+                            <h3 className='membre-list'>Membre(s) : </h3><p className='membre-list'>{groupe['members']}</p>
                         </Link>
                         </div>
                         </li>)
