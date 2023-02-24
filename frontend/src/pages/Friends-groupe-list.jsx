@@ -40,6 +40,11 @@ function Friends_groupe_list() {
     );
     else return (
             <div>
+                <nav>
+                <ul>
+                    <Link to="../create_group">Créer un group</Link>
+                </ul>
+                </nav>
                 <h1>Vos groupes d'amis</h1>
                 <ul>
                     {

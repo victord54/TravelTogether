@@ -12,7 +12,6 @@ function Banner() {
                     <ul>
                         <Link to="create-offer">Créer une offre</Link>
                         <Link to="search-offer">Rechercher une offre</Link>
-                        <Link to="create_group">Créer un group</Link>
                         <Link to="notifications">Notifications</Link>
                         <Link to="profile">Mon profil</Link>
                         <Link to="logout">Déconnexion</Link>
