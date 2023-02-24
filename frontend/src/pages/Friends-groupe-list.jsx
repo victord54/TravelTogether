@@ -46,7 +46,7 @@ function Friends_groupe_list() {
                         <div className='groupe-box'>
                             <h3 className='titre-groupe'>{groupe['nomDeGroupe']}</h3>
                             <p className='membre-list'><h4>Dirigeant : </h4>{groupe['dirigeant']}</p>
-                            <p className='membre-list'>Membre1, Membre2...</p>
+                            <p className='membre-list'><h4>Membre(s) : </h4>{groupe['members']}</p>
                         </div>
                         </li>)
                     }

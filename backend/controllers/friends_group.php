@@ -23,6 +23,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $statement->execute();
     $data = $statement->fetchAll();
 
+    foreach($data as $key=>$groupe) {
+        $statement = $pdo->prepare("SELECT email FROM APPARTIENT WHERE idfGroupe = :idfGroupe");
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->bindValue(":idfGroupe", $groupe['idfGroupe']);
+        $statement->execute();
+        $member = $statement->fetchAll();
+
+        $memberText = "";
+        foreach($member as $memberStr) $memberText = $memberText.$memberStr["email"].", ";
+        if(strcmp($memberText, '') != 0) $memberText = mb_substr($memberText, 0, -2);
+        $data[$key]['members'] = $memberText;
+    }
+
     $reponse = $data;
 
     echo json_encode($reponse);
