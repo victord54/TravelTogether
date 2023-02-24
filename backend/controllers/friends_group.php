@@ -17,14 +17,14 @@ else {
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, dirigeant FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE email = :mail UNION SELECT idfGroupe, nomDeGroupe, dirigeant FROM GROUPE WHERE dirigeant = :mail");
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, nom, prenom FROM APPARTIENT JOIN UTILISATEUR USING(email) JOIN GROUPE USING(idfGroupe) WHERE email = :mail UNION SELECT idfGroupe, nomDeGroupe, nom, prenom FROM GROUPE, UTILISATEUR U  WHERE dirigeant = :mail AND U.email = dirigeant");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":mail", $_GET['mail']);
     $statement->execute();
     $data = $statement->fetchAll();
 
     foreach($data as $key=>$groupe) {
-        $statement = $pdo->prepare("SELECT email FROM APPARTIENT WHERE idfGroupe = :idfGroupe");
+        $statement = $pdo->prepare("SELECT nom, prenom FROM APPARTIENT JOIN UTILISATEUR USING(email) WHERE idfGroupe = :idfGroupe");
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->bindValue(":idfGroupe", $groupe['idfGroupe']);
         $statement->execute();
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) 
         $var = 0;
         foreach($member as $memberStr) {
             if($var < 2) {
-                $memberText = $memberText.$memberStr["email"].", ";
+                $memberText = $memberText.$memberStr["prenom"]." ".$memberStr["nom"].", ";
                 $var += 1;
           } else {
             $var += 1;
@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) 
         if(strcmp($memberText, '') != 0) $memberText = mb_substr($memberText, 0, -2);
         if($var >= 2) $memberText = $memberText."...";
         $data[$key]['members'] = $memberText;
+        $data[$key]['dirigeant'] = $groupe["prenom"]." ".$groupe["nom"];
     }
 
     $reponse = $data;
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'one') == 0) {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, dirigeant FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE idfGroupe = :idfGroupe AND email = :mail UNION SELECT idfGroupe, nomDeGroupe, dirigeant FROM GROUPE WHERE idfGroupe = :idfGroupe AND dirigeant = :mail");
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, nom, prenom FROM APPARTIENT A JOIN GROUPE USING(idfGroupe), Utilisateur u WHERE idfGroupe = :idfGroupe AND A.email = :mail AND U.email = :mail UNION SELECT idfGroupe, nomDeGroupe, nom, prenom FROM GROUPE, Utilisateur U WHERE idfGroupe = :idfGroupe AND dirigeant = :mail AND U.email = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":idfGroupe", $_GET['idfGroupe']);
     $statement->bindValue(":mail", $_GET['mail']);
@@ -63,16 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'one') == 0) {
     if($data == false) {
         echo "";
     } else {
-        $statement = $pdo->prepare("SELECT email FROM APPARTIENT WHERE idfGroupe = :idfGroupe");
+        $statement = $pdo->prepare("SELECT nom, prenom FROM APPARTIENT JOIN UTILISATEUR USING(email) WHERE idfGroupe = :idfGroupe");
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->bindValue(":idfGroupe", $_GET['idfGroupe']);
         $statement->execute();
         $member = $statement->fetchAll();
     
         $memberText = "";
-        foreach($member as $memberStr) $memberText = $memberText.$memberStr["email"].", ";
+        foreach($member as $memberStr) $memberText = $memberText.$memberStr["prenom"]." ".$memberStr["nom"].", ";
         if(strcmp($memberText, '') != 0) $memberText = mb_substr($memberText, 0, -2);
         $data['members'] = $memberText;
+        $data['dirigeant'] = $data["prenom"]." ".$data["nom"];
     
         $reponse = $data;
     
