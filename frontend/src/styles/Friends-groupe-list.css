@@ -18,3 +18,8 @@ ul {
 .membre-list {
     padding: 0px 10px 0px 20px;
 }
+
+.groupe-link {
+    color:black;
+    text-decoration: none;
+}
