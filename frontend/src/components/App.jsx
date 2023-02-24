@@ -29,8 +29,8 @@ function App() {
                 <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
                 <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
-                <Route path="/friends-groupe-list" element={<Friends_groupe_list />} />
-                <Route path="groupe/:id" element={<Groupe />} />
+                <Route path="/friends-groupe-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />
+                <Route path="groupe/:id" element={<PrivateRoute><Groupe /></PrivateRoute>} />
                 <Route path="*" element={<Unknow />} />
             </Routes>
         </div>
