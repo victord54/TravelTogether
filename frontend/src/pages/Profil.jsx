@@ -32,7 +32,7 @@ function Profil(){
             <nav>
                 <ul>
                     <Link to="../">Retour</Link>
-                    <Link to="etPafCaFaitDesChocapic">Mes Groupes</Link>
+                    <Link to="../Friends-groupe-list">Mes Groupes</Link>
                 </ul>
             </nav>
             ;

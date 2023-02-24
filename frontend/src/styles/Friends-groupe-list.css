@@ -1,0 +1,20 @@
+
+ul {
+    list-style-type: none; 
+}
+.groupe-box {
+    margin: 5px 5px 5px 0px;
+    border: 2px solid grey;
+    border-radius: 10px;
+    vertical-align: top;
+    background-color: rgba(240, 240, 240, 0.5);
+}
+
+.titre-groupe {
+    vertical-align: top;
+    padding: 0px 10px 0px 10px;
+}
+
+.membre-list {
+    padding: 0px 10px 0px 20px;
+}

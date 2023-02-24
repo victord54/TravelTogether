@@ -12,6 +12,7 @@ import Profil from "../pages/Profil";
 import Unknow from "../pages/Unknow";
 import Create_offer from "../pages/Create-offer";
 import Create_group from "../pages/Create_group";
+import Friends_groupe_list from "../pages/Friends-groupe-list";
 
 function App() {
     const { auth } = useAuth();
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
                 <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
+                <Route path="/friends-groupe-list" element={<Friends_groupe_list />} />
                 <Route path="*" element={<Unknow />} />
             </Routes>
         </div>
