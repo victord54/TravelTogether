@@ -265,80 +265,86 @@ function Create_offer() {
         return errors;
     }
 
-    return (
-        <div>
+    if(localStorage.getItem("aUneVoiture") == 0) return (
             <div className="form-box">
-            <h1 className="creation-titre">Création de l'offre</h1>
-            <form onSubmit={handleSubmit}>
-                <div>Lieu de départ* :</div>
-                <input list="proposition_start" name="start" onChange={handleCity} />    
-                <datalist id="proposition_start">
-                    {proposition.start}
-                </datalist>
-                <p className="error-form">{formErrors.start}</p>
-                
-                <div>Lieu d'arrivée* :</div>
-                <input list="proposition_end" name="end" onChange={handleCity} />    
-                <datalist id="proposition_end">
-                    {proposition.end}
-                </datalist>
-                <p className="error-form">{formErrors.end}</p>
+                <h1 className="creation-titre">Vous ne pouvez pas créer d'offre.</h1>
+                <p>Pour pouvoir créer une offre, vous devez posséder une voiture.</p>
+            </div>
+        );
+    else return (
+            <div>
+                <div className="form-box">
+                <h1 className="creation-titre">Création de l'offre</h1>
+                <form onSubmit={handleSubmit}>
+                    <div>Lieu de départ* :</div>
+                    <input list="proposition_start" name="start" onChange={handleCity} />    
+                    <datalist id="proposition_start">
+                        {proposition.start}
+                    </datalist>
+                    <p className="error-form">{formErrors.start}</p>
+                    
+                    <div>Lieu d'arrivée* :</div>
+                    <input list="proposition_end" name="end" onChange={handleCity} />    
+                    <datalist id="proposition_end">
+                        {proposition.end}
+                    </datalist>
+                    <p className="error-form">{formErrors.end}</p>
 
-                <div>Arrêtes intermédiaires : </div>
-                <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" className="cityButton" onClick={add}>+</button>
-                <datalist id="proposition_inter">
-                    {proposition.inter}
-                </datalist>
-                <table className="cityList">
-                    <tbody>
-                    {formValues.interList.map((city, i) => 
-                        <tr key={i}>
-                            <td>{i}</td>
-                            <td>{city}</td>
-                            <td><button type="button" className='cityButton' value={i} onClick={moveUp} disabled={i===0}>&#8593;</button></td>
-                            <td><button type="button" className='cityButton' value={i} onClick={moveDown} disabled={i===formValues.interList.length-1}>&#8595;</button></td>
-                            <td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td>
-                        </tr>)}
-                    </tbody>
-                </table>
-                <p className="error-form">{formErrors.inter}</p>
+                    <div>Arrêtes intermédiaires : </div>
+                    <input list="proposition_inter" name="inter" onChange={handleCity} /> <button type="button" className="cityButton" onClick={add}>+</button>
+                    <datalist id="proposition_inter">
+                        {proposition.inter}
+                    </datalist>
+                    <table className="cityList">
+                        <tbody>
+                        {formValues.interList.map((city, i) => 
+                            <tr key={i}>
+                                <td>{i}</td>
+                                <td>{city}</td>
+                                <td><button type="button" className='cityButton' value={i} onClick={moveUp} disabled={i===0}>&#8593;</button></td>
+                                <td><button type="button" className='cityButton' value={i} onClick={moveDown} disabled={i===formValues.interList.length-1}>&#8595;</button></td>
+                                <td><button type="button" className="cityButton" value={i} onClick={remove}>-</button></td>
+                            </tr>)}
+                        </tbody>
+                    </table>
+                    <p className="error-form">{formErrors.inter}</p>
 
-                <div>Date de départ* : </div>
-                <input type="date" name="date" value={formValues.date} onChange={handleChange} />
-                <p className="error-form">{formErrors.date}</p>
+                    <div>Date de départ* : </div>
+                    <input type="date" name="date" value={formValues.date} onChange={handleChange} />
+                    <p className="error-form">{formErrors.date}</p>
 
-                <div>Heure de départ* : </div>
-                <input type="time" name="time" value={formValues.time} onChange={handleChange} />
-                <p className="error-form">{formErrors.time}</p>
+                    <div>Heure de départ* : </div>
+                    <input type="time" name="time" value={formValues.time} onChange={handleChange} />
+                    <p className="error-form">{formErrors.time}</p>
 
-                <div>Prix* : </div>
-                <input type="number" name="price" value={formValues.price} onChange={handleChange}/>
-                <p className="error-form">{formErrors.price}</p>
+                    <div>Prix* : </div>
+                    <input type="number" name="price" value={formValues.price} onChange={handleChange}/>
+                    <p className="error-form">{formErrors.price}</p>
 
-                <div>Nombre de places* : </div>
-                <input type="number" name="size" value={formValues.size} onChange={handleChange}/>
-                <p className="error-form">{formErrors.size}</p>
+                    <div>Nombre de places* : </div>
+                    <input type="number" name="size" value={formValues.size} onChange={handleChange}/>
+                    <p className="error-form">{formErrors.size}</p>
 
-                <div>Précision sur le point de rendez-vous : </div>
-                <input type="text" name="precisions" value={formValues.precisions} onChange={handleChange} />
-                <p className="error-form">{formErrors.precisions}</p>
+                    <div>Précision sur le point de rendez-vous : </div>
+                    <input type="text" name="precisions" value={formValues.precisions} onChange={handleChange} />
+                    <p className="error-form">{formErrors.precisions}</p>
 
 
-                <div>Commentaires / informations supplémentaires : </div>
-                <input type="text" name="informations" value={formValues.informations} onChange={handleChange} />
-                <p className="error-form">{formErrors.informations}</p>
-                
-                <label><input type="checkbox" name="private" className='not-text-input' onChange={handleGroupe}/>Offre privée</label><br></br>
+                    <div>Commentaires / informations supplémentaires : </div>
+                    <input type="text" name="informations" value={formValues.informations} onChange={handleChange} />
+                    <p className="error-form">{formErrors.informations}</p>
+                    
+                    <label><input type="checkbox" name="private" className='not-text-input' onChange={handleGroupe}/>Offre privée</label><br></br>
 
-                <select disabled={!privateOffer} name="groupe" onChange={handleChange}>{proposition.groupes.map(groupe => <option key={groupe['idfGroupe']} value={groupe['idfGroupe']}>{groupe['nomDeGroupe']}</option>)}</select>
+                    <select disabled={!privateOffer} name="groupe" onChange={handleChange}>{proposition.groupes.map(groupe => <option key={groupe['idfGroupe']} value={groupe['idfGroupe']}>{groupe['nomDeGroupe']}</option>)}</select>
 
-                <br/><br/>
-                <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
-                <p className="info-obligatoire">* : Information obligatoire.</p>
+                    <br/><br/>
+                    <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
+                    <p className="info-obligatoire">* : Information obligatoire.</p>
 
-            </form></div>
-        </div>
-    );
+                </form></div>
+            </div>
+        );
 }
 
 export default Create_offer;
