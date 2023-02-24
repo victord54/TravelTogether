@@ -8,8 +8,14 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+if(file_exists('../dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
+else {
+    $login = 'root';
+    $password = 'mysql';
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     $sqlInsert = "INSERT INTO OFFRE(email, dateDepart, heureDepart, prix, nbPlaceDisponible, precisions, infos, villeDepart, villeArrivee)
                     VALUES (:email, :dateDepart, :heureDepart, :prix, :nbPlaceDisponible, :precisions, :infos, :villeDepart, :villeArrivee)";
     $statement = $pdo->prepare($sqlInsert);
@@ -56,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE email = :mail UNION SELECT idfGroupe, nomDeGroupe FROM GROUPE WHERE dirigeant = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":mail", $_GET['mail']);
