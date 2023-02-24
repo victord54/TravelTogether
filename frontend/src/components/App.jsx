@@ -14,7 +14,6 @@ import Create_offer from "../pages/Create-offer";
 
 function App() {
     const { auth } = useAuth();
-    console.log(auth)
     return (
         <div>
             {auth ? <Banner /> : <NotAuthBanner />}

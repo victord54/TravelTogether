@@ -11,7 +11,6 @@ export const useAuth = () => useContext(AuthContext);
 const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState(null);
     const [user, setUser] = useState(null);
-    console.log(auth)
   
     useEffect(() => {
         if (localStorage.getItem('mail')){

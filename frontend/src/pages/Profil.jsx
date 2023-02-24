@@ -1,40 +1,44 @@
 import "../styles/Profil.css";
 import { useState } from "react";
-import { renderMatches } from "react-router-dom";
+import {useAuth} from "../components/AuthProvider"
 import React from "react"
+import axios from "axios";
+import { url_api } from "../data/url_api";
 
-class Profil extends React.Component{
+function Profil(){
 
-    state = {
-        isUser : false,
-        isSubmit : false
+    const { auth } = useAuth();
+    const initialValue = {
+        lastName: localStorage.getItem("nom"),
+        firstName: localStorage.getItem("prenom"),
+        password: "",
+        passwordConfirmation: "",
+        phoneNumber: localStorage.getItem("numTel"),
+        gender: localStorage.getItem("genre"),
+        car: localStorage.getItem("aUneVoiture"),
+        mailUpdates: localStorage.getItem("notificationParMail")
     };
-
-
-    constructor() {
-        super();
-        if (localStorage.length > 0) { //on check si l'utilisatueur est connecté
-            this.isUser = true;
-        }
-        //this.sendDataToServer = this.sendDataToServer.bind(this); //constructeur sinon ça râle
-    }
+    const [formValues, setInputValues] = useState(initialValue);
+    const [isUser, setIsUser] = useState(false);
+    const [file, setFile] = useState(null)
 
     //Fonction qui retourne une des trucs si l'utilisateur est co ou non
-    affichageBienvenue(){
+    function affichageBienvenue(){
         var message;
-        if(this.isUser){
-            message = <p> Modification du profil de {localStorage.getItem("nom")} {localStorage.getItem("prenom")} </p>;
+        if(auth){
+            message = <h3 className="par-pitié-sois-centré"> Modification du profil de {localStorage.getItem("nom")} {localStorage.getItem("prenom")} </h3>;
         }
         else{
-            message = <p> Il semblerait que vous ne soyez pas connecté. </p>;
+            message = <h3 className="par-pitié-sois-centré"> Il semblerait que vous ne soyez pas connecté. </h3>;
         }
         return message;
     }
 
     //Fonction qui affiche les informations du profil
-    affichageProfil(){
+    function affichageProfil(){
         var contenu =
             <React.Fragment> 
+            <div className="affichageActuel">
             <p className="fonctionnel"> <strong> Profil actuel: </strong></p>
             <ul> 
                 <li> Nom : {localStorage.getItem("nom")}</li>
@@ -44,93 +48,149 @@ class Profil extends React.Component{
                 <li> Possède une voiture : {localStorage.getItem("aUneVoiture") ? ("Oui") : ("Non")}</li>
                 <li> Notifications par mail : {localStorage.getItem("notificationParMail") ? ("Oui") : ("Non")}</li>
             </ul>
+            </div>
             </React.Fragment>;
         return contenu;
     }
+ 
+    //Fonction qui teste.
+    function test(){
+        console.log("zebi");
+    }
+
+    function handleChange(event) {
+        console.log("handleChange()");
+        setInputValues({ ...formValues, [event.target.name]: event.target.value });
+    }
 
     //Fonction qui gère et affiche tout ce qui est relatif aux modifs; IMPLÉMENTER DES VÉRIFICATIONS
-    modificationProfil(){ //éventuellement rajouter des onChange pour vérifier que l'utilisateur ne rentre pas nimp
-        var contenu =
-            <React.Fragment> 
-            <form onSubmit={this.submitFormulaire}>
+    function modificationProfil(){ //éventuellement rajouter des onChange pour vérifier que l'utilisateur ne rentre pas nimp
+        
+        return(
+            <form onSubmit={submitFormulaire} className="form-box">
             <p> <strong> Modifications: </strong></p>
-            <h3 className="pasFait"> La vérification des infos n'est pas encore implémentée!</h3>
-            <ul> 
+            <h3 className="pasFait"> Non implémenté : vérification des informations, photo de profil et notifications/voiture </h3>
+            <ul className="liste-sans-puces"> 
                 <li> Nom :  <input
-                                type="text" name="nom" className="fullTexte" placeholder={localStorage.getItem("nom")}
+                                type="text" name="firstName" className="fullTexte" value={formValues.firstName} onChange={handleChange}
                             ></input> </li>
                 <li> Prénom : <input
-                                type="text" name="prenom" className="fullTexte" placeholder={localStorage.getItem("prenom")}
+                                type="text" name="lastName" className="fullTexte" value={formValues.lastName} onChange={handleChange}
                             ></input></li>
-                <li className="pasFait"> Genre :
+                <li className="radio"> Genre :
                             <input
                                 type="radio"
-                                name="genre"
-                                className="radio"
+                                name="gender"
+                                className="not-text-input radiobutton"
                                 value="f"
+                                onChange={handleChange}
                             ></input>
                             Femme
                             <input
                                 type="radio"
-                                name="genre"
-                                className="radio"
+                                name="gender"
+                                className="not-text-input radiobutton"
                                 value="h"
+                                onChange={handleChange}
                             ></input>
                             Homme
                             <input
                                 type="radio"
-                                name="genre"
-                                className="radio"
+                                name="gender"
+                                className="not-text-input radiobutton"
                                 value="n"
+                                onChange={handleChange}
                             ></input>
                             Neutre
                             </li>
                 <li> Numéro de tel : <input
-                                type="text" name="tel" className="fullTexte" placeholder={localStorage.getItem("numTel")}
+                                type="text" name="phoneNumber" className="fullTexte" value={formValues.phoneNumber} onChange={handleChange}
                             ></input></li>
-                <li className="àAmeliorer"> Possède une voiture : <input
-                                type="checkbox" name="voiture" className="checkBox"
+                <li className="àAmeliorer"> Possède une voiture : (pété) <input
+                                type="checkbox" name="car" className="checkBox" defaultChecked={localStorage.getItem("aUneVoiture") ? ("true") : ("false")} onChange={handleChange}
                             ></input></li>
-                <li className="àAmeliorer"> Notifications par mail : <input
-                                type="checkbox" name="notifMail" className="checkBox"
+                <li className="àAmeliorer"> Notifications par mail : (pété) <input
+                                type="checkbox" name="mailUpdates" className="checkBox" defaultChecked={localStorage.getItem("notificationParMail") ? ("true") : ("false")} onChange={handleChange}
+                            ></input></li>
+                <li> Mot de passe : <input
+                                type="password" name="password" className="fullTexte" value={formValues.password} onChange={handleChange}
+                            ></input></li>
+                <li> Confirmation Mot de Passe : <input
+                                type="password" name="passwordConfirmation" className="fullTexte" value={formValues.passwordConfirmation} onChange={handleChange}
                             ></input></li>
             </ul>
-            <button type="submit"> Valider changements </button>
+            <button type="submit" className="formulaire-submit"> Valider changements </button>
             </form>
-            </React.Fragment>;
-        return contenu;
+        );
     }
 
-    test(){
-        console.log("zebi");
-    }
-
-
-    submitFormulaire() { //ici, problème au rafraichissement : pas de handle formulaire dans la console pour une raison bizarre
-        //e.preventDefault(); //je sais pas à quoi ca sert mais c'est rès bien ici
-        //en théorie, mettre ici une étape de vérification du formulaire avant d'envoyer les données
+    //Appel de la validation formulaire
+    function submitFormulaire(evenement) {
+        evenement.preventDefault();
         console.log("Handle formulaire");
-        //this.isSubmit = true;
-        //test(); //problème avec le this ici => voir pq le bind constructeur ne fonctionne pas
+        //dans les normes des choses, la place de la vérification c'est ici!
+        reparerDonnees();
+        sendDataToServer();
     }
 
-    render(){
-        if(!this.isUser){ //au cas où l'utilisateur ne soit pas co
-            return (
-            <main>
-                {this.affichageBienvenue()}
-            </main>
-        );}
+    //Fonction de débug pour contrer un problème de checkbox
+    function reparerDonnees(){
+        //données où on ne change rien (valeur automatique) : lastName, firstName, password & confirmation, phoneNumber
+        //car et mailUpdates sont pour le moment pétées, donc on considère qu'on ne change rien.
+        formValues.car= localStorage.getItem("aUneVoiture");
+        formValues.mailUpdates= localStorage.getItem("notificationParMail");
+        console.log("Données réparées, voiture et notification ignorées.")
+    }
 
+
+    function sendDataToServer() {
+        console.log("Envoi des changements.");
+
+        const formData = new FormData()
+        formData.append("mail", localStorage.getItem("mail"))
+        formData.append("lastName", formValues.lastName)
+        formData.append("firstName", formValues.firstName)
+        formData.append("phoneNumber", formValues.phoneNumber)
+        formData.append("password", formValues.password)
+        formData.append("gender", formValues.gender)
+        formData.append("car", formValues.car)
+
+        if (formValues.notification){
+            formData.append("notification", formValues.notification)
+        }
+        if (file){
+            formData.append("file",file)
+        } 
+        console.log(formData);
+        axios
+        .post(url_api.url + "/save_profile.php", formData)    
+            .then(function (response) {
+                console.log("Response2 :" + response.data);
+            })
+            .catch(function (error) {
+                console.log("Error :" + error);
+            });
+
+        //on déconnecte l'utilisateur
+        //window.location = '/logout'; marche pas
+        
+    }
+
+    
+    if(!auth){ //au cas où l'utilisateur ne soit pas co
+        return (
+        <main>
+            {affichageBienvenue()}
+        </main>
+    );}else{ 
         return (
             <main>
-                {this.affichageBienvenue()}
-                {this.affichageProfil()}
-                {this.modificationProfil()}
+                {affichageBienvenue()}
+                {affichageProfil()}
+                {modificationProfil()}
             </main>
         );
     }
-    
 }
 
 export default Profil;

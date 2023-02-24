@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'root', 'mysql');
     $statement = $pdo->prepare("SELECT * FROM UTILISATEUR WHERE email = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":mail", $_GET['mail']);

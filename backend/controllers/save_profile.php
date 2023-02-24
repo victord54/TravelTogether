@@ -8,20 +8,30 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /*$data = json_decode(file_get_contents('php://input'), true);
     $inputValue = $data['data']['inputValue'];*/
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'root', 'mysql');
 
-    $sqlInsert = "INSERT INTO UTILISATEUR(email, nom, prenom, numTel, genre, motDePasse, aUneVoiture, notificationParMail, photo)
-                    VALUES (:email, :nom, :prenom, :numTel, :genre, :motDePasse, :aUneVoiture, :notificationParMail, :photo)";
-    $statement = $pdo->prepare($sqlInsert);
+
+    if(!empty($_POST['password'])){ //mot de passe à changer
+        $sqlInsert = "UPDATE UTILISATEUR
+                    SET nom = :nom, prenom = :prenom, numTel = :numTel, genre = :genre, motDePasse = :motDePasse, aUneVoiture = :aUneVoiture, notificationParMail = :notificationParMail, photo = :photo
+                    WHERE email = :email";
+        $statement = $pdo->prepare($sqlInsert);
+        $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $statement->bindValue(':motDePasse', $hash);
+    }else{ //pas de mot de passe à changer
+        $sqlInsert = "UPDATE UTILISATEUR
+                    SET nom = :nom, prenom = :prenom, numTel = :numTel, genre = :genre, aUneVoiture = :aUneVoiture, notificationParMail = :notificationParMail, photo = :photo
+                    WHERE email = :email";
+        $statement = $pdo->prepare($sqlInsert);
+    }
     $statement->bindValue(':nom', $_POST['lastName']);
     $statement->bindValue(':email', $_POST['mail']);
     $statement->bindValue(':prenom', $_POST['firstName']);
     $statement->bindValue(':numTel', $_POST['phoneNumber']);
-    $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $statement->bindValue(':motDePasse', $hash);
     $statement->bindValue(':genre', $_POST['gender']);
     if (strcmp($_POST['car'], 'yes') == 0) {
         $statement->bindValue(':aUneVoiture', 1);
@@ -50,9 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $statement->execute() or die(print_r($statement->errorInfo(), true));;
-    echo "c'est bon";
+    echo "Changements sauvegardés.";
+
+    //renvoyer vers le bouton de déconnexion pour que l'utilisateur se reconnecte!
 }
 
+
+
+//Ca coute pas cher alors on met ça ici au cas où
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'root', 'mysql');
     $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :mail");
