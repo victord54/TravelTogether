@@ -25,6 +25,12 @@ function Create_offer() {
     const regExCodePostal = new RegExp("[0-9]{5}");
 
 
+    /**
+     * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
+     * Vérifie les erreurs et s'il n'y en a pas : Envoie les informations au serveur.
+     * 
+     * @param {*} e Un évènement
+     */
     async function handleSubmit(e){
         e.preventDefault();
         var errors = await validateForm(formValues);
@@ -33,11 +39,19 @@ function Create_offer() {
             sendDataToServer();
         }
     }
-    
+
+    /**
+     * Fonction qui permet de réagir quand on change la valeur d'un champs.
+     * @param {*} e Un évènement
+     */
     async function handleChange(e){
         setInputValues({ ...formValues, [e.target.name] : e.target.value});
     }
 
+    /**
+     * Fonction qui permet de réagir quand on écrit dans un input relié aux villes.
+     * @param {*} e Un évènement
+     */
     function handleCity(e) {
         handleChange(e);
         if(regExCodePostal.test(e.target.value))
@@ -46,8 +60,13 @@ function Create_offer() {
             fetch('https://geo.api.gouv.fr/communes?nom="'+ e.target.value +'"&fields=nom,codesPostaux&format=json&geometry=centre').then(rep => rep.json().then(json => setProposition({...proposition, [e.target.name] : json.map((elem, index) => <option key={index} value={elem.nom + " (" + elem.codesPostaux.map(code => code) + ")"}>{elem.nom}</option>)}))); 
     }
 
+    /**
+     * Fonction qui permet de réagir quand on selectionne une offre comme privée.
+     * @param {*} e Un évènement
+     */
     async function handleGroupe(e) {
         if(!privateOffer) {
+            // On récupère tout les groupes où l'utilisateur appartient (ou dirige).
             var reponse = await axios.get(url_api.url + "/create_offer.php", {
                 params: {
                     mail: localStorage.mail
@@ -57,12 +76,17 @@ function Create_offer() {
             if(reponse.data !== null && reponse.data.length >= 1) {
                 var groupes = reponse.data;
                 setProposition({...proposition, ['groupes'] : groupes});
-                setInputValues({...formValues, ['groupe'] : groupes[0]['idfGroupe']});
+                setInputValues({...formValues, [formValues.groupe.name] : groupes[0]['idfGroupe']});
+                setPrivate(!privateOffer);
             }
+        } else {
+            setPrivate(!privateOffer);
         }
-        setPrivate(!privateOffer);
     }
 
+    /**
+     * Fonction qui permet d'envoyer les informations au serveur.
+     */
     function sendDataToServer(){
         const formData = new FormData();
         formData.append("email", localStorage.mail);
@@ -85,16 +109,32 @@ function Create_offer() {
           });
     }
 
+    /**
+     * Ajoute la ville contenu dans formValues.inter dans les arrêts intermédiaires.
+     */
     function add() {
         setInputValues({...formValues, [formValues.interList.name] : formValues.interList.push(formValues.inter)});
     }
 
+    /**
+     * Echange l'index de deux élements dans la liste des arrêts intermédiaire.
+     * Attention veillez viens à ce que 0 <= fromIndex <= formValues.interList.length
+     * et à ce que 0 <= toIndex <= formValues.interList.length
+     * 
+     * @param {number} fromIndex Premier index de l'élément à échanger
+     * @param {number} toIndex Deuxième index de l'autre élément à échanger
+     */
     function move(fromIndex, toIndex) {
         let arr = formValues.interList;
         [arr[fromIndex], arr[toIndex]] = [arr[toIndex], arr[fromIndex]];
         setInputValues({...formValues, [formValues.interList.name] : arr});
     }
 
+    /**
+     * Echange de place une ville avec la ville précédente dans la liste
+     * 
+     * @param {*} i Evenement de click sur le bouton remove. i.target.value doit être un entier correspondant à l'index de la ville !
+     */
     function moveUp(i) {
         if(i.target.value !== 0) {
             var index = parseInt(i.target.value);
@@ -102,6 +142,11 @@ function Create_offer() {
         }
     }
 
+    /**
+     * Echange de place une ville avec la ville suivante dans la liste
+     * 
+     * @param {*} i Evenement de click sur le bouton remove. i.target.value doit être un entier correspondant à l'index de la ville !
+     */
     function moveDown(i) {
         if(i.target.value !== formValues.interList.length - 1) {
             var index = parseInt(i.target.value);
@@ -109,6 +154,11 @@ function Create_offer() {
         }
     }
 
+    /**
+     * Enlève une ville de la liste des arrêts intermédiaires
+     * 
+     * @param {*} i Evenement de click sur le bouton remove. i.target.value doit être un entier correspondant à l'index de la ville !
+     */
     function remove(i) {
         formValues.interList.splice(parseInt(i.target.value), 1);
         setInputValues({...formValues, [formValues.interList.name] : formValues.interList});
@@ -151,6 +201,8 @@ function Create_offer() {
         var matchStart = data.start.match(pregMatchCity);
         var start;
         var codes = citiesCodes;
+
+        // Récupération du code de la ville de départ
         if(matchStart == null) {
             errors.start = "La ville de départ n'est pas correctement remplie : nom-de-la-ville (codePostal).";
         } else {
@@ -163,6 +215,7 @@ function Create_offer() {
             }
         }
 
+        // Récupération du code de la ville d'arrivée
         var matchEnd = data.end.match(pregMatchCity);
         var end;
         if(matchEnd == null) {
@@ -177,8 +230,10 @@ function Create_offer() {
             }
         }
 
+        // Comparaison entre la ville de départ et la ville d'arrivée
         if(start !== undefined && start.length === 1 && end !== undefined && end.length === 1 && start[0].code === end[0].code) errors.end = "Le lieu de départ et le lieu d'arrivé ne peuvent être le même.";
 
+        // Récupération des codes des arrêts intermédiraires
         var codeInter = [];
         for (const city of data.interList) {
             var matchInter = city.match(pregMatchCity);
@@ -188,7 +243,9 @@ function Create_offer() {
                 var nomInter = matchInter[1];
                 var cPInter = matchInter[2];
                 var inter = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomInter+"'&codePostal="+cPInter+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
-                if(inter === undefined || inter.length != 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
+                
+                if(inter === undefined || inter.length !== 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
+                
                 if(inter !== undefined) if(codeInter.includes(inter[0].code)) {
                     errors.inter = "Vous ne pouvez pas passer deux fois par le même arrêts intermédiaire.";
                 } else {
@@ -197,11 +254,12 @@ function Create_offer() {
             }
         } 
 
+        // Test de validité sur la liste des arrêts intermédiaires
         if(start !== undefined && start.length === 1 && codeInter.includes(start[0].code)) errors.inter = "La ville de départ ne doit pas être dans les arrêts intermédiaires.";
         else if(end !== undefined && end.length === 1 && codeInter.includes(end[0].code)) errors.inter = "La ville d'arrivée ne doit pas être dans les arrêts intermédiaires.";
         else {
             codes.inter = codeInter;
-            setCodes(codes);
+            setCodes(codes); // Si tout les codes sont bon alors on mets les informations dans citiesCodes
         }
 
         return errors;
