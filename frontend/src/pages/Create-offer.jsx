@@ -188,7 +188,7 @@ function Create_offer() {
         }
 
         // Vérification date
-        if(new Date(data.date) <= new Date()) errors.date = "La date est déjà passée.";
+        if(new Date(data.date+" "+data.time) <= new Date()) errors.time = "La date et l'heure sont déjà passées.";
 
         // Vérification prix
         if(data.price < 0) errors.price = "Le prix doit avoir une valeur positive ou nulle.";
