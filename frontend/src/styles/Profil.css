@@ -67,8 +67,9 @@ input:not(.not-text-input) {
 }
 
 .affichageActuel{
+    float:left;
     height:250px;
-    width: 70%;
+    width: 60%;
     padding-left: 1vh;
     float:left;
     background: #fff;
@@ -86,7 +87,7 @@ input:not(.not-text-input) {
 .wrapper-nav{
     float:right;
     margin-top: 40px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .Button-profil {
@@ -97,6 +98,7 @@ input:not(.not-text-input) {
 
 .profil-infos {
     float : left;
+    width: max-content;
 }
 
 .picture {
