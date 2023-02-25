@@ -55,9 +55,8 @@ function Signin() {
         }
     }
 
-
     /**
-     * Fonction qui permet d'envoyer les informations au serveur.
+     * Fonction qui permet d'envoyer les informations au serveur. Si tout s'est bien passé, envoie l'utilisateur à la page de Login.
      */
     async function sendDataToServer() {
         console.log("on envoie");
