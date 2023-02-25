@@ -40,7 +40,7 @@ function Groupe() {
             <div>
                 <nav>
                 <ul>
-                    <Link to={"../delete_groupe/"+id}>Supprimer un groupe</Link>
+                    <Link to={"../delete_groupe/"+id}>Supprimer ce groupe</Link>
                 </ul>
                 </nav>
                 <h1>{groupe.value['nomDeGroupe']}</h1>
