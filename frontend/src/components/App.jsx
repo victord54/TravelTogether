@@ -9,6 +9,7 @@ import Login from "../pages/Login";
 import Signin from "../pages/Signin";
 import Logout from "../pages/Logout";
 import Profil from "../pages/Profil";
+import ModifProfil from "../pages/ModifProfil";
 import Unknow from "../pages/Unknow";
 import Create_offer from "../pages/Create-offer";
 import Create_group from "../pages/Create_group";
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/login" element={<PrivateRouteAuth><Login /></PrivateRouteAuth>} />
                 <Route path="/logout" element={<PrivateRoute><Logout /></PrivateRoute>} />
                 <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
+                <Route path="/modif-profile" element={<PrivateRoute><ModifProfil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
                 <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
                 <Route path="/friends-groupe-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />

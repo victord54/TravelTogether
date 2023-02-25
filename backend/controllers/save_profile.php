@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $statement->bindValue(':aUneVoiture', 0);
     }
-    if (isset($_POST['notification'])) {
+    if (strcmp($_POST['notification'], 'yes') == 0) {
         $statement->bindValue(':notificationParMail', 1);
     } else {
         $statement->bindValue(':notificationParMail', 0);
@@ -66,8 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $statement->execute() or die(print_r($statement->errorInfo(), true));;
     echo "Changements sauvegardés.";
-
-    //renvoyer vers le bouton de déconnexion pour que l'utilisateur se reconnecte!
 }
 
 
