@@ -209,7 +209,7 @@ function Create_offer() {
             var nomStart = matchStart[1];
             var cPStart = matchStart[2];
             start = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomStart+"'&codePostal="+cPStart+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));
-            if(start === undefined || start.length !== 1) errors.start = "La ville de départ ne peut pas être detectée !";
+            if(start === undefined || start.length < 1) errors.start = "La ville de départ ne peut pas être detectée !";
             else {
                 codes.start = start[0].code;
             }
@@ -224,7 +224,7 @@ function Create_offer() {
             var nomEnd = matchEnd[1];
             var cPSEnd = matchEnd[2];
             end = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomEnd+"'&codePostal="+cPSEnd+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
-            if(end === undefined || end.length !== 1) errors.end = "La ville d'arrivée ne peut pas être detectée !";
+            if(end === undefined || end.length < 1) errors.end = "La ville d'arrivée ne peut pas être detectée !";
             else {
                 codes.end = end[0].code;
             }
@@ -244,7 +244,7 @@ function Create_offer() {
                 var cPInter = matchInter[2];
                 var inter = await fetch("https://geo.api.gouv.fr/communes?nom='"+nomInter+"'&codePostal="+cPInter+"&fields=nom,codesPostaux&format=json&geometry=centre").then(rep => rep.json().then(json => {return json}));    
                 
-                if(inter === undefined || inter.length !== 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
+                if(inter === undefined || inter.length < 1) errors.inter = "La ville : " + city + " n'est pas cirrectement remplie : : nom-de-la-ville (codePostal).";
                 
                 if(inter !== undefined) if(codeInter.includes(inter[0].code)) {
                     errors.inter = "Vous ne pouvez pas passer deux fois par le même arrêts intermédiaire.";
