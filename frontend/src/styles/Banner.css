@@ -38,7 +38,6 @@ height: 60px;
     transition: 0.3s;
     padding:3px;
     border-radius: 20px;
-
 }
 
 .navigation li a:hover {
@@ -99,10 +98,7 @@ height: 60px;
       color: black;
       width: 100%;
       padding: 1.5rem 0;
-    }
-
-    .navigation-menu li:hover {
-      background-color: #eee;
+      border-radius: 20px;
     }
 }
 

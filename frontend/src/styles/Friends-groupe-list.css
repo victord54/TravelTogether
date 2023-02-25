@@ -1,9 +1,48 @@
-
-ul {
-    list-style-type: none; 
+.wrapper-grp-list {
+    display: block;
+    padding-top:5px;
 }
+
+.wrapper-grp-list li{
+    list-style-type: none;
+
+} 
+.vos-groupes {
+    float:left;
+    font-size: 30px;
+    font-weight: bolder;
+}
+.creer-groupe-wrapper{
+    float:right;
+    padding-right: 5px;
+}
+
+.creer-groupe-wrapper button{
+    margin-top: 8px;
+    height: 35px;
+    width: 200px;
+}
+
+.creer-groupe-wrapper button:hover{
+    margin-top: 8px;
+    background-color:rgb(209, 193, 224);
+}
+
+.creer-groupe-wrapper button a{
+    text-decoration: none;
+    color:black;
+}
+
+.wrapper-titre-bouton {
+    margin : 15px 10px 15px 15px ;
+}
+
+.wrapper-list-group ul{
+    padding: 20px 10px 0px 10px;
+}
+
 .groupe-box {
-    margin: 5px 5px 5px 0px;
+    margin-bottom: 10px;
     border: 2px solid grey;
     border-radius: 10px;
     vertical-align: top;

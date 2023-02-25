@@ -44,26 +44,28 @@ function Friends_groupe_list() {
         </div>
     );
     else return (
-            <div>
-                <nav>
-                <ul>
-                    <Link to="../create_group">Créer un groupe</Link>
-                </ul>
-                </nav>
-                <h1>Vos groupes d'amis</h1>
-                <ul>
-                    {
-                    groupes.values.map(groupe => <li key={groupe['idfGroupe']}>
-                        <div className='groupe-box'>
-                        <Link className='groupe-link' to={'../groupe/'+groupe['idfGroupe']}>
-                            <h2 className='titre-groupe'>{groupe['nomDeGroupe']}</h2>
-                            <h3 className='membre-list'>Dirigeant : </h3><p className='membre-list'>{groupe['dirigeant']}</p>
-                            <h3 className='membre-list'>Membre(s) : </h3><p className='membre-list'>{groupe['members']}</p>
-                        </Link>
-                        </div>
-                        </li>)
-                    }
-                </ul>
+            <div className="wrapper-grp-list">
+                <div className="wrapper-titre-bouton">
+                    <div className="vos-groupes">Vos groupes d'amis</div>
+                    <div className="creer-groupe-wrapper"><button><Link to="../create_group">Créer un groupe</Link></button></div>
+                </div> 
+                <br/>
+                <div className="wrapper-list-group">
+                    <ul>
+                        {
+                        groupes.values.map(groupe => 
+                            <li key={groupe['idfGroupe']}>
+                                <div className='groupe-box'>
+                                    <Link className='groupe-link' to={'../groupe/'+groupe['idfGroupe']}>
+                                        <h2 className='titre-groupe'>{groupe['nomDeGroupe']}</h2>
+                                        <h3 className='membre-list'>Dirigeant : </h3><p className='membre-list'>{groupe['dirigeant']}</p>
+                                        <h3 className='membre-list'>Membre(s) : </h3><p className='membre-list'>{groupe['members']}</p>
+                                    </Link>
+                                </div>
+                            </li>)
+                        }
+                    </ul>
+                </div>
             </div>
         );
 }
