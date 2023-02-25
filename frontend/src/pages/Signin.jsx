@@ -15,16 +15,17 @@ function Signin() {
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
-    const [exist, setExist] = useState(false);
     const [file, setFile] = useState(null)
     const navigate = useNavigate()
 
-    function handleFile(e) {
-        if (e.target.files) {
-            setFile(e.target.files[0])
-        }
-    }
+    
 
+    /**
+     * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
+     * Vérifie les erreurs et s'il n'y en a pas : Envoie les informations au serveur.
+     * 
+     * @param {*} e Un évènement
+     */
     async function handleSubmit(e) {
         e.preventDefault();
         var errors = await validateForm(formValues);
@@ -34,10 +35,30 @@ function Signin() {
         }
     }
 
+    /**
+     * Fonction qui permet de réagir quand on change la valeur d'un champs.
+     * 
+     * @param {*} e Un évènement
+     */
     function handleChange(e) {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
+    /**
+     * Fonction qui permet de réagir lors de l'ajout d'une image.
+     * 
+     * @param {*} e Un évènement. 
+     */
+    function handleFile(e) {
+        if (e.target.files) {
+            setFile(e.target.files[0])
+        }
+    }
+
+
+    /**
+     * Fonction qui permet d'envoyer les informations au serveur.
+     */
     async function sendDataToServer() {
         console.log("on envoie");
 
@@ -68,6 +89,12 @@ function Signin() {
             });
     }
 
+    /**
+     * Fonction qui permet de vérifier les éléments du formulaire.
+     * 
+     * @param {*} data Les données du formulaire.
+     * @returns Les erreurs éventuelles.
+     */
     async function validateForm(data) {
         console.log(data);
         const errors = {};
@@ -79,12 +106,7 @@ function Signin() {
             if (data.lastName.length < 2) {
                 errors.lastName = "Le nom doit faire minimum 2 caractères.";
             }
-            if (
-                !(
-                    data.lastName.charAt(0) ===
-                    data.lastName.charAt(0).toUpperCase()
-                )
-            ) {
+            if (!(data.lastName.charAt(0) === data.lastName.charAt(0).toUpperCase())) {
                 if (errors.lastName) {
                     errors.lastName =
                         errors.lastName +
@@ -103,12 +125,7 @@ function Signin() {
             if (data.firstName.length < 2) {
                 errors.firstName = "Le nom doit faire minimum 2 caractères.";
             }
-            if (
-                !(
-                    data.firstName.charAt(0) ===
-                    data.firstName.charAt(0).toUpperCase()
-                )
-            ) {
+            if (!(data.firstName.charAt(0) === data.firstName.charAt(0).toUpperCase())) {
                 if (errors.firstName) {
                     errors.firstName =
                         errors.firstName +
@@ -139,7 +156,7 @@ function Signin() {
         //Vérication du mail
         if (!data.mail) {
             errors.mail = "L'adresse email est obligatoire.";
-        } else {
+        } else { //On check si le mail est déjà utilisé
             await axios
                 .get(url_api.url + "/signin.php", {
                     params: {
@@ -152,11 +169,6 @@ function Signin() {
                         errors.mail = "L'adresse mail est déjà utilisée.";
                     }
                 });
-
-            // Oui c'est bizarre mais y'a des bugs sinon mdr
-            if (exist) {
-                errors.mail = "L'adresse mail est déjà utilisée.";
-            }
         }
 
         //Vérification du mot de passe
@@ -184,8 +196,6 @@ function Signin() {
 
         return errors;
     }
-
-
 
     return (
         <div>
