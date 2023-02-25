@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
 import { url_api } from "../data/url_api";
@@ -15,28 +15,21 @@ function Signin() {
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
     const [exist, setExist] = useState(false);
     const [file, setFile] = useState(null)
+    const navigate = useNavigate()
 
-    function handleFile(e){
-        if (e.target.files){
+    function handleFile(e) {
+        if (e.target.files) {
             setFile(e.target.files[0])
         }
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
-        setFormErrors(validateForm(formValues));
-        console.log(Object.keys(formErrors));
-        setIsSubmit(true);
-        console.log(
-            "submit : " +
-                isSubmit +
-                "; length : " +
-                Object.keys(formErrors).length
-        );
-        if (Object.keys(formErrors).length == 0) {
+        var errors = await validateForm(formValues);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
             sendDataToServer();
         }
     }
@@ -45,7 +38,7 @@ function Signin() {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
-    function sendDataToServer() {
+    async function sendDataToServer() {
         console.log("on envoie");
 
         const formData = new FormData()
@@ -57,24 +50,25 @@ function Signin() {
         formData.append("gender", formValues.gender)
         formData.append("car", formValues.car)
 
-        if (formValues.notification){
+        if (formValues.notification) {
             formData.append("notification", formValues.notification)
         }
-        if (file){
-            formData.append("file",file)
-        } 
+        if (file) {
+            formData.append("file", file)
+        }
         console.log(formData);
-        axios
-        .post(url_api.url + "/signin.php", formData)    
+        await axios
+            .post(url_api.url + "/signin.php", formData)
             .then(function (response) {
                 console.log("Response1 :" + response.data);
+                navigate('/login')
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
     }
 
-    function validateForm(data) {
+    async function validateForm(data) {
         console.log(data);
         const errors = {};
 
@@ -146,20 +140,16 @@ function Signin() {
         if (!data.mail) {
             errors.mail = "L'adresse email est obligatoire.";
         } else {
-            axios
+            await axios
                 .get(url_api.url + "/signin.php", {
                     params: {
                         mail: data.mail,
                     },
                 })
                 .then((response) => {
-                    console.log("Rep " + response.data);
+                    console.log("Rep mail " + response.data);
                     if (!(response.data == null)) {
-                        setExist(true);
                         errors.mail = "L'adresse mail est déjà utilisée.";
-                    } else {
-                        setExist(false);
-                        errors.mail = "";
                     }
                 });
 
@@ -195,161 +185,160 @@ function Signin() {
         return errors;
     }
 
-    if (isSubmit && Object.keys(formErrors).length === 0) {
-        return <Navigate replace to="/login" />;
-    } else
-        return (
-            <div>
-                <div className="form-box">
-                    <h1 className="inscription-titre">Inscription</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div>Nom* :</div>
+
+
+    return (
+        <div>
+            <div className="form-box">
+                <h1 className="inscription-titre">Inscription</h1>
+                <form onSubmit={handleSubmit}>
+                    <div>Nom* :</div>
+                    <input
+                        type="text"
+                        name="lastName"
+                        value={formValues.lastName}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.lastName}</p>
+
+                    <div>Prénom* :</div>
+                    <input
+                        type="text"
+                        name="firstName"
+                        value={formValues.firstName}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.firstName}</p>
+
+                    <div>Sélectionner votre genre* : </div>
+                    <label>
                         <input
-                            type="text"
-                            name="lastName"
-                            value={formValues.lastName}
+                            type="radio"
+                            name="gender"
+                            className="not-text-input radiobutton"
+                            value="f"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.lastName}</p>
-
-                        <div>Prénom* :</div>
+                        Femme
+                    </label>
+                    <label>
                         <input
-                            type="text"
-                            name="firstName"
-                            value={formValues.firstName}
+                            type="radio"
+                            name="gender"
+                            className="not-text-input radiobutton"
+                            value="h"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.firstName}</p>
-
-                        <div>Sélectionner votre genre* : </div>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                className="not-text-input radiobutton"
-                                value="f"
-                                onChange={handleChange}
-                            ></input>
-                            Femme
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                className="not-text-input radiobutton"
-                                value="h"
-                                onChange={handleChange}
-                            ></input>
-                            Homme
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                className="not-text-input radiobutton"
-                                value="n"
-                                onChange={handleChange}
-                            ></input>
-                            Neutre
-                        </label>
-                        <p className="error-form">{formErrors.gender}</p>
-
-                        <div>Numéro de téléphone* : </div>
+                        Homme
+                    </label>
+                    <label>
                         <input
-                            type="text"
-                            name="phoneNumber"
-                            value={formValues.phoneNumber}
+                            type="radio"
+                            name="gender"
+                            className="not-text-input radiobutton"
+                            value="n"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.phoneNumber}</p>
+                        Neutre
+                    </label>
+                    <p className="error-form">{formErrors.gender}</p>
 
-                        <div>Adresse e-mail* : </div>
+                    <div>Numéro de téléphone* : </div>
+                    <input
+                        type="text"
+                        name="phoneNumber"
+                        value={formValues.phoneNumber}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.phoneNumber}</p>
+
+                    <div>Adresse e-mail* : </div>
+                    <input
+                        type="mail"
+                        name="mail"
+                        value={formValues.mail}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.mail}</p>
+
+                    <div>Mot de passe* : </div>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formValues.password}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.password}</p>
+
+                    <div>Veuillez confirmer votre mot de passe* : </div>
+                    <input
+                        type="password"
+                        name="passwordConfirmation"
+                        value={formValues.passwordConfirmation}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">
+                        {formErrors.passwordConfirmation}
+                    </p>
+
+                    <div>Possédez-vous une voiture ?* </div>
+                    <label>
                         <input
-                            type="mail"
-                            name="mail"
-                            value={formValues.mail}
+                            type="radio"
+                            name="car"
+                            className="not-text-input radiobutton"
+                            value="yes"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.mail}</p>
-
-                        <div>Mot de passe* : </div>
+                        Oui
+                    </label>
+                    <label>
                         <input
-                            type="password"
-                            name="password"
-                            value={formValues.password}
+                            type="radio"
+                            name="car"
+                            className="not-text-input radiobutton"
+                            value="no"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.password}</p>
+                        Non
+                    </label>
+                    <p className="error-form">{formErrors.car}</p>
 
-                        <div>Veuillez confirmer votre mot de passe* : </div>
+                    <label>
                         <input
-                            type="password"
-                            name="passwordConfirmation"
-                            value={formValues.passwordConfirmation}
-                            onChange={handleChange}
-                        ></input>
-                        <p className="error-form">
-                            {formErrors.passwordConfirmation}
-                        </p>
-
-                        <div>Possédez-vous une voiture ?* </div>
-                        <label>
-                            <input
-                                type="radio"
-                                name="car"
-                                className="not-text-input radiobutton"
-                                value="yes"
-                                onChange={handleChange}
-                            ></input>
-                            Oui
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="car"
-                                className="not-text-input radiobutton"
-                                value="no"
-                                onChange={handleChange}
-                            ></input>
-                            Non
-                        </label>
-                        <p className="error-form">{formErrors.car}</p>
-
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="notification"
-                                className="not-text-input"
-                                onChange={handleChange}
-                            ></input>
-                            Recevoir les notifications par e-mail.
-                        </label>
-                        <br />
-                        <br />
-                        <div>Choisissez une photo de profil :</div>
-                        <input
-                            type="file"
-                            name="picture"
+                            type="checkbox"
+                            name="notification"
                             className="not-text-input"
-                            accept="image/png, image/jpeg"
-                            onChange={handleFile}
+                            onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.picture}</p>
+                        Recevoir les notifications par e-mail.
+                    </label>
+                    <br />
+                    <br />
+                    <div>Choisissez une photo de profil :</div>
+                    <input
+                        type="file"
+                        name="picture"
+                        className="not-text-input"
+                        accept="image/png, image/jpeg"
+                        onChange={handleFile}
+                    ></input>
+                    <p className="error-form">{formErrors.picture}</p>
 
-                        <br />
-                        <br />
-                        <div className="button-forms-wrap">
-                            <button type="submit" className="formulaire-submit">
-                                Valider
-                            </button>
-                        </div>
-                        <p className="info-obligatoire">
-                            * : Information obligatoire.
-                        </p>
-                    </form>
-                </div>
+                    <br />
+                    <br />
+                    <div className="button-forms-wrap">
+                        <button type="submit" className="formulaire-submit">
+                            Valider
+                        </button>
+                    </div>
+                    <p className="info-obligatoire">
+                        * : Information obligatoire.
+                    </p>
+                </form>
             </div>
-        );
+        </div>
+    );
 }
 
 export default Signin;
