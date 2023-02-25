@@ -1,21 +1,47 @@
 import "../styles/Banner.css";
 import logo from "../assets/travelTogether.png";
 import { Link } from "react-router-dom";
+import { useState } from "react"
 
 function Banner() {
+    const [isNavExpanded, setIsNavExpanded] = useState(false)
+
     return (
         <header>
-            <nav>
+            <nav className="navigation">
                 <Link to="/">
                     <img src={logo} alt="logo" />
                 </Link>
+                
+                <button className="hamburger" onClick={() => {
+                    console.log(isNavExpanded)
+                    setIsNavExpanded(!isNavExpanded)
+                }}>
+                {/* icon from heroicons.com */}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="white"
+                    >
+                    <path
+                        fillRule="evenodd"
+                        d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+                        clipRule="evenodd"
+                    />
+                    </svg>
+                </button>
+
+
+                <div className={isNavExpanded ? "navigation-menu expanded" : "navigation-menu"}>
                     <ul>
-                        {localStorage.getItem('aUneVoiture') === 0 ? <></> : <Link to="create-offer">Créer une offre</Link>}
-                        <Link to="search-offer">Rechercher une offre</Link>
-                        <Link to="notifications">Notifications</Link>
-                        <Link to="profile">Mon profil</Link>
-                        <Link to="logout">Déconnexion</Link>
+                        {localStorage.getItem('aUneVoiture') === 0 ? <></> : <li><Link to="create-offer">Créer une offre</Link></li>}
+                        <li><Link to="search-offer">Rechercher une offre</Link></li>
+                        <li><Link to="notifications">Notifications</Link></li>
+                        <li><Link to="profile">Mon profil</Link></li>
+                        <li><Link to="logout">Déconnexion</Link></li>
                     </ul>
+                </div>
             </nav>
             <div className="search-bar">
                 <div>From</div>
