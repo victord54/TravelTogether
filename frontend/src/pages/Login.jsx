@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { url_api } from "../data/url_api";
 import "../styles/Login.css";
 import {useAuth} from "../components/AuthProvider"
@@ -12,6 +12,7 @@ function Login() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const { setAuth } = useAuth();
+    const navigate = useNavigate()
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -22,20 +23,18 @@ function Login() {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
-    const getUser = async () => {
-        try {
-            const reponse = await axios.get(url_api.url + "/login.php", {
-                params: {
-                    mail: formValues["mail"],
-                    password: formValues["password"],
-                },
-            });
+    async function getUser() {
+        await axios.get(url_api.url + "/login.php", {
+            params: {
+                mail: formValues["mail"],
+                password: formValues["password"],
+            },
+        }).then(function (reponse) {
+            console.log("Reponse : " + reponse.data);
 
             if (reponse.data == null) {
                 setError("Identifiant et/ou mot de passe incorrect.");
-                setIsLoaded(false);
             } else {
-                setIsLoaded(true);
                 localStorage.setItem("mail", reponse.data["email"]);
                 localStorage.setItem("nom", reponse.data["nom"]);
                 localStorage.setItem("prenom", reponse.data["prenom"]);
@@ -49,18 +48,17 @@ function Login() {
                     "notificationParMail",
                     reponse.data["notificationParMail"]
                 );
+                setAuth(true)
+                navigate('/')
             }
-            console.log("Reponse : ");
-            console.log(reponse.data);
-        } catch (errors) {
-            console.log(errors);
-        }
-    };
+            
+        })
+        .catch(function (error) {
+            console.log("Error :" + error);
+        });
+    }
 
-    if (isLoaded) {
-        setAuth(true);
-        return <Navigate replace to="/" />;
-    } else {
+    
         return (
                 <div className="form--connexion-box">
                     <form onSubmit={handleSubmit}>
@@ -92,6 +90,6 @@ function Login() {
                 </div>
         );
     }
-}
+
 
 export default Login;
