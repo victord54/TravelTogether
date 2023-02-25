@@ -10,7 +10,7 @@ function Banner() {
                     <img src={logo} alt="logo" />
                 </Link>
                     <ul>
-                        <Link to="create-offer">Créer une offre</Link>
+                        {localStorage.getItem('aUneVoiture') === 0 ? <></> : <Link to="create-offer">Créer une offre</Link>}
                         <Link to="search-offer">Rechercher une offre</Link>
                         <Link to="notifications">Notifications</Link>
                         <Link to="profile">Mon profil</Link>

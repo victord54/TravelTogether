@@ -18,7 +18,6 @@ function Signin() {
     const [file, setFile] = useState(null)
     const navigate = useNavigate()
 
-    
 
     /**
      * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
