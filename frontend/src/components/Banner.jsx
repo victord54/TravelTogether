@@ -35,11 +35,11 @@ function Banner() {
 
                 <div className={isNavExpanded ? "navigation-menu expanded" : "navigation-menu"}>
                     <ul>
-                        {localStorage.getItem('aUneVoiture') === 0 ? <></> : <li><Link to="create-offer">Créer une offre</Link></li>}
-                        <li><Link to="search-offer">Rechercher une offre</Link></li>
-                        <li><Link to="notifications">Notifications</Link></li>
-                        <li><Link to="profile">Mon profil</Link></li>
-                        <li><Link to="logout">Déconnexion</Link></li>
+                        {localStorage.getItem('aUneVoiture') === "0" ? <></> : <li><Link to="create-offer" onClick={() => setIsNavExpanded(false)}>Créer une offre</Link></li>}
+                        <li><Link to="search-offer" onClick={() => setIsNavExpanded(false)}>Rechercher une offre</Link></li>
+                        <li><Link to="notifications" onClick={() => setIsNavExpanded(false)}>Notifications</Link></li>
+                        <li><Link to="profile" onClick={() => setIsNavExpanded(false)}>Mon profil</Link></li>
+                        <li><Link to="logout" onClick={() => setIsNavExpanded(false)}>Déconnexion</Link></li>
                     </ul>
                 </div>
             </nav>
