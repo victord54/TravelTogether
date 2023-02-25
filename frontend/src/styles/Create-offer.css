@@ -38,3 +38,6 @@ select{
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
+.not-text-input:disabled {
+    visibility: hidden;
+}

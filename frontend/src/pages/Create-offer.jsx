@@ -336,7 +336,7 @@ function Create_offer() {
                     
                     <label><input type="checkbox" name="private" className='not-text-input' onChange={handleGroupe}/>Offre privée</label><br></br>
 
-                    <select disabled={!privateOffer} name="groupe" onChange={handleChange}>{proposition.groupes.map(groupe => <option key={groupe['idfGroupe']} value={groupe['idfGroupe']}>{groupe['nomDeGroupe']}</option>)}</select>
+                    <select disabled={!privateOffer} name="groupe" className='not-text-input' onChange={handleChange}>{proposition.groupes.map(groupe => <option key={groupe['idfGroupe']} value={groupe['idfGroupe']}>{groupe['nomDeGroupe']}</option>)}</select>
 
                     <br/><br/>
                     <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
