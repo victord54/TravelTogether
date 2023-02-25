@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
 import { url_api } from "../data/url_api";
@@ -15,37 +15,49 @@ function Signin() {
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
-    const [exist, setExist] = useState(false);
     const [file, setFile] = useState(null)
+    const navigate = useNavigate()
 
-    function handleFile(e){
-        if (e.target.files){
-            setFile(e.target.files[0])
-        }
-    }
 
-    function handleSubmit(e) {
+    /**
+     * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
+     * Vérifie les erreurs et s'il n'y en a pas : Envoie les informations au serveur.
+     * 
+     * @param {*} e Un évènement
+     */
+    async function handleSubmit(e) {
         e.preventDefault();
-        setFormErrors(validateForm(formValues));
-        console.log(Object.keys(formErrors));
-        setIsSubmit(true);
-        console.log(
-            "submit : " +
-                isSubmit +
-                "; length : " +
-                Object.keys(formErrors).length
-        );
-        if (Object.keys(formErrors).length == 0) {
+        var errors = await validateForm(formValues);
+        setFormErrors(errors);
+        if (Object.keys(errors).length === 0) {
             sendDataToServer();
         }
     }
 
+    /**
+     * Fonction qui permet de réagir quand on change la valeur d'un champs.
+     * 
+     * @param {*} e Un évènement
+     */
     function handleChange(e) {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
-    function sendDataToServer() {
+    /**
+     * Fonction qui permet de réagir lors de l'ajout d'une image.
+     * 
+     * @param {*} e Un évènement. 
+     */
+    function handleFile(e) {
+        if (e.target.files) {
+            setFile(e.target.files[0])
+        }
+    }
+
+    /**
+     * Fonction qui permet d'envoyer les informations au serveur. Si tout s'est bien passé, envoie l'utilisateur à la page de Login.
+     */
+    async function sendDataToServer() {
         console.log("on envoie");
 
         const formData = new FormData()
@@ -57,24 +69,31 @@ function Signin() {
         formData.append("gender", formValues.gender)
         formData.append("car", formValues.car)
 
-        if (formValues.notification){
+        if (formValues.notification) {
             formData.append("notification", formValues.notification)
         }
-        if (file){
-            formData.append("file",file)
-        } 
+        if (file) {
+            formData.append("file", file)
+        }
         console.log(formData);
-        axios
-        .post(url_api.url + "/signin.php", formData)    
+        await axios
+            .post(url_api.url + "/signin.php", formData)
             .then(function (response) {
                 console.log("Response1 :" + response.data);
+                navigate('/login')
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
     }
 
-    function validateForm(data) {
+    /**
+     * Fonction qui permet de vérifier les éléments du formulaire.
+     * 
+     * @param {*} data Les données du formulaire.
+     * @returns Les erreurs éventuelles.
+     */
+    async function validateForm(data) {
         console.log(data);
         const errors = {};
 
@@ -85,12 +104,7 @@ function Signin() {
             if (data.lastName.length < 2) {
                 errors.lastName = "Le nom doit faire minimum 2 caractères.";
             }
-            if (
-                !(
-                    data.lastName.charAt(0) ===
-                    data.lastName.charAt(0).toUpperCase()
-                )
-            ) {
+            if (!(data.lastName.charAt(0) === data.lastName.charAt(0).toUpperCase())) {
                 if (errors.lastName) {
                     errors.lastName =
                         errors.lastName +
@@ -109,12 +123,7 @@ function Signin() {
             if (data.firstName.length < 2) {
                 errors.firstName = "Le nom doit faire minimum 2 caractères.";
             }
-            if (
-                !(
-                    data.firstName.charAt(0) ===
-                    data.firstName.charAt(0).toUpperCase()
-                )
-            ) {
+            if (!(data.firstName.charAt(0) === data.firstName.charAt(0).toUpperCase())) {
                 if (errors.firstName) {
                     errors.firstName =
                         errors.firstName +
@@ -145,28 +154,19 @@ function Signin() {
         //Vérication du mail
         if (!data.mail) {
             errors.mail = "L'adresse email est obligatoire.";
-        } else {
-            axios
+        } else { //On check si le mail est déjà utilisé
+            await axios
                 .get(url_api.url + "/signin.php", {
                     params: {
                         mail: data.mail,
                     },
                 })
                 .then((response) => {
-                    console.log("Rep " + response.data);
+                    console.log("Rep mail " + response.data);
                     if (!(response.data == null)) {
-                        setExist(true);
                         errors.mail = "L'adresse mail est déjà utilisée.";
-                    } else {
-                        setExist(false);
-                        errors.mail = "";
                     }
                 });
-
-            // Oui c'est bizarre mais y'a des bugs sinon mdr
-            if (exist) {
-                errors.mail = "L'adresse mail est déjà utilisée.";
-            }
         }
 
         //Vérification du mot de passe
@@ -195,161 +195,158 @@ function Signin() {
         return errors;
     }
 
-    if (isSubmit && Object.keys(formErrors).length === 0) {
-        return <Navigate replace to="/login" />;
-    } else
-        return (
-            <div>
-                <div className="form-box">
-                    <h1 className="inscription-titre">Inscription</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div>Nom* :</div>
+    return (
+        <div>
+            <div className="form-box">
+                <h1 className="inscription-titre">Inscription</h1>
+                <form onSubmit={handleSubmit}>
+                    <div>Nom* :</div>
+                    <input
+                        type="text"
+                        name="lastName"
+                        value={formValues.lastName}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.lastName}</p>
+
+                    <div>Prénom* :</div>
+                    <input
+                        type="text"
+                        name="firstName"
+                        value={formValues.firstName}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.firstName}</p>
+
+                    <div>Sélectionner votre genre* : </div>
+                    <label>
                         <input
-                            type="text"
-                            name="lastName"
-                            value={formValues.lastName}
+                            type="radio"
+                            name="gender"
+                            className="not-text-input radiobutton"
+                            value="f"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.lastName}</p>
-
-                        <div>Prénom* :</div>
+                        Femme
+                    </label>
+                    <label>
                         <input
-                            type="text"
-                            name="firstName"
-                            value={formValues.firstName}
+                            type="radio"
+                            name="gender"
+                            className="not-text-input radiobutton"
+                            value="h"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.firstName}</p>
-
-                        <div>Sélectionner votre genre* : </div>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                className="not-text-input radiobutton"
-                                value="f"
-                                onChange={handleChange}
-                            ></input>
-                            Femme
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                className="not-text-input radiobutton"
-                                value="h"
-                                onChange={handleChange}
-                            ></input>
-                            Homme
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="gender"
-                                className="not-text-input radiobutton"
-                                value="n"
-                                onChange={handleChange}
-                            ></input>
-                            Neutre
-                        </label>
-                        <p className="error-form">{formErrors.gender}</p>
-
-                        <div>Numéro de téléphone* : </div>
+                        Homme
+                    </label>
+                    <label>
                         <input
-                            type="text"
-                            name="phoneNumber"
-                            value={formValues.phoneNumber}
+                            type="radio"
+                            name="gender"
+                            className="not-text-input radiobutton"
+                            value="n"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.phoneNumber}</p>
+                        Neutre
+                    </label>
+                    <p className="error-form">{formErrors.gender}</p>
 
-                        <div>Adresse e-mail* : </div>
+                    <div>Numéro de téléphone* : </div>
+                    <input
+                        type="text"
+                        name="phoneNumber"
+                        value={formValues.phoneNumber}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.phoneNumber}</p>
+
+                    <div>Adresse e-mail* : </div>
+                    <input
+                        type="mail"
+                        name="mail"
+                        value={formValues.mail}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.mail}</p>
+
+                    <div>Mot de passe* : </div>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formValues.password}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.password}</p>
+
+                    <div>Veuillez confirmer votre mot de passe* : </div>
+                    <input
+                        type="password"
+                        name="passwordConfirmation"
+                        value={formValues.passwordConfirmation}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">
+                        {formErrors.passwordConfirmation}
+                    </p>
+
+                    <div>Possédez-vous une voiture ?* </div>
+                    <label>
                         <input
-                            type="mail"
-                            name="mail"
-                            value={formValues.mail}
+                            type="radio"
+                            name="car"
+                            className="not-text-input radiobutton"
+                            value="yes"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.mail}</p>
-
-                        <div>Mot de passe* : </div>
+                        Oui
+                    </label>
+                    <label>
                         <input
-                            type="password"
-                            name="password"
-                            value={formValues.password}
+                            type="radio"
+                            name="car"
+                            className="not-text-input radiobutton"
+                            value="no"
                             onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.password}</p>
+                        Non
+                    </label>
+                    <p className="error-form">{formErrors.car}</p>
 
-                        <div>Veuillez confirmer votre mot de passe* : </div>
+                    <label>
                         <input
-                            type="password"
-                            name="passwordConfirmation"
-                            value={formValues.passwordConfirmation}
-                            onChange={handleChange}
-                        ></input>
-                        <p className="error-form">
-                            {formErrors.passwordConfirmation}
-                        </p>
-
-                        <div>Possédez-vous une voiture ?* </div>
-                        <label>
-                            <input
-                                type="radio"
-                                name="car"
-                                className="not-text-input radiobutton"
-                                value="yes"
-                                onChange={handleChange}
-                            ></input>
-                            Oui
-                        </label>
-                        <label>
-                            <input
-                                type="radio"
-                                name="car"
-                                className="not-text-input radiobutton"
-                                value="no"
-                                onChange={handleChange}
-                            ></input>
-                            Non
-                        </label>
-                        <p className="error-form">{formErrors.car}</p>
-
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="notification"
-                                className="not-text-input"
-                                onChange={handleChange}
-                            ></input>
-                            Recevoir les notifications par e-mail.
-                        </label>
-                        <br />
-                        <br />
-                        <div>Choisissez une photo de profil :</div>
-                        <input
-                            type="file"
-                            name="picture"
+                            type="checkbox"
+                            name="notification"
                             className="not-text-input"
-                            accept="image/png, image/jpeg"
-                            onChange={handleFile}
+                            onChange={handleChange}
                         ></input>
-                        <p className="error-form">{formErrors.picture}</p>
+                        Recevoir les notifications par e-mail.
+                    </label>
+                    <br />
+                    <br />
+                    <div>Choisissez une photo de profil :</div>
+                    <input
+                        type="file"
+                        name="picture"
+                        className="not-text-input"
+                        accept="image/png, image/jpeg"
+                        onChange={handleFile}
+                    ></input>
+                    <p className="error-form">{formErrors.picture}</p>
 
-                        <br />
-                        <br />
-                        <div className="button-forms-wrap">
-                            <button type="submit" className="formulaire-submit">
-                                Valider
-                            </button>
-                        </div>
-                        <p className="info-obligatoire">
-                            * : Information obligatoire.
-                        </p>
-                    </form>
-                </div>
+                    <br />
+                    <br />
+                    <div className="button-forms-wrap">
+                        <button type="submit" className="formulaire-submit">
+                            Valider
+                        </button>
+                    </div>
+                    <p className="info-obligatoire">
+                        * : Information obligatoire.
+                    </p>
+                </form>
             </div>
-        );
+        </div>
+    );
 }
 
 export default Signin;

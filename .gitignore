@@ -1,2 +1,3 @@
 backend/dbconnect/dbinfos.php
+backend/pictures/*.png
 url_api.js
