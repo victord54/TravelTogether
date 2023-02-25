@@ -29,7 +29,6 @@ function Profil() {
 
     //Fonction qui affiche les informations du profil
     function affichageProfil() {
-        console.log(localStorage.getItem('photo'))
         var contenu =
             <React.Fragment>
                 <div className="wrapper-profil">

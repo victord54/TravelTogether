@@ -14,14 +14,6 @@ function Banner() {
                         <Link to="login">Connexion</Link>
                     </ul>
             </nav>
-            <div className="search-bar">
-                <div>From</div>
-                <div>To</div>
-                <div>Date</div>
-                <div>Heure</div>
-                <div>Passagers</div>
-                <button>Valider</button>
-            </div>
         </header>
     );
 }
