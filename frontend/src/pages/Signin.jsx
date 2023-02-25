@@ -80,7 +80,12 @@ function Signin() {
             .post(url_api.url + "/signin.php", formData)
             .then(function (response) {
                 console.log("Response1 :" + response.data);
-                navigate('/login')
+                if (response.data != "ok"){
+                    alert("Une erreur s'est produite.")
+                } else {
+                    navigate('/login')
+                }
+               
             })
             .catch(function (error) {
                 console.log("Error :" + error);

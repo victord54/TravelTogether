@@ -1,14 +1,14 @@
 import "../styles/Profil.css";
 import { useState } from "react";
-import {useAuth} from "../components/AuthProvider"
+import { useAuth } from "../components/AuthProvider"
 import React from "react"
 import axios from "axios";
 import { url_api } from "../data/url_api";
 import { Link } from "react-router-dom";
-import  { redirect, useHistory, Navigate} from 'react-router-dom'
+import { redirect, useHistory, Navigate } from 'react-router-dom'
 
 
-function Profil(){
+function Profil() {
 
     const { auth } = useAuth();
     const initialValue = {
@@ -27,58 +27,54 @@ function Profil(){
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
 
-    //Fonction qui retourne une des trucs si l'utilisateur est co ou non
-    function affichageBienvenue(){
-        var message;
-        if(auth){
-            message = 
-            <nav>
-                <ul>
-                    <Link to="../">Retour</Link>
-                    <Link to="../Friends-groupe-list">Mes Groupes</Link>
-                    <Link to="../modif-profile">Modifier mon profil</Link>
-                </ul>
-            </nav>
-            ;
-        }
-        else{
-            message = <h3 className="par-pitié-sois-centré"> Il semblerait que vous ne soyez pas connecté. </h3>;
-        }
-        return message;
-    }
-
     //Fonction qui affiche les informations du profil
-    function affichageProfil(){
+    function affichageProfil() {
+        console.log(localStorage.getItem('photo'))
         var contenu =
-            <React.Fragment> 
-            <div className="affichageActuel">
-            <p className="fonctionnel"> <strong> Profil actuel: </strong></p>
-            <ul> 
-                <li> Nom : {localStorage.getItem("nom")}</li>
-                <li> Prénom : {localStorage.getItem("prenom")}</li>
-                <li> Genre :  {localStorage.getItem("genre")}</li>
-                <li> Numéro de tel : {localStorage.getItem("numTel")}</li>
-                <li> Possède une voiture : {localStorage.getItem("aUneVoiture") == 1 ? ("Oui") : ("Non")}</li>
-                <li> Notifications par mail : {localStorage.getItem("notificationParMail") == 1 ? ("Oui") : ("Non")}</li>
-            </ul>
-            </div>
+            <React.Fragment>
+                <div className="wrapper-profil">
+                    <div className="affichageActuel">
+                        <p className="fonctionnel"> <strong> Profil actuel: </strong></p>
+                        <div className="picture">
+                            <img src={localStorage.getItem('photo')} height="175px" width="125px" />
+                        </div>
+                        <div className="profil-infos">
+                            <ul>
+                                <li> Nom : {localStorage.getItem("nom")}</li>
+                                <li> Prénom : {localStorage.getItem("prenom")}</li>
+                                <li> Genre :  {localStorage.getItem("genre")}</li>
+                                <li> Numéro de tel : {localStorage.getItem("numTel")}</li>
+                                <li> Possède une voiture : {localStorage.getItem("aUneVoiture") === "1" ? ("Oui") : ("Non")}</li>
+                                <li> Notifications par mail : {localStorage.getItem("notificationParMail") === "1" ? ("Oui") : ("Non")}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div className="wrapper-nav">
+                        <Link to="../Friends-groupe-list"><button className="Button-profil">Mes Groupes</button></Link><br />
+                        <Link to="../modif-profile"><button className="Button-profil">Modifier mon profil</button></Link><br />
+                        <button className="Button-profil">Supprimer mon compte</button>
+                    </div>
+                </div>
             </React.Fragment>;
         return contenu;
     }
- 
+
     //Fonction qui teste.
-    function test(){
+    function test() {
         console.log("Das Test.");
     }
-    
 
-        return (
-            <main>
-                {affichageBienvenue()}
-                {affichageProfil()}
-            </main>
-        );
-    
+
+    return (
+        <main>
+            {affichageProfil()}
+            <div className="wrapper-historique"><br /><br />
+                HISTORIQUE DES TRAJETS ICI =)
+            </div>
+        </main>
+    );
+
 }
 
 export default Profil;

@@ -44,11 +44,10 @@ function Login() {
                 password: formValues["password"],
             },
         }).then(function (reponse) {
-            console.log("Reponse : " + reponse.data['aUneVoiture']);
-
             if (reponse.data == null) {
                 setError("Identifiant et/ou mot de passe incorrect.");
             } else {
+                console.log("Reponse : " + reponse.data);
                 localStorage.setItem("mail", reponse.data["email"]);
                 localStorage.setItem("nom", reponse.data["nom"]);
                 localStorage.setItem("prenom", reponse.data["prenom"]);
