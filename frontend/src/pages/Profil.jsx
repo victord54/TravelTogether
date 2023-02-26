@@ -50,7 +50,7 @@ function Profil() {
                     </div>
 
                     <div className="wrapper-nav">
-                        <Link to="../Friends-groupe-list"><button className="Button-profil">Mes Groupes</button></Link><br />
+                        <Link to="../Friends-group-list"><button className="Button-profil">Mes Groupes</button></Link><br />
                         <Link to="../modif-profile"><button className="Button-profil">Modifier mon profil</button></Link><br />
                         <button className="Button-profil">Supprimer mon compte</button>
                     </div>
