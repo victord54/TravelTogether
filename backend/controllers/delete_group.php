@@ -8,7 +8,7 @@
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
 
-    if(file_exists('../dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
+    if(file_exists('./dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
     else {
         $login = 'root';
         $password = 'mysql';
@@ -45,4 +45,3 @@
     
         echo json_encode($reponse);
     }
-?>

@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if(file_exists('../dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
+if(file_exists('./dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
 else {
     $login = 'root';
     $password = 'mysql';
@@ -32,4 +32,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     echo json_encode($reponse);
 }
-?>
