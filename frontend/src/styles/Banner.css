@@ -19,8 +19,13 @@
     margin-right: 5vw;
 }
 
+.wrapper{
+   overflow:hidden;
+   position:relative;
+}
+
 .navigation img {
-    width: 7vw;
+    
     margin-left: 10px;
 }
 

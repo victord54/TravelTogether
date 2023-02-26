@@ -7,7 +7,7 @@ function Banner() {
         <header>
             <nav className="navigation-not-auth">
                 <Link to="/">
-                    <img src={logo} alt="logo" />
+                    <img src={logo} alt="logo" width="50px" />
                 </Link>
                 <div className="navigation-menu-not-auth">
                     <ul>

@@ -10,8 +10,9 @@ function Banner() {
         <header>
             <nav className="navigation">
                 <Link to="/">
-                    <img src={logo} alt="logo" />
-                </Link>
+                    <img src={logo} alt="logo" width="60px" />
+                </Link> 
+                
                 
                 <button className="hamburger" onClick={() => {
                     console.log(isNavExpanded)
