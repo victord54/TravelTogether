@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'one') == 0) {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, nom, prenom FROM APPARTIENT A JOIN GROUPE USING(idfGroupe), Utilisateur u WHERE idfGroupe = :idfGroupe AND A.email = :mail AND U.email = :mail UNION SELECT idfGroupe, nomDeGroupe, nom, prenom FROM GROUPE, Utilisateur U WHERE idfGroupe = :idfGroupe AND dirigeant = :mail AND U.email = :mail");
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, nom, prenom FROM APPARTIENT A JOIN GROUPE USING(idfGroupe), UTILISATEUR u WHERE idfGroupe = :idfGroupe AND A.email = :mail AND U.email = :mail UNION SELECT idfGroupe, nomDeGroupe, nom, prenom FROM GROUPE, UTILISATEUR U WHERE idfGroupe = :idfGroupe AND dirigeant = :mail AND U.email = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":idfGroupe", $_GET['idfGroupe']);
     $statement->bindValue(":mail", $_GET['mail']);
