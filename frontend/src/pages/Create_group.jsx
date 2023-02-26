@@ -17,16 +17,19 @@ function Create_group() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setFormErrors(validateForm(formValues));
+        var errors = await validateForm(formValues);
+        setFormErrors(errors);
         setIsSubmit(true);
+        
         console.log(
             "submit : " +
                 isSubmit +
                 "; length : " +
                 Object.keys(formErrors).length
         );
-        if (Object.keys(formErrors).length == 0) {
-            await sendDataToServer();
+      
+        if (Object.keys(errors).length === 0) {
+             sendDataToServer();
         }
     }
 
@@ -53,7 +56,7 @@ function Create_group() {
         const errors = {};
 
         //Vérification nom
-        if (data.group == "") {
+        if (!data.group) {
             errors.group = "Le nom de groupe est obligatoire.";
         }
         return errors;
@@ -70,9 +73,12 @@ function Create_group() {
                                 name="group"
                                 value={formValues.group}
                                 onChange={handleChange}
-                            ></input><button type="submit">
+                            ></input>
+                            <p className="error-form">{formErrors.group}</p>
+                            <button type="submit">
                             Valider
                         </button>
+
                         </form>
             </div>
             );
