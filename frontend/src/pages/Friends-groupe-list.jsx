@@ -23,7 +23,7 @@ function Friends_groupe_list() {
         }
     }
 
-    if(groupes.state === null) {
+    if(groupes.state == null) {
         getGroupes();
         return (
             <div>

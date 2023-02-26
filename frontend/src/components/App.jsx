@@ -15,6 +15,8 @@ import Create_offer from "../pages/Create-offer";
 import Create_group from "../pages/Create_group";
 import Groupe from "../pages/Groupe";
 import Friends_groupe_list from "../pages/Friends-groupe-list";
+import Delete_group from "../pages/Delete_group";
+
 
 function App() {
     const { auth } = useAuth();
@@ -31,6 +33,7 @@ function App() {
                 <Route path="/modif-profile" element={<PrivateRoute><ModifProfil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
                 <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
+                <Route path="/delete_group/:id"  element={<Delete_group/>}/>
                 <Route path="/friends-groupe-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />
                 <Route path="groupe/:id" element={<PrivateRoute><Groupe /></PrivateRoute>} />
                 <Route path="*" element={<Unknow />} />
