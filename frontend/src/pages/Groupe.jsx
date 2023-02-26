@@ -13,10 +13,12 @@ function Groupe() {
         var reponse = await axios.get(url_api.url + "/friends_group.php", {
             params: {
                 idfGroupe: id,
+               
                 mail: localStorage.getItem("mail"),
                 type: 'one'
             }
         });
+    
     
         if(reponse.data !== null && reponse.data !== '') {
             setGroupes({value : reponse.data, state : 'ok'});
@@ -24,8 +26,9 @@ function Groupe() {
             setGroupes({value : [], state : 'notOk'});
         }
     }
+    let navBar = <nav></nav>;
 
-    if(groupe.state === null) {
+    if(groupe.state == null) {
         getGroupes();
         return (
             <div>
@@ -35,22 +38,28 @@ function Groupe() {
         );
     }else if(groupe.state == 'notOk') return (
         <Navigate replace to="./friends-groupe-list" />
-    )
-    else return (
-            <div>
-                <nav>
-                <ul>
-                    <Link to={"../delete_groupe/"+id}>Supprimer ce groupe</Link>
-                </ul>
-                </nav>
-                <h1>{groupe.value['nomDeGroupe']}</h1>
-                <div className='groupe-box'>
-                    <h2 className='titre-groupe'>{groupe.value['nomDeGroupe']}</h2>
-                    <h3 className='membre-list'>Dirigeant : </h3><p className='membre-list'>{groupe.value['dirigeant']}</p>
-                    <h3 className='membre-list'>Membre(s) : </h3><p className='membre-list'>{groupe.value['members']}</p>
-                </div>
+    );
+    else if (groupe.value['email'] == localStorage.getItem("mail")) {
+        navBar =
+            <nav>
+            <ul>
+                <Link to={"../delete_group/"+id}>Supprimer ce groupe</Link>
+            </ul>
+            </nav>;
+    }
+    return (
+        <div>
+            {
+                navBar
+            }
+            <h1>{groupe.value['nomDeGroupe']}</h1>
+            <div className='groupe-box'>
+                <h2 className='titre-groupe'>{groupe.value['nomDeGroupe']}</h2>
+                <h3 className='membre-list'>Dirigeant : </h3><p className='membre-list'>{groupe.value['dirigeant']} </p>
+                <h3 className='membre-list'>Membre(s) : </h3><p className='membre-list'>{groupe.value['members']}</p>
             </div>
-        );
+        </div>
+    );
 }
 
 export default Groupe;
