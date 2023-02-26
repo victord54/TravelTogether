@@ -37,13 +37,13 @@ function Groupe() {
             </div>
         );
     }else if(groupe.state == 'notOk') return (
-        <Navigate replace to="./friends-groupe-list" />
+        <Navigate replace to="./friends-group-list" />
     );
     else if (groupe.value['email'] == localStorage.getItem("mail")) {
         navBar =
             <nav>
             <ul>
-                <Link to={"../delete_group/"+id}>Supprimer ce groupe</Link>
+                <Link to={"../delete-group/"+id}>Supprimer ce groupe</Link>
             </ul>
             </nav>;
     }

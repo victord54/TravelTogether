@@ -12,10 +12,10 @@ import Profil from "../pages/Profil";
 import ModifProfil from "../pages/ModifProfil";
 import Unknow from "../pages/Unknow";
 import Create_offer from "../pages/Create-offer";
-import Create_group from "../pages/Create_group";
+import Create_group from "../pages/Create-group";
 import Groupe from "../pages/Groupe";
-import Friends_groupe_list from "../pages/Friends-groupe-list";
-import Delete_group from "../pages/Delete_group";
+import Friends_groupe_list from "../pages/Friends-group-list";
+import Delete_group from "../pages/Delete-group";
 
 
 function App() {
@@ -32,9 +32,9 @@ function App() {
                 <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
                 <Route path="/modif-profile" element={<PrivateRoute><ModifProfil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
-                <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
-                <Route path="/delete_group/:id"  element={<PrivateRoute><Delete_group/></PrivateRoute>}/>
-                <Route path="/friends-groupe-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />
+                <Route path="/create-group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
+                <Route path="/delete-group/:id"  element={<PrivateRoute><Delete_group/></PrivateRoute>}/>
+                <Route path="/friends-group-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />
                 <Route path="groupe/:id" element={<PrivateRoute><Groupe /></PrivateRoute>} />
                 <Route path="*" element={<Unknow />} />
             </Routes>

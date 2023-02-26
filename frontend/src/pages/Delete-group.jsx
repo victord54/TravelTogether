@@ -76,7 +76,7 @@ function Delete_group() {
     }
 
     if(isReplied) return(
-        <Navigate replace to="../friends-groupe-list" />
+        <Navigate replace to="../friends-group-list" />
     )
     else return ( 
             <div className="form-box">
@@ -90,9 +90,8 @@ function Delete_group() {
                             onChange={handleChange}
             ></input>
                             <p className="error-form">{formErrors.mdp}</p>
-                        <button type="submit">
-                        Valider
-                    </button>
+                            
+                    <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
                     </form>
         </div>
         );

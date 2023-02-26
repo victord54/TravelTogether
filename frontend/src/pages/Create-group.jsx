@@ -75,9 +75,7 @@ function Create_group() {
                                 onChange={handleChange}
                             ></input>
                             <p className="error-form">{formErrors.group}</p>
-                            <button type="submit">
-                            Valider
-                        </button>
+                            <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
 
                         </form>
             </div>
