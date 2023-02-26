@@ -13,38 +13,33 @@
         $login = 'root';
         $password = 'mysql';
     }
- /*
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // a remplir bdd 
-
-     
-      $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-
-      $statement = $pdo->prepare("INSERT INTO GROUPE(nomDeGroupe, dirigeant) VALUES(:nom, :dig)");
+       $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+      $statement = $pdo->prepare("DELETE FROM GROUPE WHERE idfGroupe = :idfGroupe AND dirigeant = :email");
       $statement->setFetchMode(PDO::FETCH_ASSOC);
-      $statement->bindValue(":nom", $_POST["nom"]);
-      $statement->bindValue(":dig", $_POST["mail"]);
-      if(!$statement->execute()){
-          echo "died";
-      }
 
-      echo $pdo->lastInsertId();
-     
-    } */
+      $statement->bindValue(":idfGroupe", $_POST["idfGroupe"]);
+      $statement->bindValue(":email", $_POST["mail"]);
+
+      $statement->execute() or die(print_r($statement->errorInfo(), true));
+      echo "1";
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
         $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-        $statement = $pdo->prepare("SELECT * FROM UTILISATEUR WHERE email = :mail");
+        $statement = $pdo->prepare("SELECT motDePasse FROM UTILISATEUR WHERE email = :mail");
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->bindValue(":mail", $_GET['mail']);
-        $statement->execute();
+        $statement->execute() or die(print_r($statement->errorInfo(), true));
         $data = $statement->fetch();
     
         $reponse = null;
         if ($data) {
             if (password_verify($_GET['password'], $data['motDePasse'])) {
-                $reponse = $data;
+                $reponse = '1';
+            } else {
+                $reponse = '0';
             }
         }
     

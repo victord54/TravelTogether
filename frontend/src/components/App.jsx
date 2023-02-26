@@ -33,7 +33,7 @@ function App() {
                 <Route path="/modif-profile" element={<PrivateRoute><ModifProfil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
                 <Route path="/create_group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
-                <Route path="/delete_group/:id"  element={<Delete_group/>}/>
+                <Route path="/delete_group/:id"  element={<PrivateRoute><Delete_group/></PrivateRoute>}/>
                 <Route path="/friends-groupe-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />
                 <Route path="groupe/:id" element={<PrivateRoute><Groupe /></PrivateRoute>} />
                 <Route path="*" element={<Unknow />} />
