@@ -9,8 +9,8 @@ article {
 
 section {
     margin: 2vh 5vw;
-    width: 1500px;
     height: 150px;
+    width: 75%;
     background-color: yellow;
     display: flex;
     justify-content: center;
