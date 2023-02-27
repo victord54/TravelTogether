@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if(file_exists('./dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
+if (file_exists('./dbconnect/dbinfos.php')) include './dbconnect/dbinfos.php';
 else {
     $login = 'root';
     $password = 'mysql';
@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
 
-    if(!empty($_POST['password'])){ //mot de passe à changer
+    if (!empty($_POST['password'])) { //mot de passe à changer
         $sqlInsert = "UPDATE UTILISATEUR
                     SET nom = :nom, prenom = :prenom, numTel = :numTel, genre = :genre, motDePasse = :motDePasse, aUneVoiture = :aUneVoiture, notificationParMail = :notificationParMail, photo = :photo
                     WHERE email = :email";
         $statement = $pdo->prepare($sqlInsert);
         $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $statement->bindValue(':motDePasse', $hash);
-    }else{ //pas de mot de passe à changer
+    } else { //pas de mot de passe à changer
         $sqlInsert = "UPDATE UTILISATEUR
                     SET nom = :nom, prenom = :prenom, numTel = :numTel, genre = :genre, aUneVoiture = :aUneVoiture, notificationParMail = :notificationParMail, photo = :photo
                     WHERE email = :email";

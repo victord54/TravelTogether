@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-if(file_exists('./dbconnect/dbinfos.php')) include '../dbconnect/dbinfos.php';
+if (file_exists('./dbconnect/dbinfos.php')) include './dbconnect/dbinfos.php';
 else {
     $login = 'root';
     $password = 'mysql';
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     VALUES (:email, :dateDepart, :heureDepart, :prix, :nbPlaceDisponible, :precisions, :infos, :villeDepart, :villeArrivee)";
     $statement = $pdo->prepare($sqlInsert);
     $statement->bindValue(':email', $_POST['email']);
-    $statement->bindValue(':dateDepart', $_POST['dateDepart']." 00:00:00");
+    $statement->bindValue(':dateDepart', $_POST['dateDepart'] . " 00:00:00");
     $statement->bindValue(':heureDepart', $_POST['heureDepart']);
     $statement->bindValue(':prix', $_POST['prix']);
     $statement->bindValue(':nbPlaceDisponible', $_POST['nbPlaceDisponible']);
@@ -33,8 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
     $idfOffre = $pdo->lastInsertId();
-    if($idfOffre != false) {
-        if(!isset($_POST['groupe'])) {
+    if ($idfOffre != false) {
+        if (!isset($_POST['groupe'])) {
             $statement = $pdo->prepare("INSERT INTO OFFREPUBLIC(idfOffre) VALUES (:idfOffre)");
             $statement->bindValue(':idfOffre', $idfOffre);
             $statement->execute() or die(print_r($statement->errorInfo(), true));
@@ -43,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statement->bindValue(':idfOffre', $idfOffre);
             $statement->bindValue(':idfGroupe', $_POST['groupe']);
             $statement->execute() or die(print_r($statement->errorInfo(), true));
-        } 
-        if(strcmp($_POST['arretIntermediaire'], '') != 0) {
+        }
+        if (strcmp($_POST['arretIntermediaire'], '') != 0) {
             $cpt = 0;
-            foreach($citiesInter as $city) {
+            foreach ($citiesInter as $city) {
                 $statement = $pdo->prepare("INSERT INTO PASSE_PAR(idfOffre, ville, position) VALUES (:idfOffre, :ville, :position)");
                 $statement->bindValue(':idfOffre', $idfOffre);
                 $statement->bindValue(':ville', $city);
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    echo "Offre : ".$idfOffre." créé."; 
+    echo "Offre : " . $idfOffre . " créé.";
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
