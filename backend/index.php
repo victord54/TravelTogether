@@ -8,6 +8,10 @@ if ($_GET["request"] == "login") {
     require_once('controllers/login.php');
 } else if ($_GET["request"] == "signin") {
     require_once('controllers/signin.php');
-}else if ($_GET["request"] == "Create_group") {
+} else if ($_GET["request"] == "create_group") {
     require_once('controllers/create_group.php');
+} else if ($_GET["request"] == "create_offer") {
+    require_once('controllers/create_offer.php');
+} else if ($_GET["request"] == "save_profile") {
+    require_once('controllers/save_profile.php');
 }
