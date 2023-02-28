@@ -51,7 +51,7 @@ At the end of the file paste these lines :
 
 ```vhost
 <VirtualHost *>
-    DocumentRoot "le chemin jusqu'au fichier index.php"
+    DocumentRoot "chemin vers le dossier backend (../../TravelTogether/backend)"
     ServerName api-traveltogether
     
     <Directory "le chemin jusqu'au fichier index.php">
@@ -88,10 +88,10 @@ C:\xampp\apache\conf\extra\httpd-vhosts.conf
 Add these lines :
 ```vhost
 <VirtualHost *>
-    DocumentRoot "le chemin jusqu'au fichier index.php"
+    DocumentRoot "chemin vers le dossier backend (../htdocs/TravelTogether/backend)"
     ServerName api-traveltogether
     
-    <Directory "le chemin jusqu'au fichier index.php">
+    <Directory "chemin vers le dossier backend (../htdocs/TravelTogether/backend)">
         Order allow,deny
         Allow from all
         Require all granted
