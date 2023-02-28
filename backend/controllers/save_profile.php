@@ -38,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindValue(':prenom', $_POST['firstName']);
     $statement->bindValue(':numTel', $_POST['phoneNumber']);
     $statement->bindValue(':genre', $_POST['gender']);
-    if (strcmp($_POST['car'], 'yes') == 0) {
+    if (strcmp($_POST['car'], '1') == 0) {
         $statement->bindValue(':aUneVoiture', 1);
     } else {
         $statement->bindValue(':aUneVoiture', 0);
     }
-    if (strcmp($_POST['notification'], 'yes') == 0) {
+    if (strcmp($_POST['notification'], '1') == 0) {
         $statement->bindValue(':notificationParMail', 1);
     } else {
         $statement->bindValue(':notificationParMail', 0);
@@ -52,20 +52,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['file'])) {
         $uploaddir = dirname(__FILE__, 2) . '/pictures';
         $ext = explode('/', $_FILES['file']['type']);
-        $file_name = $uploaddir . '/' . $_POST['mail'] . '.' . $ext[1];
-        echo $file_name;
+        $file_dir_save = $uploaddir . '/' . $_POST['mail'] . '.' . $ext[1];
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $file_name)) {
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $file_dir_save)) {
+            $serv = "http://localhost/TravelTogether/backend/pictures";
+            $file_name = $serv . '/' . $_POST['mail'] . '.' . $ext[1];
             $statement->bindValue(':photo', $file_name);
+            echo $file_name;
         } else {
             echo "There was an error uploading the file";
         }
     } else {
-        $statement->bindValue(':photo', NULL);
+        $statement->bindValue(':photo', $_POST['link_picture']);
+
     }
 
     $statement->execute() or die(print_r($statement->errorInfo(), true));;
-    echo "Changements sauvegardés.";
 }
 
 

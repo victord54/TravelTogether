@@ -73,14 +73,14 @@
     background-color: #2642af;
   }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 810px) {
     .navigation-menu.expanded ul {
         height: max-content;
         display: block;
     }
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 810px) {
     .hamburger {
         display: block;
     }
