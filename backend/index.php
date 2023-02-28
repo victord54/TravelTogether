@@ -14,4 +14,10 @@ if ($_GET["request"] == "login") {
     require_once('controllers/create_offer.php');
 } else if ($_GET["request"] == "save_profile") {
     require_once('controllers/save_profile.php');
-}
+} else if ($_GET["request"] == "friends_group") {
+    require_once('controllers/friends_group.php');
+} else if ($_GET["request"] == "delete_group") {
+    require_once('controllers/delete_group.php');
+} else if ($_GET["request"] == "offer") {
+    require_once('controllers/offer.php');
+} 
