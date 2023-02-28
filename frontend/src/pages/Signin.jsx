@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
@@ -15,14 +15,13 @@ function Signin() {
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
-    const [file, setFile] = useState(null)
-    const navigate = useNavigate()
-
+    const [file, setFile] = useState(null);
+    const navigate = useNavigate();
 
     /**
      * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
      * Vérifie les erreurs et s'il n'y en a pas : Envoie les informations au serveur.
-     * 
+     *
      * @param {*} e Un évènement
      */
     async function handleSubmit(e) {
@@ -36,7 +35,7 @@ function Signin() {
 
     /**
      * Fonction qui permet de réagir quand on change la valeur d'un champs.
-     * 
+     *
      * @param {*} e Un évènement
      */
     function handleChange(e) {
@@ -45,12 +44,12 @@ function Signin() {
 
     /**
      * Fonction qui permet de réagir lors de l'ajout d'une image.
-     * 
-     * @param {*} e Un évènement. 
+     *
+     * @param {*} e Un évènement.
      */
     function handleFile(e) {
         if (e.target.files) {
-            setFile(e.target.files[0])
+            setFile(e.target.files[0]);
         }
     }
 
@@ -60,32 +59,31 @@ function Signin() {
     async function sendDataToServer() {
         console.log("on envoie");
 
-        const formData = new FormData()
-        formData.append("mail", formValues.mail)
-        formData.append("lastName", formValues.lastName)
-        formData.append("firstName", formValues.firstName)
-        formData.append("phoneNumber", formValues.phoneNumber)
-        formData.append("password", formValues.password)
-        formData.append("gender", formValues.gender)
-        formData.append("car", formValues.car)
+        const formData = new FormData();
+        formData.append("mail", formValues.mail);
+        formData.append("lastName", formValues.lastName);
+        formData.append("firstName", formValues.firstName);
+        formData.append("phoneNumber", formValues.phoneNumber);
+        formData.append("password", formValues.password);
+        formData.append("gender", formValues.gender);
+        formData.append("car", formValues.car);
 
         if (formValues.notification) {
-            formData.append("notification", formValues.notification)
+            formData.append("notification", formValues.notification);
         }
         if (file) {
-            formData.append("file", file)
+            formData.append("file", file);
         }
         console.log(formData);
         await axios
-            .post(url_api.url + "/signin.php", formData)
+            .post(url_api.url + "/signin", formData)
             .then(function (response) {
                 console.log("Response1 :" + response.data);
-                if (response.data != "ok"){
-                    alert("Une erreur s'est produite.")
+                if (response.data !== "ok") {
+                    alert("Une erreur s'est produite.");
                 } else {
-                    navigate('/login')
+                    navigate("/login");
                 }
-               
             })
             .catch(function (error) {
                 console.log("Error :" + error);
@@ -94,7 +92,7 @@ function Signin() {
 
     /**
      * Fonction qui permet de vérifier les éléments du formulaire.
-     * 
+     *
      * @param {*} data Les données du formulaire.
      * @returns Les erreurs éventuelles.
      */
@@ -109,7 +107,12 @@ function Signin() {
             if (data.lastName.length < 2) {
                 errors.lastName = "Le nom doit faire minimum 2 caractères.";
             }
-            if (!(data.lastName.charAt(0) === data.lastName.charAt(0).toUpperCase())) {
+            if (
+                !(
+                    data.lastName.charAt(0) ===
+                    data.lastName.charAt(0).toUpperCase()
+                )
+            ) {
                 if (errors.lastName) {
                     errors.lastName =
                         errors.lastName +
@@ -128,7 +131,12 @@ function Signin() {
             if (data.firstName.length < 2) {
                 errors.firstName = "Le nom doit faire minimum 2 caractères.";
             }
-            if (!(data.firstName.charAt(0) === data.firstName.charAt(0).toUpperCase())) {
+            if (
+                !(
+                    data.firstName.charAt(0) ===
+                    data.firstName.charAt(0).toUpperCase()
+                )
+            ) {
                 if (errors.firstName) {
                     errors.firstName =
                         errors.firstName +
@@ -159,9 +167,10 @@ function Signin() {
         //Vérication du mail
         if (!data.mail) {
             errors.mail = "L'adresse email est obligatoire.";
-        } else { //On check si le mail est déjà utilisé
+        } else {
+            //On check si le mail est déjà utilisé
             await axios
-                .get(url_api.url + "/signin.php", {
+                .get(url_api.url + "/signin", {
                     params: {
                         mail: data.mail,
                     },
