@@ -10,22 +10,7 @@ import { redirect, useHistory, Navigate } from 'react-router-dom'
 
 function Profil() {
 
-    const { auth } = useAuth();
-    const initialValue = {
-        lastName: localStorage.getItem("prenom"),
-        firstName: localStorage.getItem("nom"),
-        password: "",
-        passwordConfirmation: "",
-        phoneNumber: localStorage.getItem("numTel"),
-        gender: localStorage.getItem("genre"),
-        car: localStorage.getItem("aUneVoiture"),
-        mailUpdates: localStorage.getItem("notificationParMail")
-    };
-    const [formValues, setInputValues] = useState(initialValue);
-    const [isUser, setIsUser] = useState(false);
-    const [file, setFile] = useState(null)
-    const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    
 
     //Fonction qui affiche les informations du profil
     function affichageProfil() {
@@ -35,7 +20,7 @@ function Profil() {
                     <div className="affichageActuel">
                         <p className="fonctionnel"> <strong> Profil actuel: </strong></p>
                         <div className="picture">
-                            <img src={localStorage.getItem('photo')} height="175px" width="125px" />
+                            <img src={localStorage.getItem('photo')+ "?" + Math.random()} height="175px" width="125px" />
                         </div>
                         <div className="profil-infos">
                             <ul>

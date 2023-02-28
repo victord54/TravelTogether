@@ -290,7 +290,7 @@ function ModifProfil() {
                 if (file){ //Le file avait changé
                     localStorage.setItem("photo",response.data)
                 }
-                
+            
                 //Retour profil
                 navigate('/profile')
             })
