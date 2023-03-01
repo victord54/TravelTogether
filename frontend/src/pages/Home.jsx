@@ -54,7 +54,7 @@ function Home() {
             )}
             <article>
                 {offres.offres.map((offre) => <section>
-                    <h2>{offre["email"]}</h2>
+                    <h2>{offre["nom"] + " " + offre["prenom"]}</h2>
                     <p>{offre["dateDepart"] + " " + offre["heureDepart"]}</p>
                     <h3>Précision :</h3>
                     <p>{offre["precisions"]}</p>
