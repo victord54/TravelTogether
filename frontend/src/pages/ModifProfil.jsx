@@ -24,7 +24,7 @@ function ModifProfil() {
 
     //console.log(initialValue.mailUpdates);
 
-    //Fonction qui retourne une des trucs si l'utilisateur est co ou non
+    //Fonction qui permet affichage bouton retour
     function affichageBienvenue() {
         var message;
         message = (
