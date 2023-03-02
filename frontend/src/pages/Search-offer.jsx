@@ -1,25 +1,21 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { url_api } from "../data/url_api";
+import Offer from "../components/Offer";
 
 function Search_offer() {
     const initialValue = {
         start : "", 
         end :"", 
-        inter:"", 
-        interList:[], 
         date:"", 
         time:"", 
-        price:0, 
-        size:0, 
-        precisions:"", 
-        informations:"",
-        groupe:""
+        size:0
     };
     const [citiesCodes, setCodes] = useState({start:0, end:0});
     const [proposition, setProposition] = useState({start : "", end : ""});
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
+    const [offers, setOffers] = useState({statut : "", offers : []});
     const regExCodePostal = new RegExp("[0-9]{5}");
 
     async function handleSubmit(e){
@@ -52,7 +48,7 @@ function Search_offer() {
             }
         })
           .then(function (response) {
-            console.log(response.data);
+            setOffers({statut : "ok", offers : response.data});
           })
           .catch(function (error) {
             console.log('Error : ' + error);
@@ -111,40 +107,63 @@ function Search_offer() {
         return errors;
     }
 
-    return (
-            <div className="form-box">
-            <form onSubmit={handleSubmit}>
-                <div>Date de départ* : </div>
-                <input type="date" name="date" value={formValues.date} onChange={handleChange} />
-                <p className="error-form">{formErrors.date}</p>
+    var searchForm =(
+    <div className="form-box">
+        <form onSubmit={handleSubmit}>
+            <div>Date de départ* : </div>
+            <input type="date" name="date" value={formValues.date} onChange={handleChange} />
+            <p className="error-form">{formErrors.date}</p>
 
-                <div>Heure de départ : </div>
-                <input type="time" name="time" value={formValues.time} onChange={handleChange} />
-                <p></p>
+            <div>Heure de départ : </div>
+            <input type="time" name="time" value={formValues.time} onChange={handleChange} />
+            <p></p>
 
-                <div>Lieu de départ* :</div>
-                <input list="proposition_start" name="start" onChange={handleCity} />    
-                <datalist id="proposition_start">
-                    {proposition.start}
-                </datalist>
-                <p className="error-form">{formErrors.start}</p>
-                
-                <div>Lieu d'arrivée* :</div>
-                <input list="proposition_end" name="end" onChange={handleCity} />    
-                <datalist id="proposition_end">
-                    {proposition.end}
-                </datalist>
-                <p className="error-form">{formErrors.end}</p>
+            <div>Lieu de départ* :</div>
+            <input list="proposition_start" name="start" onChange={handleCity} />    
+            <datalist id="proposition_start">
+                {proposition.start}
+            </datalist>
+            <p className="error-form">{formErrors.start}</p>
+            
+            <div>Lieu d'arrivée* :</div>
+            <input list="proposition_end" name="end" onChange={handleCity} />    
+            <datalist id="proposition_end">
+                {proposition.end}
+            </datalist>
+            <p className="error-form">{formErrors.end}</p>
 
-                <div>Nombre de places* : </div>
-                <input type="number" name="size" value={formValues.size} onChange={handleChange}/>
-                <p className="error-form">{formErrors.size}</p>
+            <div>Nombre de places* : </div>
+            <input type="number" name="size" value={formValues.size} onChange={handleChange}/>
+            <p className="error-form">{formErrors.size}</p>
 
-                <br/><br/>
-                <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
-                <p className="info-obligatoire">* : Information obligatoire.</p>
+            <br/><br/>
+            <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
+            <p className="info-obligatoire">* : Information obligatoire.</p>
 
-            </form></div>
+        </form>
+    </div>);
+
+    if(offers.statut === "")
+        return (
+            <main>
+                {searchForm}
+            </main>
+        );
+    else if (offers.statut === "ok" && offers.offers === []) return (
+        <main>
+            {searchForm}
+            <article>
+                <p>Aucune offre trouvée !</p>
+            </article>
+        </main>
+    );
+    else return (
+        <main>
+        {searchForm}
+        <article>
+            {offers.offers.map(offre => Offer(offre))}
+        </article>
+    </main>
     );
 }
 
