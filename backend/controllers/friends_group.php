@@ -4,7 +4,7 @@ include 'header.php';
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, nom, prenom FROM APPARTIENT A JOIN GROUPE USING(idfGroupe), UTILISATEUR U WHERE A.email = :mail AND U.email = dirigeant UNION SELECT idfGroupe, nomDeGroupe, U.nom, U.prenom FROM GROUPE, UTILISATEUR U WHERE dirigeant = :mail AND U.email = :mail");
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, U.nom, U.prenom FROM GROUPE, UTILISATEUR U WHERE dirigeant = :mail AND U.email = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":mail", $_GET['mail']);
     $statement->execute();
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'list') == 0) 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && strcmp($_GET['type'], 'one') == 0) {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, nom, prenom, U.email FROM APPARTIENT A JOIN GROUPE USING(idfGroupe), UTILISATEUR U WHERE idfGroupe = :idfGroupe AND A.email = :mail AND U.email = dirigeant UNION SELECT idfGroupe, nomDeGroupe, U.nom, U.prenom, U.email FROM GROUPE, UTILISATEUR U WHERE idfGroupe = :idfGroupe AND dirigeant = :mail AND U.email = :mail");
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe, U.nom, U.prenom, U.email FROM GROUPE, UTILISATEUR U WHERE idfGroupe = :idfGroupe AND dirigeant = :mail AND U.email = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":idfGroupe", $_GET['idfGroupe']);
     $statement->bindValue(":mail", $_GET['mail']);
