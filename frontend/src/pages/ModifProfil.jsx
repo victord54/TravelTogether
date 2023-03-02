@@ -1,6 +1,5 @@
 import "../styles/Profil.css";
 import { useState } from "react";
-import { useAuth } from "../components/AuthProvider";
 import React from "react";
 import axios from "axios";
 import { url_api } from "../data/url_api";
@@ -19,7 +18,6 @@ function ModifProfil() {
         car: localStorage.getItem("aUneVoiture"),
         mailUpdates: localStorage.getItem("notificationParMail"),
     };
-    const { setAuth } = useAuth();
     const [formValues, setInputValues] = useState(initialValue);
     const [file, setFile] = useState();
     const [formErrors, setFormErrors] = useState({});
