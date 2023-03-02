@@ -3,6 +3,7 @@ import { url_api } from "../data/url_api";
 import "../styles/Friends-groupe-list.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Group from "../components/Group";
 
 function Friends_groupe_list() {
     const [groupes, setGroupes] = useState({ values: [], state: null });
@@ -60,28 +61,11 @@ function Friends_groupe_list() {
                     <ul>
                         {groupes.values.map((groupe) => (
                             <li key={groupe["idfGroupe"]}>
-                                <div className="groupe-box">
-                                    <Link
-                                        className="groupe-link"
-                                        to={"../groupe/" + groupe["idfGroupe"]}
-                                    >
-                                        <h2 className="titre-groupe">
-                                            {groupe["nomDeGroupe"]}
-                                        </h2>
-                                        <h3 className="membre-list">
-                                            Dirigeant :{" "}
-                                        </h3>
-                                        <p className="membre-list">
-                                            {groupe["dirigeant"]}
-                                        </p>
-                                        <h3 className="membre-list">
-                                            Membre(s) :{" "}
-                                        </h3>
-                                        <p className="membre-list">
-                                            {groupe["members"]}
-                                        </p>
-                                    </Link>
-                                </div>
+                                <Link
+                                    className="groupe-link"
+                                    to={"../groupe/" + groupe["idfGroupe"]}>
+                                        {Group(groupe)}
+                                </Link>
                             </li>
                         ))}
                     </ul>

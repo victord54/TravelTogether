@@ -3,6 +3,7 @@ import { url_api } from "../data/url_api";
 import "../styles/Friends-groupe-list.css";
 import { useState } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
+import Group from "../components/Group";
 
 function Groupe() {
     let { id } = useParams();
@@ -52,13 +53,7 @@ function Groupe() {
         <div>
             {navBar}
             <h1>{groupe.value["nomDeGroupe"]}</h1>
-            <div className="groupe-box">
-                <h2 className="titre-groupe">{groupe.value["nomDeGroupe"]}</h2>
-                <h3 className="membre-list">Dirigeant : </h3>
-                <p className="membre-list">{groupe.value["dirigeant"]} </p>
-                <h3 className="membre-list">Membre(s) : </h3>
-                <p className="membre-list">{groupe.value["members"]}</p>
-            </div>
+            {Group(groupe.value)}
         </div>
     );
 }
