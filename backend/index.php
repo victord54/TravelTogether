@@ -20,4 +20,6 @@ if ($_GET["request"] == "login") {
     require_once('controllers/delete_group.php');
 } else if ($_GET["request"] == "offer") {
     require_once('controllers/offer.php');
+} else if ($_GET["request"] == "search_offer") {
+    require_once('controllers/search_offer.php');
 } 

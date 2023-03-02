@@ -16,6 +16,7 @@ import Create_group from "../pages/Create-group";
 import Groupe from "../pages/Groupe";
 import Friends_groupe_list from "../pages/Friends-group-list";
 import Delete_group from "../pages/Delete-group";
+import Search_offer from "../pages/Search-offer";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/profile" element={<PrivateRoute><Profil /></PrivateRoute>} />
                 <Route path="/modif-profile" element={<PrivateRoute><ModifProfil /></PrivateRoute>} />
                 <Route path="/create-offer" element={<PrivateRoute><Create_offer /></PrivateRoute>} />
+                <Route path="/search-offer" element={<PrivateRoute><Search_offer /></PrivateRoute>}/>
                 <Route path="/create-group" element={<PrivateRoute><Create_group /></PrivateRoute>} />
                 <Route path="/delete-group/:id"  element={<PrivateRoute><Delete_group/></PrivateRoute>}/>
                 <Route path="/friends-group-list" element={<PrivateRoute><Friends_groupe_list /></PrivateRoute>} />
