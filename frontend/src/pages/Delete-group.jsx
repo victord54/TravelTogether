@@ -7,7 +7,7 @@ import { url_api } from "../data/url_api";
 function Delete_group() {
     let { id } = useParams();
     const initialValue = {
-        mdp: ""
+        mdp: "",
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
@@ -32,70 +32,77 @@ function Delete_group() {
         formData.append("password", formValues.mdp);
         formData.append("mail", localStorage.getItem("mail"));
         await axios
-            .post(url_api.url + "/delete_group.php", formData)
+            .post(url_api.url + "/delete_group", formData)
             .then(function (response) {
                 setIsReplied(true);
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
-            
     }
 
     async function validateForm(data) {
         const errors = {};
-        
-        //Vérification si l'utilisateur a rentrer un mdp 
-       if (!data.mdp){
+
+        //Vérification si l'utilisateur a rentrer un mdp
+        if (!data.mdp) {
             errors.mdp = "Aucun mot de passe saisie.";
         } else {
             await axios
-                .get(url_api.url + "/delete_group.php", {
+                .get(url_api.url + "/delete_group", {
                     params: {
                         password: formValues.mdp,
                         mail: localStorage.getItem("mail"),
-                    }
+                    },
                 })
                 .then(function (response) {
-                    if(response.data === "1") {
+                    if (response.data === "1") {
                         setLoaded(true);
                     } else {
-                        errors.mdp = "Le mots de passe saisie n'est pas correct.";
+                        errors.mdp =
+                            "Le mots de passe saisie n'est pas correct.";
                     }
                 })
                 .catch(function (error) {
                     console.log("Error :" + error);
                 });
         }
-        
+
         return errors;
     }
 
-    if (isLoaded && isSubmit && !isReplied && Object.keys(formErrors).length === 0) {
+    if (
+        isLoaded &&
+        isSubmit &&
+        !isReplied &&
+        Object.keys(formErrors).length === 0
+    ) {
         sendDataToServer();
     }
 
-    if(isReplied) return(
-        <Navigate replace to="../friends-group-list" />
-    )
-    else return ( 
+    if (isReplied) return <Navigate replace to="../friends-group-list" />;
+    else
+        return (
             <div className="form-box">
-            <h1 className="suppression-titre">Suppression du groupe</h1>
-            <form onSubmit={handleSubmit}>
-            <input
-                            type="password"
-                            name="mdp"
-                            placeholder="Saisir le mots de passe pour confirmer"
-                            value={formValues.mdp}
-                            onChange={handleChange}
-            ></input>
-                            <p className="error-form">{formErrors.mdp}</p>
-                            
-                    <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
-                    </form>
-        </div>
+                <h1 className="suppression-titre">Suppression du groupe</h1>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="password"
+                        name="mdp"
+                        placeholder="Saisir le mots de passe pour confirmer"
+                        value={formValues.mdp}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.mdp}</p>
+
+                    <div className="button-forms-wrap">
+                        <button type="submit" className="formulaire-submit">
+                            Valider
+                        </button>
+                    </div>
+                </form>
+            </div>
         );
 }
-
 
 export default Delete_group;

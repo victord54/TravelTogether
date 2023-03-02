@@ -1,15 +1,14 @@
 import "../styles/Profil.css";
 import { useState } from "react";
-import { useAuth } from "../components/AuthProvider"
-import React from "react"
+import { useAuth } from "../components/AuthProvider";
+import React from "react";
 import axios from "axios";
 import { url_api } from "../data/url_api";
 import { Link } from "react-router-dom";
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate } from "react-router-dom";
 
 function ModifProfil() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const { auth } = useAuth();
     const initialValue = {
         lastName: localStorage.getItem("prenom"),
@@ -19,63 +18,102 @@ function ModifProfil() {
         phoneNumber: localStorage.getItem("numTel"),
         gender: localStorage.getItem("genre"),
         car: localStorage.getItem("aUneVoiture"),
-        mailUpdates: localStorage.getItem("notificationParMail")
+        mailUpdates: localStorage.getItem("notificationParMail"),
     };
     const [formValues, setInputValues] = useState(initialValue);
-    const [isUser, setIsUser] = useState(false);
-    const [file, setFile] = useState()
+    //const [isUser, setIsUser] = useState(false);
+    const [file, setFile] = useState();
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmit, setIsSubmit] = useState(false);
+    //const [isSubmit, setIsSubmit] = useState(false);
 
-    console.log(initialValue.mailUpdates)
+    console.log(initialValue.mailUpdates);
 
     //Fonction qui retourne une des trucs si l'utilisateur est co ou non
     function affichageBienvenue() {
         var message;
         if (auth) {
-            message =
+            message = (
                 <nav>
                     <ul>
                         <Link to="../profile">Retour</Link>
                     </ul>
                 </nav>
-                ;
-        }
-        else {
-            message = <h3 className="par-pitié-sois-centré"> Il semblerait que vous ne soyez pas connecté. </h3>;
+            );
+        } else {
+            message = (
+                <h3 className="par-pitié-sois-centré">
+                    {" "}
+                    Il semblerait que vous ne soyez pas connecté.{" "}
+                </h3>
+            );
         }
         return message;
     }
 
     function handleChange(event) {
         console.log("handleChange()");
-        console.log(event.target.value)
-        setInputValues({ ...formValues, [event.target.name]: event.target.value });
+        console.log(event.target.value);
+        setInputValues({
+            ...formValues,
+            [event.target.name]: event.target.value,
+        });
     }
 
     function handleFile(e) {
         console.log("handleFile()");
         if (e.target.files) {
-            setFile(e.target.files[0])
+            setFile(e.target.files[0]);
         }
     }
 
     //Fonction qui gère et affiche tout ce qui est relatif aux modifs; IMPLÉMENTER DES VÉRIFICATIONS
-    function modificationProfil() { //éventuellement rajouter des onChange pour vérifier que l'utilisateur ne rentre pas nimp
+    function modificationProfil() {
+        //éventuellement rajouter des onChange pour vérifier que l'utilisateur ne rentre pas nimp
         return (
             <form onSubmit={submitFormulaire} className="form-box">
-                <p> <strong> Modifications: </strong></p>
+                <p>
+                    {" "}
+                    <strong> Modifications: </strong>
+                </p>
                 <ul className="liste-sans-puces">
-                    <li> Photo de profil : <input
-                        type="file" name="picture" className="not-text-input" accept="image/png, image/jpeg" onChange={handleFile}
-                    ></input></li>
-                    <li> Nom :  <input
-                        type="text" name="firstName" className="fullTexte" value={formValues.firstName} onChange={handleChange}
-                    ></input> <p className="error-form">{formErrors.firstName}</p> </li>
-                    <li> Prénom : <input
-                        type="text" name="lastName" className="fullTexte" value={formValues.lastName} onChange={handleChange}
-                    ></input> <p className="error-form">{formErrors.lastName}</p> </li>
-                    <li className="radio"> Genre :
+                    <li>
+                        {" "}
+                        Photo de profil :{" "}
+                        <input
+                            type="file"
+                            name="picture"
+                            className="not-text-input"
+                            accept="image/png, image/jpeg"
+                            onChange={handleFile}
+                        ></input>
+                    </li>
+                    <li>
+                        {" "}
+                        Nom :{" "}
+                        <input
+                            type="text"
+                            name="firstName"
+                            className="fullTexte"
+                            value={formValues.firstName}
+                            onChange={handleChange}
+                        ></input>{" "}
+                        <p className="error-form">{formErrors.firstName}</p>{" "}
+                    </li>
+                    <li>
+                        {" "}
+                        Prénom :{" "}
+                        <input
+                            type="text"
+                            name="lastName"
+                            className="fullTexte"
+                            value={formValues.lastName}
+                            onChange={handleChange}
+                        ></input>{" "}
+                        <p className="error-form">{formErrors.lastName}</p>{" "}
+                    </li>
+                    <li className="radio">
+                        {" "}
+                        Genre :
                         <input
                             type="radio"
                             name="gender"
@@ -104,10 +142,21 @@ function ModifProfil() {
                         ></input>
                         Neutre
                     </li>
-                    <li> Numéro de tel : <input
-                        type="text" name="phoneNumber" className="fullTexte" value={formValues.phoneNumber} onChange={handleChange}
-                    ></input> <p className="error-form">{formErrors.phoneNumber}</p> </li>
-                    <li className="radio"> En possession d'une voiture :
+                    <li>
+                        {" "}
+                        Numéro de tel :{" "}
+                        <input
+                            type="text"
+                            name="phoneNumber"
+                            className="fullTexte"
+                            value={formValues.phoneNumber}
+                            onChange={handleChange}
+                        ></input>{" "}
+                        <p className="error-form">{formErrors.phoneNumber}</p>{" "}
+                    </li>
+                    <li className="radio">
+                        {" "}
+                        En possession d'une voiture :
                         <input
                             type="radio"
                             name="car"
@@ -127,7 +176,9 @@ function ModifProfil() {
                         ></input>
                         Non
                     </li>
-                    <li className="radio"> Notifications par mail :
+                    <li className="radio">
+                        {" "}
+                        Notifications par mail :
                         <input
                             type="radio"
                             name="mailUpdates"
@@ -147,14 +198,37 @@ function ModifProfil() {
                         ></input>
                         Non
                     </li>
-                    <li> Mot de passe : <input
-                        type="password" name="password" className="fullTexte" value={formValues.password} onChange={handleChange}
-                    ></input> <p className="error-form">{formErrors.password}</p> </li>
-                    <li> Confirmation Mot de Passe : <input
-                        type="password" name="passwordConfirmation" className="fullTexte" value={formValues.passwordConfirmation} onChange={handleChange}
-                    ></input> <p className="error-form">{formErrors.passwordConfirmation}</p> </li>
+                    <li>
+                        {" "}
+                        Mot de passe :{" "}
+                        <input
+                            type="password"
+                            name="password"
+                            className="fullTexte"
+                            value={formValues.password}
+                            onChange={handleChange}
+                        ></input>{" "}
+                        <p className="error-form">{formErrors.password}</p>{" "}
+                    </li>
+                    <li>
+                        {" "}
+                        Confirmation Mot de Passe :{" "}
+                        <input
+                            type="password"
+                            name="passwordConfirmation"
+                            className="fullTexte"
+                            value={formValues.passwordConfirmation}
+                            onChange={handleChange}
+                        ></input>{" "}
+                        <p className="error-form">
+                            {formErrors.passwordConfirmation}
+                        </p>{" "}
+                    </li>
                 </ul>
-                <button type="submit" className="formulaire-submit"> Valider changements </button>
+                <button type="submit" className="formulaire-submit">
+                    {" "}
+                    Valider changements{" "}
+                </button>
             </form>
         );
     }
@@ -162,8 +236,8 @@ function ModifProfil() {
     //Appel de la validation formulaire
     function submitFormulaire(evenement) {
         evenement.preventDefault();
-        const errors = (validateForm(formValues))
-        setFormErrors(errors)
+        const errors = validateForm(formValues);
+        setFormErrors(errors);
         if (Object.keys(errors).length === 0) {
             sendDataToServer();
         }
@@ -252,53 +326,55 @@ function ModifProfil() {
         return errors;
     }
 
-
     function sendDataToServer() {
         console.log("Envoi des changements.");
 
-        const formData = new FormData()
-        formData.append("mail", localStorage.getItem("mail"))
-        formData.append("lastName", formValues.lastName)
-        formData.append("firstName", formValues.firstName)
-        formData.append("phoneNumber", formValues.phoneNumber)
-        formData.append("password", formValues.password)
-        formData.append("gender", formValues.gender)
-        formData.append("car", formValues.car)
-        formData.append("notification", formValues.mailUpdates)
+        const formData = new FormData();
+        formData.append("mail", localStorage.getItem("mail"));
+        formData.append("lastName", formValues.lastName);
+        formData.append("firstName", formValues.firstName);
+        formData.append("phoneNumber", formValues.phoneNumber);
+        formData.append("password", formValues.password);
+        formData.append("gender", formValues.gender);
+        formData.append("car", formValues.car);
+        formData.append("notification", formValues.mailUpdates);
 
         if (file) {
-            formData.append("file", file)
+            formData.append("file", file);
         } else {
-            formData.append("link_picture", localStorage.getItem("picture"))
+            formData.append("link_picture", localStorage.getItem("picture"));
         }
         //console.log(formData);
 
         axios
-            .post(url_api.url + "/save_profile.php", formData)
+            .post(url_api.url + "/save_profile", formData)
             .then(function (response) {
                 console.log("Response2 :" + response.data);
                 console.log("Reload infos user");
 
                 //on recharge le localStorage avec les nouvelles infos
-                localStorage.setItem("nom", formValues.firstName);
-                localStorage.setItem("prenom", formValues.lastName);
+                localStorage.setItem("nom", formValues.lastName);
+                localStorage.setItem("prenom", formValues.firstName);
                 localStorage.setItem("numTel", formValues.phoneNumber);
                 localStorage.setItem("genre", formValues.gender);
                 localStorage.setItem("aUneVoiture", formValues.car);
-                localStorage.setItem("notificationParMail", formValues.mailUpdates);
-                
-                if (file){ //Le file avait changé
-                    localStorage.setItem("photo",response.data)
+                localStorage.setItem(
+                    "notificationParMail",
+                    formValues.mailUpdates
+                );
+
+                if (file) {
+                    //Le file avait changé
+                    localStorage.setItem("photo", response.data);
                 }
-            
+
                 //Retour profil
-                navigate('/profile')
+                navigate("/profile");
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
     }
-
 
     return (
         <main>
@@ -306,7 +382,6 @@ function ModifProfil() {
             {modificationProfil()}
         </main>
     );
-
 }
 
 export default ModifProfil;

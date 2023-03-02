@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
@@ -8,7 +8,7 @@ import { url_api } from "../data/url_api";
 
 function Create_group() {
     const initialValue = {
-        group: ""
+        group: "",
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
@@ -20,16 +20,16 @@ function Create_group() {
         var errors = await validateForm(formValues);
         setFormErrors(errors);
         setIsSubmit(true);
-        
+
         console.log(
             "submit : " +
                 isSubmit +
                 "; length : " +
                 Object.keys(formErrors).length
         );
-      
+
         if (Object.keys(errors).length === 0) {
-             sendDataToServer();
+            sendDataToServer();
         }
     }
 
@@ -38,13 +38,13 @@ function Create_group() {
     }
 
     async function sendDataToServer() {
-        const formData = new FormData()
-        formData.append("nom", formValues.group)
-        formData.append("mail", localStorage.getItem("mail"))
+        const formData = new FormData();
+        formData.append("nom", formValues.group);
+        formData.append("mail", localStorage.getItem("mail"));
         await axios
-            .post(url_api.url + "/create_group.php", formData)
+            .post(url_api.url + "/create_group", formData)
             .then(function (response) {
-                setInputValues({group: response.data});
+                setInputValues({ group: response.data });
                 setIsLoaded(true);
             })
             .catch(function (error) {
@@ -61,25 +61,28 @@ function Create_group() {
         }
         return errors;
     }
-        if (isLoaded) {
-            return <Navigate replace to={"/groupe/"+formValues.group} />;
-        } else
-            return (
-                <div className="form-box">
+    if (isLoaded) {
+        return <Navigate replace to={"/groupe/" + formValues.group} />;
+    } else
+        return (
+            <div className="form-box">
                 <h1 className="creation-titre">Création d'un nouveau groupe</h1>
                 <form onSubmit={handleSubmit}>
-                <input
-                                type="text"
-                                name="group"
-                                value={formValues.group}
-                                onChange={handleChange}
-                            ></input>
-                            <p className="error-form">{formErrors.group}</p>
-                            <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
-
-                        </form>
+                    <input
+                        type="text"
+                        name="group"
+                        value={formValues.group}
+                        onChange={handleChange}
+                    ></input>
+                    <p className="error-form">{formErrors.group}</p>
+                    <div className="button-forms-wrap">
+                        <button type="submit" className="formulaire-submit">
+                            Valider
+                        </button>
+                    </div>
+                </form>
             </div>
-            );
+        );
 }
 
 export default Create_group;

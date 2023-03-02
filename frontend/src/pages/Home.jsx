@@ -1,11 +1,47 @@
 import "../styles/Home.css";
 import { useState } from "react";
-import {useAuth} from "../components/AuthProvider"
+import { url_api } from "../data/url_api";
+import {useAuth} from "../components/AuthProvider";
+import axios from "axios";
 
 function Home() {
     const { auth } = useAuth();
+    const [ offres, setOffres ] = useState({offres : [], statut : ""});
     
-    return (
+    async function getOffres() {
+        await axios
+            .get(url_api.url + "/offer")
+            .then(function (reponse) {
+                if (reponse.data == null) {
+                    console.log("Bug");
+                } else {
+                    setOffres({offres : reponse.data, statut : "ok" });
+                }
+            })
+            .catch(function (error) {
+                console.log("Error :" + error);
+            });
+    }
+
+    if(offres.statut === "") {
+        getOffres();
+    } else if(offres.statut === "ok" && offres.offres.length === 0)
+        return(
+            <main>
+            {auth ? (
+                <p>
+                    Bienvenue {localStorage.getItem("nom")}{" "}
+                    {localStorage.getItem("prenom")} !
+                </p>
+            ) : (
+                <p> Bienvenue !</p>
+            )}
+            <article>
+                <p>Aucune offre disponible</p>
+            </article>
+        </main>
+        )
+    else return (
         <main>
             {auth ? (
                 <p>
@@ -16,18 +52,14 @@ function Home() {
                 <p> Bienvenue !</p>
             )}
             <article>
-                <section>a</section>{" "}
-                {/* A remplacer par un component pour afficher les trajets récents*/}
-                <section>b</section>
-                <section>c</section>
-                <section>d</section>
-                <section>e</section>
-                <section>f</section>
-                <section>g</section>
-                <section>h</section>
-                <section>i</section>
-                <section>j</section>
-                <section>k</section>
+                {offres.offres.map((offre) => <section key={offre["idfOffre"]}>
+                    <h2>{offre["nom"] + " " + offre["prenom"]}</h2>
+                    <p>{offre["dateDepart"] + " " + offre["heureDepart"]}</p>
+                    <h3>Précision :</h3>
+                    <p>{offre["precisions"]}</p>
+                    <h3>Informations :</h3>
+                    <p>{offre["infos"]}</p>
+                </section>)}
             </article>
         </main>
     );
