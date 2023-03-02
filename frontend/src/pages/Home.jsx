@@ -3,6 +3,7 @@ import { useState } from "react";
 import { url_api } from "../data/url_api";
 import {useAuth} from "../components/AuthProvider";
 import axios from "axios";
+import Offer from "../components/Offer";
 
 function Home() {
     const { auth } = useAuth();
@@ -52,14 +53,7 @@ function Home() {
                 {localStorage.getItem("prenom")} !
             </p>
             <article>
-                {offres.offres.map((offre) => <section key={offre["idfOffre"]}>
-                    <h2>{offre["nom"] + " " + offre["prenom"]}</h2>
-                    <p>{offre["dateDepart"] + " " + offre["heureDepart"]}</p>
-                    <h3>Précision :</h3>
-                    <p>{offre["precisions"]}</p>
-                    <h3>Informations :</h3>
-                    <p>{offre["infos"]}</p>
-                </section>)}
+                {offres.offres.map((offre) => Offer(offre))}
             </article>
         </main>
     );
