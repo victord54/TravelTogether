@@ -23,7 +23,11 @@ function Home() {
             });
     }
 
-    if(offres.statut === "") {
+    if(!auth) {
+        return <main>
+            <p>Bienvenue !</p>
+        </main>
+    } else if(offres.statut === "") {
         getOffres();
     } else if(offres.statut === "ok" && offres.offres.length === 0)
         return(
@@ -43,14 +47,10 @@ function Home() {
         )
     else return (
         <main>
-            {auth ? (
-                <p>
-                    Bienvenue {localStorage.getItem("nom")}{" "}
-                    {localStorage.getItem("prenom")} !
-                </p>
-            ) : (
-                <p> Bienvenue !</p>
-            )}
+            <p>
+                Bienvenue {localStorage.getItem("nom")}{" "}
+                {localStorage.getItem("prenom")} !
+            </p>
             <article>
                 {offres.offres.map((offre) => <section key={offre["idfOffre"]}>
                     <h2>{offre["nom"] + " " + offre["prenom"]}</h2>
