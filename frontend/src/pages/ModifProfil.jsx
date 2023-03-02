@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 
 function ModifProfil() {
     const navigate = useNavigate();
-    const { auth } = useAuth();
     const initialValue = {
         lastName: localStorage.getItem("prenom"),
         firstName: localStorage.getItem("nom"),
@@ -20,33 +19,23 @@ function ModifProfil() {
         car: localStorage.getItem("aUneVoiture"),
         mailUpdates: localStorage.getItem("notificationParMail"),
     };
+    const { setAuth } = useAuth();
     const [formValues, setInputValues] = useState(initialValue);
-    //const [isUser, setIsUser] = useState(false);
     const [file, setFile] = useState();
     const [formErrors, setFormErrors] = useState({});
-    //const [isSubmit, setIsSubmit] = useState(false);
 
-    console.log(initialValue.mailUpdates);
+    //console.log(initialValue.mailUpdates);
 
     //Fonction qui retourne une des trucs si l'utilisateur est co ou non
     function affichageBienvenue() {
         var message;
-        if (auth) {
-            message = (
-                <nav>
-                    <ul>
-                        <Link to="../profile">Retour</Link>
-                    </ul>
-                </nav>
-            );
-        } else {
-            message = (
-                <h3 className="par-pitié-sois-centré">
-                    {" "}
-                    Il semblerait que vous ne soyez pas connecté.{" "}
-                </h3>
-            );
-        }
+        message = (
+            <nav>
+                <ul>
+                    <Link to="../profile">Retour</Link>
+                </ul>
+            </nav>
+        );
         return message;
     }
 
