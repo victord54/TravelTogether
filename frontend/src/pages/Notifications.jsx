@@ -62,6 +62,18 @@ function Notifications() {
             });
     }
 
+    async function deleteNotif(idNotif) {
+        await axios
+            .delete(url_api + "notifications", {
+                params: {
+                    idf: idNotif,
+                },
+            })
+            .then(function (response) {
+                console.log(response.data);
+            });
+    }
+
     if (!isGetData) {
         getNotifs("dallevictor@gmail.com");
         setIsGetData(true);
