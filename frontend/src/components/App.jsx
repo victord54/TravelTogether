@@ -17,6 +17,7 @@ import Groupe from "../pages/Groupe";
 import FriendsGroupList from "../pages/FriendsGroupList";
 import DeleteGroup from "../pages/DeleteGroup";
 import SearchOffer from "../pages/SearchOffer";
+import Notifications from "../pages/Notifications";
 
 function App() {
     const { auth } = useAuth();
@@ -111,6 +112,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <Groupe />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="notifications"
+                    element={
+                        <PrivateRoute>
+                            <Notifications />
                         </PrivateRoute>
                     }
                 />
