@@ -9,7 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $data = $statement->fetchAll();
     echo json_encode($data);
 } else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+    $statement = $pdo->prepare("UPDATE NOTIFICATION SET etat=1 WHERE idfNotif=:idf");
+    $statement->bindValue(":idf", $_GET['idf']);
+    $statement->execute();
     echo json_encode("j'ai bien reçu que tu as lu " . $_GET["idf"]);
 } else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $statement = $pdo->prepare("DELETE FROM NOTIFICATION WHERE idfNotif=:idf");
+    $statement->bindValue(":idf", $_GET['idf']);
+    $statement->execute();
     echo json_encode("j'ai bien reçu que tu supprimes " . $_GET["idf"]);
 }
