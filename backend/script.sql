@@ -74,34 +74,17 @@ CREATE TABLE
 
 CREATE TABLE
     NOTIFICATION(
-        idfNotification INT PRIMARY KEY AUTO_INCREMENT,
+        idfNotif INT PRIMARY KEY AUTO_INCREMENT,
+        typeNotif ENUM('groupe', 'offre', 'reponse'),
+        dateNotif DATE NOT NULL,
         notifie VARCHAR(50) NOT NULL,
+        idfGroupe INT DEFAULT NULL,
+        idfOffre INT DEFAULT NULL,
+        interesse VARCHAR(50) DEFAULT NULL,
         informations TEXT NOT NULL,
-        FOREIGN KEY (notifie) REFERENCES UTILISATEUR(email)
-    );
-
-CREATE TABLE
-    NOTIFICATIONGROUPE(
-        idfNotification INT PRIMARY KEY,
-        idfGroupe INT NOT NULL,
-        FOREIGN KEY (idfNotification) REFERENCES NOTIFICATION(idfNotification),
-        FOREIGN KEY (idfGroupe) REFERENCES GROUPE(idfGROUPE)
-    );
-
-CREATE TABLE
-    NOTIFICATIONOFFRE(
-        idfNotification INT PRIMARY KEY,
-        idfOffre INT NOT NULL,
-        FOREIGN KEY (idfNotification) REFERENCES NOTIFICATION(idfNotification),
-        FOREIGN KEY (idfOffre) REFERENCES OFFRE(idfOffre)
-    );
-
-CREATE TABLE
-    NOTIFICATIONREPONSE(
-        idfNotification INT PRIMARY KEY,
-        idfOffre INT NOT NULL,
-        interesse VARCHAR(50) NOT NULL,
-        FOREIGN KEY (idfNotification) REFERENCES NOTIFICATION(idfNotification),
+        etat BOOLEAN NOT NULL DEFAULT 0,
+        FOREIGN KEY (notifie) REFERENCES UTILISATEUR(email),
+        FOREIGN KEY (idfGroupe) REFERENCES GROUPE(idfGROUPE),
         FOREIGN KEY (idfOffre) REFERENCES OFFRE(idfOffre),
         FOREIGN KEY (interesse) REFERENCES UTILISATEUR(email)
     );
