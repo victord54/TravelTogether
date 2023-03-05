@@ -2,10 +2,12 @@ import "../styles/Banner.css";
 import logo from "../assets/travelTogether.png";
 import { Link } from "react-router-dom";
 import { useState } from "react"
+import { useCar } from "../components/CarProvider";
 
 function Banner() {
     const [isNavExpanded, setIsNavExpanded] = useState(false)
-
+    const { car } = useCar();
+    console.log(car)
     return (
         <header>
             <nav className="navigation">
@@ -36,7 +38,7 @@ function Banner() {
 
                 <div className={isNavExpanded ? "navigation-menu expanded" : "navigation-menu"}>
                     <ul>
-                        {localStorage.getItem('aUneVoiture') === "0" ? <></> : <li><Link to="create-offer" onClick={() => setIsNavExpanded(false)}>Créer une offre</Link></li>}
+                        {car ? <li><Link to="create-offer" onClick={() => setIsNavExpanded(false)}>Créer une offre</Link></li> : <></> }
                         <li><Link to="search-offer" onClick={() => setIsNavExpanded(false)}>Rechercher une offre</Link></li>
                         <li><Link to="notifications" onClick={() => setIsNavExpanded(false)}>Notifications</Link></li>
                         <li><Link to="profile" onClick={() => setIsNavExpanded(false)}>Mon profil</Link></li>

@@ -18,6 +18,7 @@ import FriendsGroupList from "../pages/FriendsGroupList";
 import DeleteGroup from "../pages/DeleteGroup";
 import SearchOffer from "../pages/SearchOffer";
 import Notifications from "../pages/Notifications";
+import CarProvider from "./CarProvider";
 
 function App() {
     const { auth } = useAuth();
