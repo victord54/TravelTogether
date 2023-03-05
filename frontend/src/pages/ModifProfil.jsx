@@ -5,9 +5,12 @@ import axios from "axios";
 import { url_api } from "../data/url_api";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useCar} from "../components/CarProvider"
 
 function ModifProfil() {
     const navigate = useNavigate();
+    const {setCar} = useCar()
+
     const initialValue = {
         lastName: localStorage.getItem("prenom"),
         firstName: localStorage.getItem("nom"),
@@ -354,7 +357,9 @@ function ModifProfil() {
                     //Le file avait changé
                     localStorage.setItem("photo", response.data);
                 }
-
+                
+                setCar(localStorage.getItem("aUneVoiture") === "1")
+                
                 //Retour profil
                 navigate("/profile");
             })

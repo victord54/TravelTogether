@@ -1,10 +1,13 @@
 import { Navigate } from "react-router-dom";
 import {useAuth} from "../components/AuthProvider"
+import { useEffect } from "react";
 
 function Logout() {
-    localStorage.clear();
     const { setAuth } = useAuth();
-    setAuth(false);
+    localStorage.clear();
+    useEffect(() => {
+        setAuth(false)
+    });
     return <Navigate replace to="/" />;
 }
 
