@@ -15,9 +15,11 @@ function Notifications() {
     const [isGetData, setIsGetData] = useState(false);
     const [isData, setIsData] = useState(false);
     const [open, setOpen] = useState(false);
+    const [dialogTuple,setDialogTuple] = useState([])
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (tuple) => {
         setOpen(true);
+        setDialogTuple(tuple)
     };
 
     const handleClose = () => {
@@ -45,6 +47,7 @@ function Notifications() {
                 console.log(response.data);
                 if (response.data.length > 0) {
                     setIsData(true);
+                    console.log(response.data);
                     setData(response.data);
                 }
             });
@@ -75,13 +78,13 @@ function Notifications() {
     }
 
     if (!isGetData) {
-        getNotifs("dallevictor@gmail.com");
+        getNotifs(localStorage.getItem('mail'));
         setIsGetData(true);
     } else {
         if (isData) {
             return data.map((tuple) => (
                 <div key={tuple.idfNotif}>
-                    <Link key={tuple.idfNotif} onClick={handleClickOpen}>
+                    <Link key={tuple.idfNotif} onClick={() => handleClickOpen(tuple)}>
                         <Notif
                             key={tuple.idfNotif + "notif"}
                             type={tuple.typeNotif}
@@ -94,13 +97,13 @@ function Notifications() {
                         onClose={handleClose}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
-                    >
+                    >   
                         <DialogTitle>
-                            {"Use Google's location service?"}
+                            {dialogTuple.typeNotif}
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                {tuple.idfNotif}
+                                {dialogTuple.informations}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

@@ -2,7 +2,7 @@
 include 'header.php';
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $statement = $pdo->prepare("SELECT * FROM NOTIFICATION WHERE notifie = :mail");
+    $statement = $pdo->prepare("SELECT * FROM NOTIFICATION WHERE notifie = :mail ORDER BY idfNotif DESC");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":mail", $_GET['mail']);
     $statement->execute();
