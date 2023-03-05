@@ -168,8 +168,12 @@ function Signin() {
         if (!data.mail) {
             errors.mail = "L'adresse email est obligatoire.";
         } else {
-            //On check si le mail est déjà utilisé
-            await axios
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            if (!data.mail.match(regex)){
+                errors.mail = "Cette adresse mail n'est pas bonne."
+            } else {
+                //On check si le mail est déjà utilisé
+                await axios
                 .get(url_api.url + "/signin", {
                     params: {
                         mail: data.mail,
@@ -181,6 +185,8 @@ function Signin() {
                         errors.mail = "L'adresse mail est déjà utilisée.";
                     }
                 });
+            }
+            
         }
 
         //Vérification du mot de passe
