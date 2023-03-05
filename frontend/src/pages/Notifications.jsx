@@ -106,12 +106,35 @@ function Notifications() {
                                 {dialogTuple.informations}
                             </DialogContentText>
                         </DialogContent>
+
+                        {dialogTuple.typeNotif ==="reponse" ?
+                                dialogTuple.statutOffre === "attente" ? 
+                                <DialogActions>
+                                <Button onClick={handleClose}>
+                                    Accepter
+                                </Button>
+                                <Button onClick={handleClose}>Refuser</Button>
+                                </DialogActions>
+                                :
+                                <>
+                                <DialogContent>
+                                    <DialogContentText>
+                                    Vous avez déjà acceptée cette personne.
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                <Button onClick={handleClose}>Supprimer</Button>
+                                </DialogActions></>
+                        
+                        : 
                         <DialogActions>
                             <Button onClick={handleClose}>
                                 Marquer comme lue
                             </Button>
                             <Button onClick={handleClose}>Supprimer</Button>
                         </DialogActions>
+                        
+                         }                  
                     </Dialog>
                 </div>
             ));
