@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { url_api } from "../data/url_api";
 import Offer from "../components/Offer";
+import { Link } from "react-router-dom";
 
 function Search_offer() {
     const initialValue = {
@@ -43,10 +44,13 @@ function Search_offer() {
         axios.get(url_api.url + "/search_offer", {
             params: {
                 dateDepart : formValues.date,
-                nbPlaceDisponible : formValues.size
+                nbPlaceDisponible : formValues.size,
+                villeDepart : citiesCodes.start,
+                villeArrivee : citiesCodes.end
             }
         })
           .then(function (response) {
+            console.log(response);
             setOffers({statut : "ok", offers : response.data});
           })
           .catch(function (error) {
@@ -160,7 +164,7 @@ function Search_offer() {
         <main>
         {searchForm}
         <article>
-            {offers.offers.map(offre => Offer(offre))}
+            {offers.offers.map((offre,index) => <Link to={"../offre/" + offre["idfOffre"]} key={index}>{Offer(offre)}</Link>)}
         </article>
     </main>
     );
