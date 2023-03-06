@@ -2,16 +2,18 @@
 include 'header.php';
 
 function getCity($code) {
-    $res = "";
+    $infos = "";
     $fh = fopen("https://geo.api.gouv.fr/communes?code=".$code."&fields=nom,codesPostaux&format=json&geometry=centre", 'r');
-    while(! feof($fh)) $res .= fread($fh, 1048576);
-    $res = json_decode($res, true);
-    try {
-        return $res[0];
-    } catch (Exception $e){
-        $res["nom"] = $code;
-        return $res;
+    while(! feof($fh)) $infos .= fread($fh, 1048576);
+    $infos = json_decode($infos, true);
+
+    $res = $infos[0]["nom"]." (";
+    foreach($infos[0]["codesPostaux"] as $index=>$codePostal) {
+        $res .= $codePostal.", ";
     }
+    if (strcmp($res, '') != 0) $res = mb_substr($res, 0, -2);
+    $res .= ")";
+    return $res;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -31,13 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
         foreach($inter as $indexVille=>$ville) {
             $test = getCity($ville["ville"]);
-            $data["inter"][$indexVille] = $test["nom"];
+            $data["inter"][$indexVille] = $test;
         }
 
         $villeDep = getCity($data["villeDepart"]);
-        $data["villeDepart"] = $villeDep["nom"];
+        $data["villeDepart"] = $villeDep;
         $villeArrivee = getCity($data["villeArrivee"]);
-        $data["villeArrivee"] = $villeArrivee["nom"];
+        $data["villeArrivee"] = $villeArrivee;
     
         $reponse = $data;
     } else {
@@ -48,9 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
         foreach($data as $index=>$offer) {
             $villeDep = getCity($offer["villeDepart"]);
-            $data[$index]["villeDepart"] = $villeDep["nom"];
+            $data[$index]["villeDepart"] = $villeDep;
             $villeArrivee = getCity($offer["villeArrivee"]);
-            $data[$index]["villeArrivee"] = $villeArrivee["nom"];
+            $data[$index]["villeArrivee"] = $villeArrivee;
 
             $statement = $pdo->prepare("SELECT ville FROM PASSE_PAR JOIN OFFRE USING(idfOffre)
             WHERE idfOffre = :idfOffre ORDER BY position");
@@ -58,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $statement->bindValue(":idfOffre", $offer['idfOffre']);
             $statement->execute();
             $villes = $statement->fetchAll();
-            
+
             foreach($villes as $indexVille=>$ville) {
                 $test = getCity($ville["ville"]);
-                $data[$index]["inter"][$indexVille] = $test["nom"];
+                $data[$index]["inter"][$indexVille] = $test;
             }
         }
     
