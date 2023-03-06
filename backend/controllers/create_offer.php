@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe FROM APPARTIENT JOIN GROUPE USING(idfGroupe) WHERE email = :mail UNION SELECT idfGroupe, nomDeGroupe FROM GROUPE WHERE dirigeant = :mail");
+    $statement = $pdo->prepare("SELECT idfGroupe, nomDeGroupe FROM GROUPE WHERE dirigeant = :mail");
     $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":mail", $_GET['mail']);
     $statement->execute();

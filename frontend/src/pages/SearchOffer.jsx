@@ -49,7 +49,8 @@ function Search_offer() {
                 nbPlaceDisponible : formValues.size,
                 villeDepart : citiesCodes.start,
                 villeArrivee : citiesCodes.end,
-                heure : time
+                heure : time,
+                email : localStorage.getItem("mail")
             }
         })
           .then(function (response) {

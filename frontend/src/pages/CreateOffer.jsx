@@ -38,6 +38,7 @@ function Create_offer() {
      * @param {*} e Un évènement
      */
     async function handleSubmit(e) {
+        console.log(formValues);
         e.preventDefault();
         var errors = await validateForm(formValues);
         setFormErrors(errors);
@@ -128,11 +129,11 @@ function Create_offer() {
             if (reponse.data !== null && reponse.data.length >= 1) {
                 var groupes = reponse.data;
                 setProposition({ ...proposition, groupes: groupes });
+                setPrivate(!privateOffer);
                 setInputValues({
                     ...formValues,
-                    [formValues.groupe.name]: groupes[0]["idfGroupe"],
+                    ["groupe"]: groupes[0]["idfGroupe"]
                 });
-                setPrivate(!privateOffer);
             }
         } else {
             setPrivate(!privateOffer);
@@ -154,7 +155,10 @@ function Create_offer() {
         formData.append("villeDepart", citiesCodes.start);
         formData.append("villeArrivee", citiesCodes.end);
         formData.append("arretIntermediaire", citiesCodes.inter);
-        if (privateOffer) formData.append("groupe", formValues.groupe);
+        if (privateOffer) {
+            formData.append("groupe", formValues.groupe);
+            console.log("groupe privée " + formValues.groupe);
+        } 
         axios
             .post(url_api.url + "/create_offer", formData)
             .then(function (response) {

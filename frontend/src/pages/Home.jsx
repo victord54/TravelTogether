@@ -12,7 +12,11 @@ function Home() {
     
     async function getOffres() {
         await axios
-            .get(url_api.url + "/offer")
+            .get(url_api.url + "/offer", {
+                params: {
+                    email : localStorage.getItem("mail")
+                }
+            })
             .then(function (reponse) {
                 if (reponse.data == null) {
                     console.log("Bug");
