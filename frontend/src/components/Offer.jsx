@@ -9,7 +9,7 @@ function Offer(data) {
             <p>{data["dateDepart"] + " " + data["heureDepart"]}</p>
             <h3>Arrêts intermédiaires :</h3>
             <ul>
-                {data["inter"].map((city, index) => <ul key={index}>{city["ville"]}</ul>)}
+                {data["inter"].map((city, index) => <ul key={index}>{city}</ul>)}
             </ul>
             <h3>Précision :</h3>
             <p>{data["precisions"]}</p>

@@ -17,6 +17,7 @@ function Home() {
                 if (reponse.data == null) {
                     console.log("Bug");
                 } else {
+                    console.log(reponse.data);
                     setOffres({offres : reponse.data, statut : "ok" });
                 }
             })
