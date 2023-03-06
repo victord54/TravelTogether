@@ -18,7 +18,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
-        $statement = $pdo->prepare("SELECT * FROM OFFRE o JOIN UTILISATEUR USING(email)
+        $statement = $pdo->prepare("SELECT *, ABS(TIME_TO_SEC(o.heureDepart) - TIME_TO_SEC(:heure)) as diffTemps FROM OFFRE o JOIN UTILISATEUR USING(email)
         WHERE dateDepart = :dateDepart AND nbPlaceDisponible >= :nbPlaceDisponible AND
         (idfOffre in (
             SELECT idfOffre
@@ -30,12 +30,14 @@
             )
         )   OR (villeDepart = :villeDepart AND :villeArrivee in (SELECT ville FROM PASSE_PAR WHERE idfOffre = o.idfOffre))
             OR (villeArrivee = :villeArrivee AND :villeDepart in (SELECT ville FROM PASSE_PAR WHERE idfOffre = o.idfOffre)))
-            OR(villeDepart = :villeDepart AND (villeArrivee = :villeArrivee))");
+            OR(villeDepart = :villeDepart AND (villeArrivee = :villeArrivee))
+        ORDER BY diffTemps");
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->bindValue(":dateDepart", $_GET['dateDepart']);
         $statement->bindValue(":nbPlaceDisponible", $_GET['nbPlaceDisponible']);
         $statement->bindValue(":villeDepart", $_GET['villeDepart']);
-        $statement->bindValue(":villeArrivee", $_GET['villeArrivee']);
+        $statement->bindValue(":villeArrivee", $_GET['villeArrivee']); 
+        $statement->bindValue(":heure", $_GET['heure']);
         $statement->execute();
         $data = $statement->fetchAll();
 

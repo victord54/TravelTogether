@@ -41,12 +41,15 @@ function Search_offer() {
     }
 
     function sendDataToServer(){
+        var time = '00:00:00';
+        if(formValues.time) time = formValues.time;
         axios.get(url_api.url + "/search_offer", {
             params: {
                 dateDepart : formValues.date,
                 nbPlaceDisponible : formValues.size,
                 villeDepart : citiesCodes.start,
-                villeArrivee : citiesCodes.end
+                villeArrivee : citiesCodes.end,
+                heure : time
             }
         })
           .then(function (response) {
