@@ -3,7 +3,7 @@
 
     function getCity($code) {
         $infos = "";
-        $fh = fopen("https://geo.api.gouv.fr/communes?code=".$code."&fields=nom,codesPostaux&format=json&geometry=centre", 'r');
+        $fh = fopen("https://geo.api.gouv.fr/communes?code=".sprintf( '%05d', $code )."&fields=nom,codesPostaux&format=json&geometry=centre", 'r');
         while(! feof($fh)) $infos .= fread($fh, 1048576);
         $infos = json_decode($infos, true);
     
