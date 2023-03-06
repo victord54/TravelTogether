@@ -4,6 +4,7 @@ import { url_api } from "../data/url_api";
 import {useAuth} from "../components/AuthProvider";
 import axios from "axios";
 import Offer from "../components/Offer";
+import { Link } from "react-router-dom";
 
 function Home() {
     const { auth } = useAuth();
@@ -53,7 +54,7 @@ function Home() {
                 {localStorage.getItem("prenom")} !
             </p>
             <article>
-                {offres.offres.map((offre) => Offer(offre))}
+                {offres.offres.map((offre, index) => <Link to={"../offre/" + offre["idfOffre"]} key={index}>{Offer(offre)}</Link>)}
             </article>
         </main>
     );

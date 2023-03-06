@@ -11,6 +11,15 @@
         $statement->execute();
         $data = $statement->fetchAll();
 
+        foreach($data as $index=>$offer) {
+            $statement = $pdo->prepare("SELECT ville FROM PASSE_PAR JOIN OFFRE USING(idfOffre)
+            WHERE idfOffre = :idfOffre ORDER BY position");
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $statement->bindValue(":idfOffre", $offer['idfOffre']);
+            $statement->execute();
+            $data[$index]["inter"] = $statement->fetchAll();
+        }
+        
         $reponse = $data;
 
         echo json_encode($reponse);

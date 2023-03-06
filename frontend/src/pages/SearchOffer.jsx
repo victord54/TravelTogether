@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react';
+import axios from 'axios';
 import { url_api } from "../data/url_api";
 import Offer from "../components/Offer";
 
@@ -22,7 +22,6 @@ function Search_offer() {
         e.preventDefault();
         var errors = await validateForm(formValues);
         setFormErrors(errors);
-        console.log(errors);
         if (Object.keys(errors).length === 0 ) {
             sendDataToServer();
         }
