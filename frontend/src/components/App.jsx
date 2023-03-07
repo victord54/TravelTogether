@@ -16,6 +16,8 @@ import CreateGroup from "../pages/CreateGroup";
 import Groupe from "../pages/Groupe";
 import FriendsGroupList from "../pages/FriendsGroupList";
 import DeleteGroup from "../pages/DeleteGroup";
+import AddMember_group from "../pages/AddMember-group";
+import DeleteMember_group from "../pages/DeleteMember-group";
 import SearchOffer from "../pages/SearchOffer";
 import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
@@ -100,6 +102,22 @@ function App() {
                             <DeleteGroup />
                         </PrivateRoute>
                     }
+                />
+                <Route
+                    path="/deletemember-group/:id"
+                    element=
+                        {<PrivateRoute>
+                            <DeleteMember_group />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/addmember-group/:id"
+                    element=
+                        {<PrivateRoute>
+                            <AddMember_group />
+                        </PrivateRoute>
+                        }
                 />
                 <Route
                     path="/friends-group-list"
