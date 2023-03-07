@@ -53,6 +53,18 @@ function Notifications() {
             });
     }
 
+    async function responseNotif(idNotif) {
+        await axios
+            .response(url_api + "notifications", {
+                params: {
+                    idf: idNotif,
+                },
+            })
+            .then(function (response) {
+                console.log(response.data);
+            });
+    }
+
     async function updateNotif(idNotif) {
         await axios
             .put(url_api + "notifications", {
@@ -83,12 +95,12 @@ function Notifications() {
     } else {
         if (isData) {
             return data.map((tuple) => (
-                <div key={tuple.idfNotif}>
-                    <Link key={tuple.idfNotif} onClick={() => handleClickOpen(tuple)}>
+                <div key={tuple.idfNotification}>
+                    <Link key={tuple.idfNotification} onClick={() => handleClickOpen(tuple)}>
                         <Notif
-                            key={tuple.idfNotif + "notif"}
-                            type={tuple.typeNotif}
-                            date={tuple.dateNotif}
+                            key={tuple.idfNotification + "notif"}
+                            type={tuple.idfNotification}
+                            date={tuple.idfNotification}
                             message={tuple.informations}
                         />
                     </Link>
