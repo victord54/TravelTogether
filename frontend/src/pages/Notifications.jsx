@@ -36,6 +36,13 @@ function Notifications() {
         console.log("supprimer la notif ", id);
     };
 
+    const handleUpdate = (idNotif, ref) => {
+        
+        setOpen(false);
+        updateNotif(idNotif, ref);
+        console.log("update ", idNotif);
+    };
+
     async function getNotifs(id) {
         await axios
             .get(url_api.url + "/notifications", {
@@ -53,23 +60,12 @@ function Notifications() {
             });
     }
 
-    async function responseNotif(idNotif) {
+    async function updateNotif(idNotif, ref) { //data is not sent with post request
         await axios
-            .response(url_api + "notifications", {
-                params: {
-                    idf: idNotif,
-                },
-            })
-            .then(function (response) {
-                console.log(response.data);
-            });
-    }
-
-    async function updateNotif(idNotif) {
-        await axios
-            .put(url_api + "notifications", {
-                params: {
-                    idf: idNotif,
+            .post(url_api.url + "/notifications", {
+                data: {
+                    idf: 1,
+                    ref: "ref"
                 },
             })
             .then(function (response) {
@@ -95,12 +91,12 @@ function Notifications() {
     } else {
         if (isData) {
             return data.map((tuple) => (
-                <div key={tuple.idfNotification}>
-                    <Link key={tuple.idfNotification} onClick={() => handleClickOpen(tuple)}>
+                <div key={tuple.idfNotif}>
+                    <Link key={tuple.idfNotif} onClick={() => handleClickOpen(tuple)}>
                         <Notif
-                            key={tuple.idfNotification + "notif"}
-                            type={tuple.idfNotification}
-                            date={tuple.idfNotification}
+                            key={tuple.idfNotif + "notif"}
+                            type={tuple.typeNotif}
+                            date={tuple.dateNotif}
                             message={tuple.informations}
                         />
                     </Link>
@@ -120,9 +116,9 @@ function Notifications() {
                         </DialogContent>
 
                         {dialogTuple.typeNotif ==="reponse" ?
-                                dialogTuple.statutOffre === "attente" ? 
+                                dialogTuple.statutReponse === "attente" ? 
                                 <DialogActions>
-                                <Button onClick={handleClose}>
+                                <Button onClick={handleUpdate}>
                                     Accepter
                                 </Button>
                                 <Button onClick={handleClose}>Refuser</Button>
