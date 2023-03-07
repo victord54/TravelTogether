@@ -84,6 +84,7 @@ CREATE TABLE
         informations TEXT NOT NULL,
         etat BOOLEAN NOT NULL DEFAULT 0,
         statutReponse ENUM('attente', 'accepter', 'refuser'),
+        nbPlaceSouhaitees INT NOT NULL,
         FOREIGN KEY (notifie) REFERENCES UTILISATEUR(email),
         FOREIGN KEY (idfGroupe) REFERENCES GROUPE(idfGROUPE),
         FOREIGN KEY (idfOffre) REFERENCES OFFRE(idfOffre),
