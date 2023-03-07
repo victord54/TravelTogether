@@ -108,7 +108,7 @@ function Notifications() {
                         </DialogContent>
 
                         {dialogTuple.typeNotif ==="reponse" ?
-                                dialogTuple.statutOffre === "attente" ? 
+                                dialogTuple.statutReponse === "attente" ? 
                                 <DialogActions>
                                 <Button onClick={handleClose}>
                                     Accepter
