@@ -18,6 +18,10 @@ if ($_GET["request"] == "login") {
     require_once('controllers/friends_group.php');
 } else if ($_GET["request"] == "delete_group") {
     require_once('controllers/delete_group.php');
+} else if ($_GET["request"] == "addmember_group") {
+    require_once('controllers/addmember_group.php');
+} else if ($_GET["request"] == "deletemember_group") {
+    require_once('controllers/deletemember_group.php');
 } else if ($_GET["request"] == "offer") {
     require_once('controllers/offer.php');
 } else if ($_GET["request"] == "search_offer") {
