@@ -20,11 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     echo json_encode("j'ai bien reçu que tu supprimes " . $_GET["idf"]);
 }
 else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $statement = $pdo->prepare("UPDATE NOTIFICATION SET statutReponse=(:ref) AND etat='1' WHERE idfNotif=(:idf)"); //temporairement on considere accepte en tant que valeur unique 
-    $statement->bindValue(":idf", $_POST['idf']);
-    $statement->bindValue(":ref", $_POST['ref']);
+    $statement = $pdo->prepare("UPDATE NOTIFICATION SET statutReponse=(:ref), etat=1 WHERE idfNotif=(:idf)");
+    
+    //https://stackoverflow.com/questions/44799589/php-post-array-empty-on-axios-post solution credit
+    $body = file_get_contents('php://input');
+
+    // Parse json body and notify when error occurs
+    $data = json_decode($body, true);
+    
+    print_r($data);
+    $statement->bindValue(":idf", $data["idf"]);
+    $statement->bindValue(":ref", $data["ref"]);
     $statement->execute();
-    echo json_encode("j'ai bien reçu que tu as change le statut de la notification " . $_POST["idf"]);
-    //todo to finish: get interested user and send a notification of approval or disapproval
-    //reminder set idNotification to idfNotif to align back with new script
+    echo json_encode("j'ai bien reçu que tu as change le statut de la notification " . $data["ref"]);
 }

@@ -37,7 +37,6 @@ function Notifications() {
     };
 
     const handleUpdate = (idNotif, ref) => {
-        
         setOpen(false);
         updateNotif(idNotif, ref);
         console.log("update ", idNotif);
@@ -60,17 +59,21 @@ function Notifications() {
             });
     }
 
-    async function updateNotif(idNotif, ref) { //data is not sent with post request
-        await axios
-            .post(url_api.url + "/notifications", {
-                data: {
-                    idf: 1,
-                    ref: "ref"
-                },
-            })
+    async function updateNotif(idNotif, ref) { 
+        setOpen(false);
+        await  axios.post(url_api.url + "/notifications", {
+            
+                idf: idNotif,
+                ref: ref
+            
+          
+          })
             .then(function (response) {
                 console.log(response.data);
-            });
+            }).catch(function (error) {
+                console.log(error);
+              });;
+           
     }
 
     async function deleteNotif(idNotif) {
@@ -118,10 +121,10 @@ function Notifications() {
                         {dialogTuple.typeNotif ==="reponse" ?
                                 dialogTuple.statutReponse === "attente" ? 
                                 <DialogActions>
-                                <Button onClick={handleUpdate}>
+                                <Button onClick={() => updateNotif(dialogTuple.idfNotif, "accepter")}>
                                     Accepter
                                 </Button>
-                                <Button onClick={handleClose}>Refuser</Button>
+                                <Button onClick={() => updateNotif(dialogTuple.idfNotif, "refuser")}>Refuser</Button>
                                 </DialogActions>
                                 :
                                 <>
