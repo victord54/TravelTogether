@@ -24,10 +24,10 @@
         AND
         (idfOffre in (
             SELECT idfOffre
-            FROM Passe_par P1
+            FROM PASSE_PAR P1
             WHERE P1.ville = :villeDepart AND idfOffre in (
                 SELECT idfOffre
-                FROM Passe_par P2
+                FROM PASSE_PAR P2
                 WHERE P2.ville = :villeArrivee AND P1.position < P2.position
             )
         )   OR (villeDepart = :villeDepart AND :villeArrivee in (SELECT ville FROM PASSE_PAR WHERE idfOffre = o.idfOffre))
