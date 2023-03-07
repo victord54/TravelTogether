@@ -24,4 +24,6 @@ if ($_GET["request"] == "login") {
     require_once('controllers/search_offer.php');
 } else if ($_GET["request"] == "notifications") {
     require_once('controllers/notifications.php');
+} else if ($_GET["request"] == "offer_response"){
+    require_once("controllers/offer_response.php");
 }
