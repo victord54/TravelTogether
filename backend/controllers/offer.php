@@ -2,9 +2,7 @@
 include 'header.php';
 
 function getCity($code) {
-    $infos = "";
-    $fh = fopen("https://geo.api.gouv.fr/communes?code=".sprintf( '%05d', $code )."&fields=nom,codesPostaux&format=json&geometry=centre", 'r');
-    while(! feof($fh)) $infos .= fread($fh, 1048576);
+    $infos = file_get_contents("https://geo.api.gouv.fr/communes?code=".sprintf( '%05d', $code )."&fields=nom,codesPostaux&format=json&geometry=centre");
     $infos = json_decode($infos, true);
 
     $res = $infos[0]["nom"]." (";
