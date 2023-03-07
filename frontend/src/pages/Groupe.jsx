@@ -45,6 +45,12 @@ function Groupe() {
                     <Link to={"../delete-group/" + id}>
                         Supprimer ce groupe
                     </Link>
+                    <Link to={"../addmember-group/" + id}>
+                        Ajouter un nouveau membre
+                    </Link>
+                    <Link to={"../deletemember-group/" + id}>
+                        Supprimer un membre
+                    </Link>
                 </ul>
             </nav>
         );
