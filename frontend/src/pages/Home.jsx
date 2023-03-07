@@ -18,8 +18,9 @@ function Home() {
                 }
             })
             .then(function (reponse) {
-                if (reponse.data == null) {
+                if (reponse.data == null || !isJson(reponse.data)) {
                     console.log("Bug");
+                    setOffres({offres : [], statut : "ok" });
                 } else {
                     console.log(reponse.data);
                     setOffres({offres : reponse.data, statut : "ok" });
@@ -63,6 +64,16 @@ function Home() {
             </article>
         </main>
     );
+
+    function isJson(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
 }
+
 
 export default Home;
