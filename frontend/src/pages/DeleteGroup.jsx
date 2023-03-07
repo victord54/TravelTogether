@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import {useState} from "react";
+import {Navigate, useParams} from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
-import { url_api } from "../data/url_api";
+import {url_api} from "../data/url_api";
 
 function Delete_group() {
     let { id } = useParams();

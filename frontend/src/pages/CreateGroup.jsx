@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import {useState} from "react";
+import {Navigate} from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
-import { url_api } from "../data/url_api";
+import {url_api} from "../data/url_api";
 
 //check if user is logged in
 

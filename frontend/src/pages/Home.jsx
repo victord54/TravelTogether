@@ -1,10 +1,10 @@
 import "../styles/Home.css";
-import { useState } from "react";
-import { url_api } from "../data/url_api";
+import {useState} from "react";
+import {url_api} from "../data/url_api";
 import {useAuth} from "../components/AuthProvider";
 import axios from "axios";
 import Offer from "../components/Offer";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function Home() {
     const { auth } = useAuth();

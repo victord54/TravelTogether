@@ -1,11 +1,9 @@
 import "../styles/Profil.css";
-import { useState } from "react";
-import React from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import { url_api } from "../data/url_api";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useCar} from "../components/CarProvider"
+import {url_api} from "../data/url_api";
+import {Link, useNavigate} from "react-router-dom";
+import {useCar} from "../components/CarProvider"
 
 function ModifProfil() {
     const navigate = useNavigate();

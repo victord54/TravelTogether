@@ -1,8 +1,8 @@
 import axios from "axios";
-import { url_api } from "../data/url_api";
+import {url_api} from "../data/url_api";
 import "../styles/Friends-groupe-list.css";
-import { useState } from "react";
-import { useParams, Navigate, Link } from "react-router-dom";
+import {useState} from "react";
+import {Link, Navigate, useParams} from "react-router-dom";
 import Group from "../components/Group";
 
 function Groupe() {

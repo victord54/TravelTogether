@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import axios from 'axios';
-import { url_api } from "../data/url_api";
+import {url_api} from "../data/url_api";
 import Offer from "../components/Offer";
-import { useParams, Link } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 function Search_offer() {
     let { id } = useParams();

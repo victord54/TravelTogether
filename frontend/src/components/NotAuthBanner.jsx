@@ -1,6 +1,6 @@
 import "../styles/NotAuthBanner.css";
 import logo from "../assets/travelTogether.png";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function Banner() {
     return (

@@ -1,8 +1,8 @@
 import "../styles/Banner.css";
 import logo from "../assets/travelTogether.png";
-import { Link } from "react-router-dom";
-import { useState } from "react"
-import { useCar } from "../components/CarProvider";
+import {Link} from "react-router-dom";
+import {useState} from "react"
+import {useCar} from "../components/CarProvider";
 
 function Banner() {
     const [isNavExpanded, setIsNavExpanded] = useState(false)

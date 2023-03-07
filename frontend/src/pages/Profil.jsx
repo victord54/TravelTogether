@@ -1,6 +1,6 @@
 import "../styles/Profil.css";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function Profil() {
     //Fonction qui affiche les informations du profil

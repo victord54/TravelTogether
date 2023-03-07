@@ -1,8 +1,8 @@
-import { useState } from "react";
+import {useState} from "react";
 import axios from "axios";
-import { url_api } from "../data/url_api";
+import {url_api} from "../data/url_api";
 import "../styles/Create-offer.css";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function Create_offer() {
     const initialValue = {

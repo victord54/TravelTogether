@@ -1,9 +1,9 @@
-import { useState } from "react";
+import {useState} from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { url_api } from "../data/url_api";
+import {useNavigate} from "react-router-dom";
+import {url_api} from "../data/url_api";
 import "../styles/Login.css";
-import { useAuth } from "../components/AuthProvider";
+import {useAuth} from "../components/AuthProvider";
 
 function Login() {
     const initialValue = { mail: "", password: "" };

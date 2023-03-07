@@ -1,8 +1,8 @@
 import axios from "axios";
-import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import {React, useState} from "react";
+import {Link} from "react-router-dom";
 import Notif from "../components/Notif";
-import { url_api } from "../data/url_api";
+import {url_api} from "../data/url_api";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

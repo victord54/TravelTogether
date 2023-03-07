@@ -1,7 +1,7 @@
-import { Routes, Route } from "react-router-dom";
-import { useAuth } from "../components/AuthProvider";
-import { PrivateRoute } from "./PrivateRoute";
-import { PrivateRouteAuth } from "./PrivateRouteAuth";
+import {Route, Routes} from "react-router-dom";
+import {useAuth} from "../components/AuthProvider";
+import {PrivateRoute} from "./PrivateRoute";
+import {PrivateRouteAuth} from "./PrivateRouteAuth";
 import Banner from "./Banner";
 import NotAuthBanner from "./NotAuthBanner";
 import Home from "../pages/Home";
@@ -21,7 +21,6 @@ import DeleteMember_group from "../pages/DeleteMember-group";
 import SearchOffer from "../pages/SearchOffer";
 import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
-import CarProvider from "./CarProvider";
 
 function App() {
     const { auth } = useAuth();
