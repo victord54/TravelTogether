@@ -55,6 +55,10 @@ function DeleteMember_group()
     {
       errors.email = "Aucun email n'a été saisie.";
     }
+    else if(data.email === localStorage.getItem("mail"))
+    {
+      errors.email = "Ceci est votre email.";
+    }
     else
     {
       await axios
