@@ -18,8 +18,7 @@ function Home() {
                 }
             })
             .then(function (reponse) {
-                if (reponse.data == null || !isJson(reponse.data)) {
-                    console.log("Bug");
+                if (reponse.data == null) {
                     setOffres({offres : [], statut : "ok" });
                 } else {
                     console.log(reponse.data);
