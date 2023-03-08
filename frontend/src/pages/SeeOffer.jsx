@@ -50,6 +50,7 @@ function Search_offer() {
         formData.append("nbPlaces", formValues.nbPlaces);
         formData.append("interesse", localStorage.getItem("mail"));
         formData.append("idfOffre", id);
+        formData.append("message", formValues.messageFalcutatif);
 
         console.log(formData);
         await axios

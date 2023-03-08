@@ -20,6 +20,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $placeDisponible = $data["nbPlaceDisponible"];
 
         if($placeDisponible - $_POST["nbPlaces"] >= 0){
+
+            $message = $_POST["interesse"]." a répondu à l'une de vos offres";
+            echo $_POST["message"] != "";
+            if($_POST["message"] != ""){
+                $message = $message." et a laissé le message : \"". $_POST["message"] ."\"";
+            }else{
+                $message = $message.".";
+            }
+
+
             $statement = $pdo->prepare("INSERT INTO NOTIFICATION (typeNotif, dateNotif, notifie, interesse, idfOffre,informations,etat,statutReponse, nbPlacesSouhaitees) 
             VALUES (:typeNotif, :dateNotif, :notifie, :interesse, :idfOffre, :informations, :etat, :statutReponse, :nbPlaces)");
             $statement->bindValue(":typeNotif", "reponse");
@@ -27,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statement->bindValue(":notifie", $mail);
             $statement->bindValue(":interesse", $_POST["interesse"]);
             $statement->bindValue(":idfOffre", $_POST["idfOffre"]);
-            $statement->bindValue(":informations", "reponse a votre offre");
+            $statement->bindValue(":informations", $message);
             $statement->bindValue(":etat", 0);
             $statement->bindValue(":statutReponse", "attente");
             $statement->bindValue(":nbPlaces", $_POST["nbPlaces"]);
