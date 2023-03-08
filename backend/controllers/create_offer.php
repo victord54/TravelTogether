@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $statement->bindValue(":dateNotif", date('y-m-d'));
                 $statement->bindValue(":notifie", $member["email"]);
                 $statement->bindValue(":idfOffre", $idfOffre);
-                $statement->bindValue(":informations", "Cette offre est suceptible de vous intéressé !");
+                $statement->bindValue(":informations", "Cette offre est susceptible de vous intéresser !");
 
                 $statement->execute() or die(print_r($statement->errorInfo(), true));
             }
