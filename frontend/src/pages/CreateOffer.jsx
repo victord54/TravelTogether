@@ -125,7 +125,7 @@ function Create_offer() {
                     mail: localStorage.mail,
                 },
             });
-
+            console.log(reponse);
             if (reponse.data !== null && reponse.data.length >= 1) {
                 var groupes = reponse.data;
                 setProposition({ ...proposition, groupes: groupes });

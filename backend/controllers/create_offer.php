@@ -30,6 +30,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statement->bindValue(':idfOffre', $idfOffre);
             $statement->bindValue(':idfGroupe', $_POST['groupe']);
             $statement->execute() or die(print_r($statement->errorInfo(), true));
+
+            $statement = $pdo->prepare("SELECT email FROM APPARTIENT WHERE idfGroupe = :idfGroupe");
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $statement->bindValue(':idfGroupe', $_POST['groupe']);
+            $statement->execute();
+            $members = $statement->fetchAll();
+
+            foreach($members as $member) {
+                $statement = $pdo->prepare("INSERT INTO NOTIFICATION (typeNotif, dateNotif, informations, notifie, idfOffre) 
+                VALUES (:typeNotif, :dateNotif, :informations, :notifie, :idfOffre)");
+                $statement->bindValue(":typeNotif", "offre");
+                $statement->bindValue(":dateNotif", date('y-m-d'));
+                $statement->bindValue(":notifie", $member["email"]);
+                $statement->bindValue(":idfOffre", $idfOffre);
+                $statement->bindValue(":informations", "Cette offre est suceptible de vous intéressé !");
+
+                $statement->execute() or die(print_r($statement->errorInfo(), true));
+            }
+
         }
         if (strcmp($_POST['arretIntermediaire'], '') != 0) {
             $cpt = 0;
@@ -44,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    echo "Offre : " . $idfOffre . " créé.";
+    echo $idfOffre;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {

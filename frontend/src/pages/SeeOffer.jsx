@@ -85,7 +85,7 @@ function Search_offer() {
         return (
             <main>
                 <article>
-                    <p>L'offre n'est pas trouvée !</p>
+                    <p key='-1'>L'offre n'est pas trouvée !</p>
                 </article>
             </main>
         );
