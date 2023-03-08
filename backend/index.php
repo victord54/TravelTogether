@@ -30,4 +30,6 @@ if ($_GET["request"] == "login") {
     require_once('controllers/notifications.php');
 } else if ($_GET["request"] == "reply"){
     require_once("controllers/reply.php");
+}else if ($_GET["request"] == "check_notifications"){
+    require_once("controllers/check_notifications.php");
 }

@@ -177,7 +177,7 @@ function Notifications() {
                 </div>
             ));
         } else {
-            return <div>Il n'y a pas de notifications pour le moment</div>;
+            return <div>Vous n'avez pas de notifications pour le moment</div>;
         }
     }
 }

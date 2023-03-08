@@ -131,3 +131,12 @@
     justify-content: center;
     background-color: aquamarine;
 }
+
+.navigation .new_notifs a{
+    color:red;
+    font-weight: bold;
+}
+
+.navigation .new_notifs a:hover{
+    color:red;
+}

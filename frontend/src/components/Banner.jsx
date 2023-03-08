@@ -1,13 +1,36 @@
 import "../styles/Banner.css";
 import logo from "../assets/travelTogether.png";
 import {Link} from "react-router-dom";
-import {useState} from "react"
+import {createContext, useContext, useEffect, useState} from 'react';
 import {useCar} from "../components/CarProvider";
+import { url_api } from "../data/url_api";
+import axios from "axios";
 
 function Banner() {
     const [isNavExpanded, setIsNavExpanded] = useState(false)
     const { car } = useCar();
-    console.log(car)
+    const [nbNewNotif, setNbNewNotif] = useState(null);
+    
+    checkForNewNotifications()
+
+    async function checkForNewNotifications()  {
+        await axios
+            .get(url_api.url + "/check_notifications", {
+                params: {
+                    notifie: localStorage.getItem("mail"),
+                },
+            })
+            .then(function (reponse) {
+                console.log(reponse.data.length)
+                setNbNewNotif(reponse.data.length);
+            })
+    };
+    
+    useEffect(() => {
+        const intervalId = setInterval(checkForNewNotifications, 1 * 5 * 1000);
+        return () => clearInterval(intervalId);
+      }, []);
+
     return (
         <header>
             <nav className="navigation">
@@ -17,7 +40,6 @@ function Banner() {
                 
                 
                 <button className="hamburger" onClick={() => {
-                    console.log(isNavExpanded)
                     setIsNavExpanded(!isNavExpanded)
                 }}>
                 {/* icon from heroicons.com */}
@@ -35,12 +57,15 @@ function Banner() {
                     </svg>
                 </button>
 
-
                 <div className={isNavExpanded ? "navigation-menu expanded" : "navigation-menu"}>
                     <ul>
                         {car ? <li><Link to="create-offer" onClick={() => setIsNavExpanded(false)}>Créer une offre</Link></li> : <></> }
                         <li><Link to="search-offer" onClick={() => setIsNavExpanded(false)}>Rechercher une offre</Link></li>
-                        <li><Link to="notifications" onClick={() => setIsNavExpanded(false)}>Notifications</Link></li>
+                        {nbNewNotif === 0 ? 
+                            <li><Link to="notifications" onClick={() => setIsNavExpanded(false)}>Notifications</Link></li>
+                        :
+                            <li className="new_notifs"><Link to="notifications" onClick={() => setIsNavExpanded(false)}>Notifications {'(' + nbNewNotif + ')'}</Link></li>
+                        }
                         <li><Link to="profile" onClick={() => setIsNavExpanded(false)}>Mon profil</Link></li>
                         <li><Link to="logout" onClick={() => setIsNavExpanded(false)}>Déconnexion</Link></li>
                     </ul>
