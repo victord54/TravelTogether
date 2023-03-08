@@ -42,8 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $file_dir_save = $uploaddir . '/' . $_POST['mail'] . '.' . $ext[1];
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $file_dir_save)) {
-            $serv = "http://localhost/TravelTogether/backend/pictures";
-            $file_name = $serv . '/' . $_POST['mail'] . '.' . $ext[1];
+            $file_name = $url . '/pictures/' . $_POST['mail'] . '.' . $ext[1];
             $statement->bindValue(':photo', $file_name);
             echo $file_name;
         } else {
