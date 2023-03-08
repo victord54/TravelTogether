@@ -2,3 +2,7 @@ a {
     text-decoration: none;
     color: black;
 }
+
+.non_lue {
+    background-color: rgb(208, 101, 111);
+}

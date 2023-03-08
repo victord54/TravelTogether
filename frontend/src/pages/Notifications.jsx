@@ -107,7 +107,7 @@ function Notifications() {
             return data.map((tuple) => (
                 <div key={tuple.idfNotif}>
                     <Link key={tuple.idfNotif} onClick={() => handleClickOpen(tuple)}>
-                        <Notif
+                        <Notif className={tuple.etat === "0" ? "non_lue" :""}
                             key={tuple.idfNotif + "notif"}
                             type={tuple.typeNotif}
                             date={tuple.dateNotif}
