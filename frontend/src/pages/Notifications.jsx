@@ -109,6 +109,11 @@ function Notifications() {
         }
     }
 
+    function dateChange(param){
+        const date = new Date(param)
+        return date.getDate().toString().padStart(2, "0") + "/" + (date.getMonth()+1).toString().padStart(2, "0") + "/" + date.getFullYear()
+    }
+
     if (!isGetData) {
         getNotifs(localStorage.getItem('mail'));
         setIsGetData(true);
@@ -120,7 +125,7 @@ function Notifications() {
                         <Notif className={tuple.etat === "0" ? "non_lue" :""}
                             key={tuple.idfNotif + "notif"}
                             titre={titleSwitch(tuple.typeNotif)}
-                            date={tuple.dateNotif}
+                            date={dateChange(tuple.dateNotif)}
                             message={tuple.informations}
                         />
                     </Link>

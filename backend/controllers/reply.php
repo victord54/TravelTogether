@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if($placeDisponible - $_POST["nbPlaces"] >= 0){
 
-            $message = $_POST["interesse"]." a répondu à l'une de vos offres";
+            $message = $_POST["interesse"]." a répondu à l'une de vos offres. Il souhaite réserver " . $_POST["nbPlaces"] . " place(s)";
             echo $_POST["message"] != "";
             if($_POST["message"] != ""){
                 $message = $message." et a laissé le message : \"". $_POST["message"] ."\"";
