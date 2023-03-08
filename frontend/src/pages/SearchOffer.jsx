@@ -54,7 +54,6 @@ function Search_offer() {
             }
         })
           .then(function (response) {
-            console.log(response);
             setOffers({statut : "ok", offers : response.data});
           })
           .catch(function (error) {
