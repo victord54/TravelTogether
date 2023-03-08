@@ -27,7 +27,14 @@ function Offer(data) {
     return (
     <section key={data["idfOffre"]}>
         <h2>{data["villeDepart"]} &#8594; {data["villeArrivee"]}</h2>
-        <h3>{data["nom"] + " " + data["prenom"]}</h3>
+                            <img
+                                alt="profil"
+                                src={
+                                    data["photo"] +
+                                    "?" +
+                                    Math.random()
+                                } width="75px"/>
+                                <h3>{data["nom"] + " " + data["prenom"]}</h3>
         <p>Le {date.getDate().toString().padStart(2, "0") + "/" + (date.getMonth()+1).toString().padStart(2, "0") + "/" + date.getFullYear()} à {hour.getHours() + "h" + hour.getMinutes().toString().padStart(2, "0")}</p>
         {inter}
         {precision}
