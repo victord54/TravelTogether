@@ -38,14 +38,27 @@ function Create_group() {
     }
 
     async function sendDataToServer() {
+        const errors = {};
         const formData = new FormData();
         formData.append("nom", formValues.group);
         formData.append("mail", localStorage.getItem("mail"));
         await axios
             .post(url_api.url + "/create_group", formData)
             .then(function (response) {
-                setInputValues({ group: response.data });
+                console.log("response", response.data);
+                console.log("test", response.data === "exists")
+                if(response.data == 0){
+                    //console.log("exists");
+                    
+                    setIsLoaded(false);
+                    errors.group = "Vous avez un nom de groupe de ce nom deja existant.";
+                    setFormErrors(errors);
+                    return errors;
+                }else{
+                    console.log("hi");
+                    setInputValues({ group: response.data });
                 setIsLoaded(true);
+            }
             })
             .catch(function (error) {
                 console.log("Error :" + error);
