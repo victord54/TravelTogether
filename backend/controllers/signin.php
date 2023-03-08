@@ -33,14 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $file_dir_save = $uploaddir . '/' . $_POST['mail'] . '.' . $ext[1];
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $file_dir_save)) {
-            $serv = "http://localhost/TravelTogether/backend/pictures";
+            $serv = $url . "/pictures";
             $file_name = $serv . '/' . $_POST['mail'] . '.' . $ext[1];
             $statement->bindValue(':photo', $file_name);
         } else {
             echo "There was an error uploading the file";
         }
     } else {
-        $file_name = "http://localhost/TravelTogether/backend/pictures/default.png";
+        $file_name = $url . "/pictures/default.png";
         $statement->bindValue(':photo', $file_name);
     }
 

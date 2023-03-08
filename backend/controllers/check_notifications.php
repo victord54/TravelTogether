@@ -1,14 +1,14 @@
 <?php
-    include 'header.php';
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-       
-        $statement = $pdo->prepare("SELECT * FROM notification WHERE etat='0' AND notifie=:notifie");
-        $statement->setFetchMode(PDO::FETCH_ASSOC);
-        $statement->bindValue(":notifie", $_GET['notifie']);
-        $statement->execute();
-        $data = $statement->fetchAll();
-        
+include 'header.php';
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
-        echo json_encode($data);
-    }
+    $statement = $pdo->prepare("SELECT * FROM NOTIFICATION WHERE etat='0' AND notifie=:notifie");
+    $statement->setFetchMode(PDO::FETCH_ASSOC);
+    $statement->bindValue(":notifie", $_GET['notifie']);
+    $statement->execute();
+    $data = $statement->fetchAll();
+
+
+    echo json_encode($data);
+}
