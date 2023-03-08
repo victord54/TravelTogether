@@ -14,4 +14,9 @@ section {
     justify-content: center;
     align-items: center;
     box-shadow: rgba(94, 124, 138, 0.541) 0px 7px 29px 0px;
+    transition: all 0.5s;
+}
+
+section:hover {
+    margin: 2vh 7vw;
 }
