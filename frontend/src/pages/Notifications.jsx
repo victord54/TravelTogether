@@ -9,6 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import "../styles/Notifications.css";
 
 function Notifications() {
     const [data, setData] = useState([]);
@@ -125,7 +126,12 @@ function Notifications() {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                {dialogTuple.informations}
+                                {dialogTuple.typeNotif === "Offre" ? 
+                                <><Link className="offre "to={"../offre/" + dialogTuple.idfOffre}>{dialogTuple.informations}</Link></>
+                                :
+                                <>{dialogTuple.informations}</>
+                                } 
+                                
                             </DialogContentText>
                         </DialogContent>
 
