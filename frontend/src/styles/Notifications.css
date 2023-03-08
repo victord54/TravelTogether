@@ -8,6 +8,11 @@
     text-align: center;
 }
 
+.wrapper-notifications:hover {
+    transform: scale(1.1);
+    box-shadow: 2% 2%;
+
+}
 .title {
     font-size: 25px;
     font-weight: bold;
