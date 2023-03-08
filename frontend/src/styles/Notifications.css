@@ -3,3 +3,16 @@
     text-decoration: underline;
     
 }
+
+.wrapper-notifications {
+    text-align: center;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.button-delete{
+    color:red;
+}
