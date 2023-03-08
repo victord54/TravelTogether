@@ -1,5 +1,5 @@
 import axios from "axios";
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import Notif from "../components/Notif";
 import {url_api} from "../data/url_api";
@@ -16,6 +16,15 @@ function Notifications() {
     const [isData, setIsData] = useState(false);
     const [open, setOpen] = useState(false);
     const [dialogTuple,setDialogTuple] = useState([])
+    const [isUpdate, setIsUpdate] = useState(false)
+
+
+    useEffect(() => {
+        if (isUpdate){
+            getNotifs(localStorage.getItem('mail'));
+        }
+        setIsUpdate(false)
+      }, [isUpdate]);
 
     const handleClickOpen = (tuple) => {
         setOpen(true);
@@ -31,9 +40,9 @@ function Notifications() {
         console.log("mettre la notif ", id, " a lu");
     };
 
-    const handleDelete = (id) => {
+    const handleDelete = () => {
         setOpen(false);
-        console.log("supprimer la notif ", id);
+        deleteNotif(dialogTuple.idfNotif)
     };
 
     const handleUpdate = (idNotif, ref) => {
@@ -55,21 +64,21 @@ function Notifications() {
                     setIsData(true);
                     console.log(response.data);
                     setData(response.data);
+                } else {
+                    setIsData(false);
                 }
             });
     }
 
     async function updateNotif(idNotif, ref) { 
-        setOpen(false);
-        await  axios.post(url_api.url + "/notifications", {
-            
+        await  axios.put(url_api.url + "/notifications", {
                 idf: idNotif,
                 ref: ref
-            
-          
           })
             .then(function (response) {
                 console.log(response.data);
+                setOpen(false);
+                setIsUpdate(true)
             }).catch(function (error) {
                 console.log(error);
               });;
@@ -78,13 +87,15 @@ function Notifications() {
 
     async function deleteNotif(idNotif) {
         await axios
-            .delete(url_api + "notifications", {
+            .delete(url_api.url + "/notifications", {
                 params: {
                     idf: idNotif,
                 },
             })
             .then(function (response) {
                 console.log(response.data);
+                setOpen(false);
+                setIsUpdate(true)
             });
     }
 
@@ -118,7 +129,7 @@ function Notifications() {
                             </DialogContentText>
                         </DialogContent>
 
-                        {dialogTuple.typeNotif ==="reponse" ?
+                        {dialogTuple.typeNotif ==="Reponse" ?
                                 dialogTuple.statutReponse === "attente" ? 
                                 <DialogActions>
                                 <Button onClick={() => updateNotif(dialogTuple.idfNotif, "accepter")}>
@@ -135,7 +146,7 @@ function Notifications() {
                                             </DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={handleClose}>Supprimer</Button>
+                                        <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
                                         </DialogActions></>
                                     :
                                     <><DialogContent>
@@ -144,17 +155,22 @@ function Notifications() {
                                             </DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={handleClose}>Supprimer</Button>
+                                        <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
                                         </DialogActions></>
                                     }</>
                         
-                        : 
-                            <DialogActions>
-                                <Button onClick={handleClose}>
-                                    Marquer comme lue
-                                </Button>
-                                <Button onClick={handleClose}>Supprimer</Button>
-                            </DialogActions>
+                        :   
+                            dialogTuple.etat === "0" ? 
+                                <DialogActions>
+                                    <Button onClick={() => updateNotif(dialogTuple.idfNotif, null)}>
+                                        Marquer comme lue
+                                    </Button>
+                                    <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
+                                </DialogActions>
+                            :
+                                <DialogActions>
+                                    <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
+                                </DialogActions>
                             
                         }            
                     </Dialog>
