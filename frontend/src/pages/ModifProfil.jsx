@@ -1,17 +1,17 @@
 import "../styles/Profil.css";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {url_api} from "../data/url_api";
-import {Link, useNavigate} from "react-router-dom";
-import {useCar} from "../components/CarProvider"
+import { url_api } from "../data/url_api";
+import { Link, useNavigate } from "react-router-dom";
+import { useCar } from "../components/CarProvider";
 
 function ModifProfil() {
     const navigate = useNavigate();
-    const {setCar} = useCar()
+    const { setCar } = useCar();
 
     const initialValue = {
-        lastName: localStorage.getItem("prenom"),
-        firstName: localStorage.getItem("nom"),
+        lastName: localStorage.getItem("nom"),
+        firstName: localStorage.getItem("prenom"),
         password: "",
         passwordConfirmation: "",
         phoneNumber: localStorage.getItem("numTel"),
@@ -80,24 +80,24 @@ function ModifProfil() {
                         Nom :{" "}
                         <input
                             type="text"
-                            name="firstName"
-                            className="fullTexte"
-                            value={formValues.firstName}
-                            onChange={handleChange}
-                        ></input>{" "}
-                        <p className="error-form">{formErrors.firstName}</p>{" "}
-                    </li>
-                    <li>
-                        {" "}
-                        Prénom :{" "}
-                        <input
-                            type="text"
                             name="lastName"
                             className="fullTexte"
                             value={formValues.lastName}
                             onChange={handleChange}
                         ></input>{" "}
                         <p className="error-form">{formErrors.lastName}</p>{" "}
+                    </li>
+                    <li>
+                        {" "}
+                        Prénom :{" "}
+                        <input
+                            type="text"
+                            name="firstName"
+                            className="fullTexte"
+                            value={formValues.firstName}
+                            onChange={handleChange}
+                        ></input>{" "}
+                        <p className="error-form">{formErrors.firstName}</p>{" "}
                     </li>
                     <li className="radio">
                         {" "}
@@ -237,10 +237,10 @@ function ModifProfil() {
 
         //Vérification nom
         if (!data.firstName) {
-            errors.firstName = "Le nom est obligatoire.";
+            errors.firstName = "Le prénom est obligatoire.";
         } else {
             if (data.firstName.length < 2) {
-                errors.firstName = "Le nom doit faire minimum 2 caractères.";
+                errors.firstName = "Le prénom doit faire minimum 2 caractères.";
             }
             if (
                 !(
@@ -251,17 +251,17 @@ function ModifProfil() {
                 if (errors.firstName) {
                     errors.firstName =
                         errors.firstName +
-                        " Le nom doit commencer par une majuscule.";
+                        " Le prénom doit commencer par une majuscule.";
                 } else {
                     errors.firstName =
-                        "Le nom doit commencer par une majuscule.";
+                        "Le prénom doit commencer par une majuscule.";
                 }
             }
         }
 
         //Vérication prénom
         if (!data.lastName) {
-            errors.lastName = "Le prénom est obligatoire.";
+            errors.lastName = "Le nom est obligatoire.";
         } else {
             if (data.lastName.length < 2) {
                 errors.lastName = "Le nom doit faire minimum 2 caractères.";
@@ -275,10 +275,10 @@ function ModifProfil() {
                 if (errors.lastName) {
                     errors.lastName =
                         errors.lastName +
-                        " Le prénom doit commencer par une majuscule.";
+                        " Le nom doit commencer par une majuscule.";
                 } else {
                     errors.lastName =
-                        "Le prénom doit commencer par une majuscule.";
+                        "Le nom doit commencer par une majuscule.";
                 }
             }
         }
@@ -355,9 +355,9 @@ function ModifProfil() {
                     //Le file avait changé
                     localStorage.setItem("photo", response.data);
                 }
-                
-                setCar(localStorage.getItem("aUneVoiture") === "1")
-                
+
+                setCar(localStorage.getItem("aUneVoiture") === "1");
+
                 //Retour profil
                 navigate("/profile");
             })
