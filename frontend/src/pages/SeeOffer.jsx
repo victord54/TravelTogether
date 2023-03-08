@@ -16,6 +16,7 @@ function Search_offer() {
     let { id } = useParams();
     const [offers, setOffers] = useState({statut : "", offer : null});
     const [formValues, setInputValues] = useState(initialValue);
+    const [error, setError] = useState(null);
 
     function load_data() { 
         axios.get(url_api.url + "/offer", {
@@ -26,8 +27,8 @@ function Search_offer() {
             .then(function (response) {
                 setOffers({statut : "ok", offer : response.data});
             })
-            .catch(function (error) {
-                console.log('Error : ' + error);
+            .catch(function (err) {
+                console.log('Error : ' + err);
                 setOffers({statut : "ok", offer : null});
             });
     }
@@ -39,6 +40,7 @@ function Search_offer() {
     async function handleSubmit(e){
         e.preventDefault();
         sendDataToServer();
+        setInputValues({nbPlaces: 1, messageFalcutatif: ""});
     }
 
     async function sendDataToServer() {
@@ -53,7 +55,17 @@ function Search_offer() {
         await axios
             .post(url_api.url + "/reply", formData)
             .then(function (response) {
-                console.log("Response1 :" + response.data);
+                console.log("response :" + response.data);
+                if(response.data !== "ok"){
+                    
+                    if(response.data == "user already replied"){
+                        setError("Vous avez déjà répondu à cette offre.")
+                    }else if(response.data == "not enough places available"){
+                        setError("Il n'y pas assez de places disponibles pour cette offre.")
+                    }
+                }else{
+                    setError(null);
+                }
             })
             .catch(function (error) {
                 console.log("Error :" + error);
@@ -93,19 +105,20 @@ function Search_offer() {
                 {Offer(offers.offer)}
                 <div>
                     <form onSubmit={handleSubmit}>
-                        <div>Nombre de places souhaitées</div>
+                        <div>Nombre de places souhaitées :</div>
                         <label>
                             <select name="nbPlaces" id="nbPlaces" value={formValues.nbPlacesSouhaitees} onChange={handleChange}>
                                 {places}
                             </select>
                         </label>
-                        <div>Message (facultatif)</div>
+                        <div>Message (facultatif) :</div>
                         <label>
                         <textarea name="messageFalcutatif" id="messageFalcutatif" value={formValues.messageFalcutatif} onChange={handleChange}></textarea>
                         </label>
                         <div className='button-forms-wrap'>
                             <button type="submit" className="formulaire-submit">Répondre à l'offre</button>
                         </div>
+                        <p className="error">{error}</p>
                     </form>
                 </div>
             </article>
