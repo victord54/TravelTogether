@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     } else {
         $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE 
-        idfOffre in (SELECT idfOffre from OFFREPUBLIC) OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE WHERE idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email))");
+        idfOffre in (SELECT idfOffre from OFFREPUBLIC) OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE WHERE idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)) LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
         $statement->execute();
         $data = $statement->fetchAll();
