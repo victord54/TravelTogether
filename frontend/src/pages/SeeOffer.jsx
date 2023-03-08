@@ -42,7 +42,6 @@ function Search_offer() {
     }
 
     async function sendDataToServer() {
-        console.log("on envoie");
 
         const formData = new FormData();
         formData.append("nbPlaces", formValues.nbPlaces);
@@ -50,11 +49,9 @@ function Search_offer() {
         formData.append("idfOffre", id);
         formData.append("message", formValues.messageFalcutatif);
 
-        console.log(formData);
         await axios
             .post(url_api.url + "/reply", formData)
             .then(function (response) {
-                console.log("response :" + response.data);
                 if(response.data !== "ok"){
                     
                     if(response.data == "user already replied"){

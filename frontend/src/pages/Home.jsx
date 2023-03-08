@@ -21,7 +21,6 @@ function Home() {
                 if (reponse.data == null) {
                     setOffres({offres : [], statut : "ok" });
                 } else {
-                    console.log(reponse.data);
                     setOffres({offres : reponse.data, statut : "ok" });
                 }
             })
