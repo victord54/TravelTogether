@@ -46,6 +46,11 @@ function Offer(data) {
             <h2>
                 {data["villeDepart"]} &#8594; {data["villeArrivee"]}
             </h2>
+            <img
+                alt="profil"
+                src={data["photo"] + "?" + Math.random()}
+                width="75px"
+            />
             <h3>{data["nom"] + " " + data["prenom"]}</h3>
             <p>
                 Le{" "}

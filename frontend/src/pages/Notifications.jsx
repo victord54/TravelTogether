@@ -100,17 +100,26 @@ function Notifications() {
             });
     }
 
+    function titleSwitch(param){
+        switch (param) {
+            case 'Reponse' :
+                return "Demande de participation à un trajet";
+            case 'Offre' :
+                return "Nouvelle offre privée";
+        }
+    }
+
     if (!isGetData) {
         getNotifs(localStorage.getItem('mail'));
         setIsGetData(true);
     } else {
         if (isData) {
-            return data.map((tuple) => (
+            return <div className="wrapper-notifications">{data.map((tuple) => (
                 <div key={tuple.idfNotif}>
                     <Link key={tuple.idfNotif} onClick={() => handleClickOpen(tuple)}>
                         <Notif className={tuple.etat === "0" ? "non_lue" :""}
                             key={tuple.idfNotif + "notif"}
-                            type={tuple.typeNotif}
+                            titre={titleSwitch(tuple.typeNotif)}
                             date={tuple.dateNotif}
                             message={tuple.informations}
                         />
@@ -121,8 +130,8 @@ function Notifications() {
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
                     >   
-                        <DialogTitle>
-                            {dialogTuple.typeNotif}
+                        <DialogTitle >
+                            <span className="title">{titleSwitch(dialogTuple.typeNotif)}</span>
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
@@ -138,10 +147,10 @@ function Notifications() {
                         {dialogTuple.typeNotif ==="Reponse" ?
                                 dialogTuple.statutReponse === "attente" ? 
                                 <DialogActions>
-                                <Button onClick={() => updateNotif(dialogTuple.idfNotif, "accepter")}>
+                                <Button color="success" variant="contained"onClick={() => updateNotif(dialogTuple.idfNotif, "accepter")}>
                                     Accepter
                                 </Button>
-                                <Button onClick={() => updateNotif(dialogTuple.idfNotif, "refuser")}>Refuser</Button>
+                                <Button color="error" variant="contained" onClick={() => updateNotif(dialogTuple.idfNotif, "refuser")}>Refuser</Button>
                                 </DialogActions>
                                 :
                                     <>
@@ -152,7 +161,7 @@ function Notifications() {
                                             </DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
+                                        <Button color="error" variant="contained" onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
                                         </DialogActions></>
                                     :
                                     <><DialogContent>
@@ -161,27 +170,27 @@ function Notifications() {
                                             </DialogContentText>
                                         </DialogContent>
                                         <DialogActions>
-                                        <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
+                                        <Button color="error" variant="contained" onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
                                         </DialogActions></>
                                     }</>
                         
                         :   
                             dialogTuple.etat === "0" ? 
                                 <DialogActions>
-                                    <Button onClick={() => updateNotif(dialogTuple.idfNotif, null)}>
+                                    <Button color="info" variant="contained" onClick={() => updateNotif(dialogTuple.idfNotif, null)}>
                                         Marquer comme lue
                                     </Button>
-                                    <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
+                                    <Button color="error" variant="contained" onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
                                 </DialogActions>
                             :
                                 <DialogActions>
-                                    <Button onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
+                                    <Button color="error" variant="contained" onClick={() => deleteNotif(dialogTuple.idfNotif)}>Supprimer</Button>
                                 </DialogActions>
                             
                         }            
                     </Dialog>
                 </div>
-            ));
+            ))}</div>
         } else {
             return <div>Vous n'avez pas de notifications pour le moment</div>;
         }
