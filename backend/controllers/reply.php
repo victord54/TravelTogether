@@ -9,14 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->execute();
     $data = $statement->fetchAll()[0];
     $mail = $data["email"];
-    $placeDisponible = ["placeDisponible"];
+    $placeDisponible = $data["nbPlaceDisponible"];
 
-    $statement = $pdo->prepare("SELECT SUM(nbPlacesSouhaitees) FROM NOTIFICATION WHERE idfOffre = :idfOffre");
-    $statement->bindValue(":idfOffre", $_POST["idfOffre"]);
-    $statement->execute();
-    $nbPlacesPrises = $statement->fetchAll()[0][0];
-
-    if($placeDisponible - ($nbPlacesPrises + $_POST["nbPlaces"]) >= 0){
+    if($placeDisponible - $_POST["nbPlaces"] >= 0){
+        echo("sa");
         $statement = $pdo->prepare("INSERT INTO NOTIFICATION (typeNotif, dateNotif, notifie, interesse, idfOffre,informations,etat,statutReponse, nbPlacesSouhaitees) 
         VALUES (:typeNotif, :dateNotif, :notifie, :interesse, :idfOffre, :informations, :etat, :statutReponse, :nbPlaces)");
         $statement->bindValue(":typeNotif", "reponse");

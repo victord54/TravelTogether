@@ -1,0 +1,8 @@
+select{
+    max-width: fit-content;
+}
+
+textarea{
+    min-width: 30em;
+    min-height: 5em;
+}

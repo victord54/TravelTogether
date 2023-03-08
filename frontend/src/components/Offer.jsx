@@ -32,8 +32,8 @@ function Offer(data) {
         {inter}
         {precision}
         {info}
-        {boutonRepondreOffre}
-    </section>);
+    </section>
+    );
 };
 
 export default Offer;
