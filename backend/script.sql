@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS travel_together;
+\W DROP DATABASE IF EXISTS travel_together;
 
 CREATE DATABASE travel_together;
 
