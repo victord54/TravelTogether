@@ -5,7 +5,7 @@ import Offer from "../components/Offer";
 import {Link, useParams} from "react-router-dom";
 import "../styles/SeeOffer.css";
 
-function Search_offer() {
+function SeeOffer() {
     const initialValue = {
         nbPlaces: 1,
         messageFalcutatif: ""
@@ -67,8 +67,7 @@ function Search_offer() {
                 console.log("Error :" + error);
             });
     }
-
-    let nav = <nav></nav>;
+    let form = <form></form>;
     let places = [];
 
     if(offers.statut === "") {
@@ -82,44 +81,43 @@ function Search_offer() {
         return (
             <main>
                 <article>
-                    <p key='-1'>L'offre n'est pas trouvée !</p>
+                    <p>L'offre n'est pas trouvée !</p>
                 </article>
             </main>
         );
-    else if (offers.offer["email"] !== localStorage.getItem("mail")) {
-        for(let i = 1; i<=offers.offer["nbPlaceDisponible"]; i++) places.push(<option value={i}>{i}</option>);
-        nav = <nav>
-            <ul>
-                <Link to={"../reply/" + id}>reponse</Link>
-            </ul>
-        </nav>;
+    else {
+        let ajd = new Date();
+        let date = new Date(offers.offer["dateDepart"]);
+        if (offers.offer["email"] !== localStorage.getItem("mail") && date > ajd && !(date.getDate() === ajd.getDate() &&  date.getMonth() === ajd.getMonth() && date.getFullYear() === ajd.getFullYear())) {
+            for(let i = 1; i<=offers.offer["nbPlaceDisponible"]; i++) places.push(<option value={i}>{i}</option>);
+            form = <form onSubmit={handleSubmit}>
+            <div>Nombre de places souhaitées :</div>
+            <label>
+                <select name="nbPlaces" id="nbPlaces" value={formValues.nbPlacesSouhaitees} onChange={handleChange}>
+                    {places}
+                </select>
+            </label>
+            <div>Message (facultatif) :</div>
+            <label>
+            <textarea name="messageFalcutatif" id="messageFalcutatif" value={formValues.messageFalcutatif} onChange={handleChange}></textarea>
+            </label>
+            <div className='button-forms-wrap'>
+                <button type="submit" className="formulaire-submit">Répondre à l'offre</button>
+            </div>
+            <p className="error">{error}</p>
+        </form>;
+        }
     }
     return (
         <main>
-            {nav}    
             <article>
                 {Offer(offers.offer)}
                 <div>
-                    <form onSubmit={handleSubmit}>
-                        <div>Nombre de places souhaitées :</div>
-                        <label>
-                            <select name="nbPlaces" id="nbPlaces" value={formValues.nbPlacesSouhaitees} onChange={handleChange}>
-                                {places}
-                            </select>
-                        </label>
-                        <div>Message (facultatif) :</div>
-                        <label>
-                        <textarea name="messageFalcutatif" id="messageFalcutatif" value={formValues.messageFalcutatif} onChange={handleChange}></textarea>
-                        </label>
-                        <div className='button-forms-wrap'>
-                            <button type="submit" className="formulaire-submit">Répondre à l'offre</button>
-                        </div>
-                        <p className="error">{error}</p>
-                    </form>
+                    {form}
                 </div>
             </article>
         </main>
     );
 }
 
-export default Search_offer;
+export default SeeOffer;
