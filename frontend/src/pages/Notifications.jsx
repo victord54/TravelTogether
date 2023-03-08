@@ -36,6 +36,12 @@ function Notifications() {
         console.log("supprimer la notif ", id);
     };
 
+    const handleUpdate = (idNotif, ref) => {
+        setOpen(false);
+        updateNotif(idNotif, ref);
+        console.log("update ", idNotif);
+    };
+
     async function getNotifs(id) {
         await axios
             .get(url_api.url + "/notifications", {
@@ -53,16 +59,21 @@ function Notifications() {
             });
     }
 
-    async function updateNotif(idNotif) {
-        await axios
-            .put(url_api + "notifications", {
-                params: {
-                    idf: idNotif,
-                },
-            })
+    async function updateNotif(idNotif, ref) { 
+        setOpen(false);
+        await  axios.post(url_api.url + "/notifications", {
+            
+                idf: idNotif,
+                ref: ref
+            
+          
+          })
             .then(function (response) {
                 console.log(response.data);
-            });
+            }).catch(function (error) {
+                console.log(error);
+              });;
+           
     }
 
     async function deleteNotif(idNotif) {
@@ -107,14 +118,14 @@ function Notifications() {
                             </DialogContentText>
                         </DialogContent>
 
-                        {dialogTuple.typeNotif ==="Reponse" ?
+                        {dialogTuple.typeNotif ==="reponse" ?
                                 dialogTuple.statutReponse === "attente" ? 
-                                    <DialogActions>
-                                    <Button onClick={handleClose}>
-                                        Accepter
-                                    </Button>
-                                    <Button onClick={handleClose}>Refuser</Button>
-                                    </DialogActions>
+                                <DialogActions>
+                                <Button onClick={() => updateNotif(dialogTuple.idfNotif, "accepter")}>
+                                    Accepter
+                                </Button>
+                                <Button onClick={() => updateNotif(dialogTuple.idfNotif, "refuser")}>Refuser</Button>
+                                </DialogActions>
                                 :
                                     <>
                                     {dialogTuple.statutReponse === "accepter" ? 

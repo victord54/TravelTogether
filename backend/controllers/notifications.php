@@ -19,3 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $statement->execute();
     echo json_encode("j'ai bien reçu que tu supprimes " . $_GET["idf"]);
 }
+else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $statement = $pdo->prepare("UPDATE NOTIFICATION SET statutReponse=(:ref), etat=1 WHERE idfNotif=(:idf)");
+    
+    //https://stackoverflow.com/questions/44799589/php-post-array-empty-on-axios-post solution credit
+    $body = file_get_contents('php://input');
+
+    // Parse json body and notify when error occurs
+    $data = json_decode($body, true);
+    
+    print_r($data);
+    $statement->bindValue(":idf", $data["idf"]);
+    $statement->bindValue(":ref", $data["ref"]);
+    $statement->execute();
+    echo json_encode("j'ai bien reçu que tu as change le statut de la notification " . $data["ref"]);
+}
