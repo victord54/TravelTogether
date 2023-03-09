@@ -180,7 +180,7 @@ function Notifications() {
                                     }</>
                         
                         :   
-                            dialogTuple.etat === "0" ? 
+                            dialogTuple.etat === 0 ? 
                                 <DialogActions>
                                     <Button color="info" variant="contained" onClick={() => updateNotif(dialogTuple.idfNotif, null)}>
                                         Marquer comme lue
