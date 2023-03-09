@@ -120,7 +120,7 @@ function Notifications() {
     } else {
         if (isData) {
             return <div className="wrapper-notifications">{data.map((tuple) => (
-                <div key={tuple.idfNotif}>
+                <div className="notif" key={tuple.idfNotif}>
                     <Link key={tuple.idfNotif} onClick={() => handleClickOpen(tuple)}>
                         <Notif className={tuple.etat === "0" ? "non_lue" :""}
                             key={tuple.idfNotif + "notif"}
