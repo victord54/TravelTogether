@@ -22,7 +22,6 @@ function Home() {
                     setOffres({ offres: [], statut: "ok" });
                 } else {
                     setOffres({ offres: reponse.data, statut: "ok" });
-                    console.log(reponse.data);
                 }
             })
             .catch(function (error) {
