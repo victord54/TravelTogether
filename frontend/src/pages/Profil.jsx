@@ -1,8 +1,15 @@
 import "../styles/Profil.css";
 import React from "react";
 import {Link} from "react-router-dom";
+import {useState} from 'react';
+import { url_api } from "../data/url_api";
+import axios from "axios";
+import Offer from "../components/Offer";
 
 function Profil() {
+    const [offers, setOffers] = useState({statut : "", offers : []});
+
+
     //Fonction qui affiche les informations du profil
     function affichageProfil() {
         var contenu = (
@@ -84,19 +91,46 @@ function Profil() {
         return contenu;
     }
 
-    //Fonction qui teste.
-    // function test() {
-    //     console.log("Das Test.");
-    // }
+    async function getOffres() {
+        await axios
+            .get(url_api.url + "/offer", {
+                params: {
+                    email: localStorage.getItem("mail"),
+                    type: "historique"
+                },
+            })
+            .then(function (reponse) {
+                console.log(reponse.data);
+                if (reponse.data == null) {
+                    setOffers({ offers: [], statut: "ok" });
+                } else {
+                    setOffers({ offers: reponse.data, statut: "ok" });
+                }
+            })
+            .catch(function (error) {
+                console.log("Error :" + error);
+            });
+    }
+
+    var historique = <></>;
+
+    if(offers.statut === "") {
+        historique = <div className="wrapper-historique"><p>Chargement de vos trajets</p></div>;
+        getOffres();
+    } else if (offers.statut === "ok" && offers.offers.length === 0) {
+        historique = <div className="wrapper-historique"><p>Vous n'avez pas effectué de trajet ou n'avez aucune demande de trajet en attente.</p></div>;
+    } else {
+        historique = <article className="wrapper-historique">{offers.offers.map((offre, index) => (
+            <Link to={"../offre/" + offre["idfOffre"]} key={index}>
+                {Offer(offre)}
+            </Link>
+        ))}</article>;
+    }
 
     return (
         <main>
             {affichageProfil()}
-            <div className="wrapper-historique">
-                <br />
-                <br />
-                HISTORIQUE DES TRAJETS ICI =)
-            </div>
+            {historique}
         </main>
     );
 }

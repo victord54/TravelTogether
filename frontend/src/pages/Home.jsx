@@ -18,6 +18,7 @@ function Home() {
                 },
             })
             .then(function (reponse) {
+                console.log(reponse);
                 if (reponse.data == null) {
                     setOffres({ offres: [], statut: "ok" });
                 } else {
