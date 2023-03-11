@@ -12,8 +12,8 @@ function getCity($code) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     if(isset($_GET["idfOffre"])) {
-        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idfOffre");
         $statement->bindValue(":idfOffre", $_GET['idfOffre']);
         $statement->execute();
@@ -37,8 +37,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $data["villeArrivee"] = $villeArrivee;
     
         $reponse = $data;
+    } else if (isset($_GET["type"]) && $_GET["type"] == "historique") {
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE email = :email OR 
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse != 'refuser') ORDER BY DateDepart");
+        $statement->bindValue(":email", $_GET['email']);
+        $statement->execute();
+        $data = $statement->fetchAll();
+
+        foreach($data as $index=>$offer) {
+            $villeDep = getCity($offer["villeDepart"]);
+            $data[$index]["villeDepart"] = $villeDep;
+            $villeArrivee = getCity($offer["villeArrivee"]);
+            $data[$index]["villeArrivee"] = $villeArrivee;
+
+            $statement = $pdo->prepare("SELECT ville FROM PASSE_PAR JOIN OFFRE USING(idfOffre)
+            WHERE idfOffre = :idfOffre ORDER BY position");
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $statement->bindValue(":idfOffre", $offer['idfOffre']);
+            $statement->execute();
+            $villes = $statement->fetchAll();
+
+            foreach($villes as $indexVille=>$ville) {
+                $test = getCity($ville["ville"]);
+                $data[$index]["inter"][$indexVille] = $test;
+            }
+        }
+    
+        $reponse = $data;
     } else {
-        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE dateDepart > :dateDepart AND
         idfOffre in (SELECT idfOffre from OFFREPUBLIC) OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE WHERE idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)) ORDER BY dateDepart LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
