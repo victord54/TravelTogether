@@ -2,7 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import {url_api} from "../data/url_api";
 import Offer from "../components/Offer";
-import {Link, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import "../styles/SeeOffer.css";
 
 function SeeOffer() {
@@ -54,9 +54,9 @@ function SeeOffer() {
             .then(function (response) {
                 if(response.data !== "ok"){
                     
-                    if(response.data == "user already replied"){
+                    if(response.data === "user already replied"){
                         setError("Vous avez déjà répondu à cette offre.")
-                    }else if(response.data == "not enough places available"){
+                    }else if(response.data === "not enough places available"){
                         setError("Il n'y pas assez de places disponibles pour cette offre.")
                     }
                 }else{
@@ -88,8 +88,12 @@ function SeeOffer() {
     else {
         let ajd = new Date();
         let date = new Date(offers.offer["dateDepart"]);
-        if (offers.offer["email"] !== localStorage.getItem("mail") && date > ajd && !(date.getDate() === ajd.getDate() &&  date.getMonth() === ajd.getMonth() && date.getFullYear() === ajd.getFullYear())) {
-            for(let i = 1; i<=offers.offer["nbPlaceDisponible"]; i++) places.push(<option value={i}>{i}</option>);
+        if (offers.offer["email"] !== localStorage.getItem("mail") && 
+            date > ajd && !(date.getDate() === ajd.getDate() &&  
+            date.getMonth() === ajd.getMonth() && 
+            date.getFullYear() === ajd.getFullYear())
+            && offers.offer["nbPlaceDisponible"] > 0) {
+            for(let i = 1; i<=offers.offer["nbPlaceDisponible"]; i++) places.push(<option key={i} value={i}>{i}</option>);
             form = <form onSubmit={handleSubmit}>
             <div>Nombre de places souhaitées :</div>
             <label>
@@ -112,7 +116,7 @@ function SeeOffer() {
         <main>
             <article>
                 {Offer(offers.offer)}
-                <div>
+                <div key="form">
                     {form}
                 </div>
             </article>
