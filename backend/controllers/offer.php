@@ -6,10 +6,7 @@ function getCity($code) {
     $infos = json_decode($infos, true);
 
     $res = $infos[0]["nom"]." (";
-    foreach($infos[0]["codesPostaux"] as $index=>$codePostal) {
-        $res .= $codePostal.", ";
-    }
-    if (strcmp($res, '') != 0) $res = mb_substr($res, 0, -2);
+    $res = $res.substr($infos[0]["codesPostaux"][0], 0, 2);
     $res .= ")";
     return $res;
 }

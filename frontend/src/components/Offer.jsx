@@ -41,6 +41,10 @@ function Offer(data) {
         );
     }
 
+    var placedispo = <p>Nombre de places disponibles : {data["nbPlaceDisponible"]}</p>;
+    if(data["nbPlaceDisponible"] === 1) placedispo = <p>Nombre de place disponible : {data["nbPlaceDisponible"]}</p>;
+    if(data["nbPlaceDisponible"] === 0) placedispo = <p>Aucune place disponible.</p>;
+
     return (
         <section key={data["idfOffre"]}>
             <h2>
@@ -67,6 +71,7 @@ function Offer(data) {
             {inter}
             {precision}
             {info}
+            {placedispo}
         </section>
     );
 }
