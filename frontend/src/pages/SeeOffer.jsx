@@ -2,7 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import {url_api} from "../data/url_api";
 import Offer from "../components/Offer";
-import {useParams} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import "../styles/SeeOffer.css";
 
 function SeeOffer() {
@@ -15,6 +15,7 @@ function SeeOffer() {
     const [offers, setOffers] = useState({statut : "", offer : null});
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
+    var buttons = <nav></nav>;
 
     function load_data() { 
         axios.get(url_api.url + "/offer", {
@@ -112,8 +113,12 @@ function SeeOffer() {
         </form>;
         }
     }
+    if(localStorage.getItem("mail") === offers.offer["email"]) {
+        buttons = <nav><Link to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></nav>
+    }
     return (
         <main>
+            {buttons}
             <article>
                 {Offer(offers.offer)}
                 <div key="form">
