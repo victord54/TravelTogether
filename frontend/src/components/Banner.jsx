@@ -21,7 +21,6 @@ function Banner() {
                 },
             })
             .then(function (reponse) {
-                console.log(reponse.data.length);
                 setNbNewNotif(reponse.data.length);
             });
     }

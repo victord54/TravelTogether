@@ -4,7 +4,6 @@ function Offer(data) {
     var inter = <></>;
     var date = new Date(data["dateDepart"]);
     var hour = new Date("July 1 2023 " + data["heureDepart"]);
-    let boutonRepondreOffre = <></>;
 
     if (data["infos"].length > 1)
         info = (
@@ -33,13 +32,9 @@ function Offer(data) {
             </main>
         );
 
-    if (data["email"] != localStorage.getItem("mail")) {
-        boutonRepondreOffre = (
-            <main>
-                <button onClick={console.log("hey")}>Répondre à l'offre</button>
-            </main>
-        );
-    }
+    var placedispo = <p>Nombre de places disponibles : {data["nbPlaceDisponible"]}</p>;
+    if(data["nbPlaceDisponible"] === 1) placedispo = <p>Nombre de place disponible : {data["nbPlaceDisponible"]}</p>;
+    if(data["nbPlaceDisponible"] === 0) placedispo = <p>Aucune place disponible.</p>;
 
     return (
         <section key={data["idfOffre"]}>
@@ -67,6 +62,7 @@ function Offer(data) {
             {inter}
             {precision}
             {info}
+            {placedispo}
         </section>
     );
 }

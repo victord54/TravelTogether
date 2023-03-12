@@ -18,11 +18,11 @@ function Home() {
                 },
             })
             .then(function (reponse) {
+                console.log(reponse);
                 if (reponse.data == null) {
                     setOffres({ offres: [], statut: "ok" });
                 } else {
                     setOffres({ offres: reponse.data, statut: "ok" });
-                    console.log(reponse.data);
                 }
             })
             .catch(function (error) {
@@ -75,15 +75,6 @@ function Home() {
                 </article>
             </main>
         );
-
-    function isJson(str) {
-        try {
-            JSON.parse(str);
-        } catch (e) {
-            return false;
-        }
-        return true;
-    }
 }
 
 export default Home;
