@@ -21,6 +21,7 @@ import DeleteMember_group from "../pages/DeleteMember-group";
 import SearchOffer from "../pages/SearchOffer";
 import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
+import ModifyOffer from "../pages/ModifyOffer";
 
 function App() {
     const { auth } = useAuth();
@@ -147,6 +148,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <SeeOffer />
+                        </PrivateRoute>
+                    }
+                />
+                 <Route
+                    path="modify-offer/:id"
+                    element={
+                        <PrivateRoute>
+                            <ModifyOffer />
                         </PrivateRoute>
                     }
                 />
