@@ -114,8 +114,10 @@ function SeeOffer() {
         </form>;
         }
     }
-    if(localStorage.getItem("mail") === offers.offer["email"]) {
-        buttons = <ul className='navButton'><li className='buttonsNav'><Link to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></li></ul>
+    let ajd = new Date();
+    let date = new Date(offers.offer["dateDepart"]);
+    if(localStorage.getItem("mail") === offers.offer["email"] && date > ajd) {
+        buttons = <ul className='navButton'><li className='buttonsNav'><Link to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></li></ul>;
     }
     return (
         <main>
