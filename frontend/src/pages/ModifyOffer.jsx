@@ -21,6 +21,7 @@ function ModifyOffer() {
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
+    const [offer, setOffer] = useState({statut : "", offer : null});
 
     /**
      * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
@@ -47,12 +48,35 @@ function ModifyOffer() {
 
     function validateForm(values) {
         let errors = {};
-        if(!values.date) errors.date = "La date de départ est obligatoire !";
-        if(!values.time) errors.time = "L'heure de départ est obligatoire !";
-        if(!values.price) errors.price = "Le prix est obligatoire !";
-        if(!values.size) errors.size = "Le nombre de place est obligatoire !";
+
+        if(values.price && values.price < 0) errors.price = "Le prix ne peut pas avoir de valeur négative !";
 
         return errors;
+    }
+
+    function load_data() { 
+        axios.get(url_api.url + "/offer", {
+            params: {
+                idfOffre : id
+            }
+        })
+            .then(function (response) {
+                setOffer({statut : "ok", offer : response.data});
+            })
+            .catch(function (err) {
+                console.log('Error : ' + err);
+                setOffer({statut : "ok", offer : null});
+            });
+    }
+
+    if(offer.statut === "") {
+        load_data();
+        return(
+            <div className="form-box">
+                <h1 className="creation-titre">Modification de l'offre</h1>
+                <p>Chargement des informations sur l'offre...</p>
+            </div>
+        );
     }
 
     return (
@@ -63,7 +87,7 @@ function ModifyOffer() {
                     <input
                         type="date"
                         name="date"
-                        value={formValues.date}
+                        value={formValues.date ? formValues.date : offer.offer["dateDepart"]}
                         onChange={handleChange}
                     />
                     <p className="error-form">{formErrors.date}</p>
@@ -71,7 +95,7 @@ function ModifyOffer() {
                     <input
                         type="time"
                         name="time"
-                        value={formValues.time}
+                        value={formValues.time ? formValues.time : offer.offer["heureDepart"]}
                         onChange={handleChange}
                     />
                     <p className="error-form">{formErrors.time}</p>
@@ -79,7 +103,7 @@ function ModifyOffer() {
                     <input
                         type="number"
                         name="price"
-                        value={formValues.price}
+                        value={formValues.price ? formValues.price : offer.offer["prix"]}
                         onChange={handleChange}
                     />
                     <p className="error-form">{formErrors.price}</p>
@@ -87,7 +111,7 @@ function ModifyOffer() {
                     <input
                         type="number"
                         name="size"
-                        value={formValues.size}
+                        value={formValues.size ? formValues.size : offer.offer["nbPlaceDisponible"]}
                         onChange={handleChange}
                     />
                     <p className="error-form">{formErrors.size}</p>
@@ -95,7 +119,7 @@ function ModifyOffer() {
                     <input
                         type="text"
                         name="precisions"
-                        value={formValues.precisions}
+                        value={formValues.precisions ? formValues.precisions : offer.offer["precisions"]}
                         onChange={handleChange}
                     />
                     <div>
@@ -104,7 +128,7 @@ function ModifyOffer() {
                     <input
                         type="text"
                         name="informations"
-                        value={formValues.informations}
+                        value={formValues.informations ? formValues.informations : offer.offer["infos"]}
                         onChange={handleChange}
                     />
                     <br />
