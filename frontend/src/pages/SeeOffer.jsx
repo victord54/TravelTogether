@@ -4,6 +4,7 @@ import {url_api} from "../data/url_api";
 import Offer from "../components/Offer";
 import {useParams, Link} from "react-router-dom";
 import "../styles/SeeOffer.css";
+import "../styles/NavButton.css";
 
 function SeeOffer() {
     const initialValue = {
@@ -15,7 +16,7 @@ function SeeOffer() {
     const [offers, setOffers] = useState({statut : "", offer : null});
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
-    var buttons = <nav></nav>;
+    var buttons = <nav className='navButton'></nav>;
 
     function load_data() { 
         axios.get(url_api.url + "/offer", {
@@ -114,7 +115,7 @@ function SeeOffer() {
         }
     }
     if(localStorage.getItem("mail") === offers.offer["email"]) {
-        buttons = <nav><Link to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></nav>
+        buttons = <ul className='navButton'><li className='buttonsNav'><Link to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></li></ul>
     }
     return (
         <main>
