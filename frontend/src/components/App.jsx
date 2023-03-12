@@ -22,6 +22,7 @@ import SearchOffer from "../pages/SearchOffer";
 import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
 import ModifyOffer from "../pages/ModifyOffer";
+import ModifGroup from "../pages/ModifGroup";
 
 function App() {
     const { auth } = useAuth();
@@ -148,6 +149,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <SeeOffer />
+                        </PrivateRoute>
+                    }
+                />
+                 <Route
+                    path="modif-group/:id"
+                    element={
+                        <PrivateRoute>
+                        <ModifGroup/>
                         </PrivateRoute>
                     }
                 />
