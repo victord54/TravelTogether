@@ -35,22 +35,6 @@ function Notifications() {
         setOpen(false);
     };
 
-    const handleRed = (id) => {
-        setOpen(false);
-        console.log("mettre la notif ", id, " a lu");
-    };
-
-    const handleDelete = () => {
-        setOpen(false);
-        deleteNotif(dialogTuple.idfNotif);
-    };
-
-    const handleUpdate = (idNotif, ref) => {
-        setOpen(false);
-        updateNotif(idNotif, ref);
-        console.log("update ", idNotif);
-    };
-
     async function getNotifs(id) {
         await axios
             .get(url_api.url + "/notifications", {
@@ -106,6 +90,8 @@ function Notifications() {
                 return "Demande de participation à un trajet";
             case "Offre":
                 return "Nouvelle offre privée";
+            case "Resultat":
+                return "Réponse à votre demande de participation"
         }
     }
 
@@ -135,7 +121,7 @@ function Notifications() {
                             >
                                 <Notif
                                     className={
-                                        tuple.etat === 0 ? "non_lue" : ""
+                                        tuple.etat == 0 ? "non_lue" : ""
                                     }
                                     key={tuple.idfNotif + "notif"}
                                     titre={titleSwitch(tuple.typeNotif)}
@@ -163,6 +149,12 @@ function Notifications() {
                                                     to={
                                                         "../offre/" +
                                                         dialogTuple.idfOffre
+                                                    }
+                                                    onClick={() =>
+                                                        updateNotif(
+                                                            dialogTuple.idfNotif,
+                                                            null
+                                                        )
                                                     }
                                                 >
                                                     {dialogTuple.informations}
@@ -256,7 +248,7 @@ function Notifications() {
                                     )
                                 ) : (
                                     <>
-                                        {dialogTuple.etat === 0 ? (
+                                        {dialogTuple.etat == 0 ? (
                                             <DialogActions>
                                                 <Button
                                                     color="info"

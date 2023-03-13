@@ -75,7 +75,7 @@ CREATE TABLE
 CREATE TABLE
     NOTIFICATION(
         idfNotif INT PRIMARY KEY AUTO_INCREMENT,
-        typeNotif ENUM('Groupe', 'Offre', 'Reponse'),
+        typeNotif ENUM('Groupe', 'Offre', 'Reponse', 'Resultat'),
         dateNotif DATE NOT NULL,
         notifie VARCHAR(50) NOT NULL,
         idfGroupe INT DEFAULT NULL,

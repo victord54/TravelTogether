@@ -35,7 +35,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     echo json_encode($data2[0]["interesse"]);
     $statement = $pdo->prepare("INSERT INTO NOTIFICATION (typeNotif, dateNotif, notifie, etat, informations) 
     VALUES (:typeNotif, :dateNotif, :notifie, :etat, :info)");
-    $statement->bindValue(":typeNotif", "Reponse");
+    $statement->bindValue(":typeNotif", "Resultat");
     $statement->bindValue(":dateNotif", date('y-m-d'));
     $statement->bindValue(":notifie", $data2[0]["interesse"]);
     $statement->bindValue(":etat", 0);
