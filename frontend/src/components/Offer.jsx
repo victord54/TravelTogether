@@ -1,3 +1,7 @@
+import { url_api } from "../data/url_api";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 function Offer(data) {
     var info = <></>;
     var precision = <></>;
@@ -9,9 +13,6 @@ function Offer(data) {
     dateD.setHours(hour.getHours())
     dateD.setMinutes(hour.getMinutes())
     const dateAuj = new Date()
-    
-    console.log("D : " + dateD)
-    console.log("Auj : " + dateAuj)
 
     if (data["infos"].length > 1)
         info = (
@@ -44,8 +45,15 @@ function Offer(data) {
     if(data["nbPlaceDisponible"] === 1) placedispo = <p>Nombre de place disponible : {data["nbPlaceDisponible"]}</p>;
     if(data["nbPlaceDisponible"] === 0) placedispo = <p>Aucune place disponible.</p>;
 
-    function handleNoterParticipants(){
-        alert("NoterParticipants")
+    async function handleNoterParticipants(){
+        axios.get(url_api.url + "/grade_participants", {
+            params: {
+                id: data["idfOffre"]
+            },
+        })
+        .then(function (reponse) {
+            console.log(reponse);
+        })
     }
 
     return (
@@ -75,7 +83,8 @@ function Offer(data) {
             {inter}
             {precision}
             {info}
-            {dateD < dateAuj ? <button onClick={handleNoterParticipants}>Noter les participants</button> : <>{placedispo}</>}
+            {dateD < dateAuj ? <button onClick={() => handleNoterParticipants}>Noter les participants</button> : <>{placedispo}</>}
+            
         </section>
     );
 }
