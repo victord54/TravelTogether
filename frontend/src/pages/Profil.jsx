@@ -120,10 +120,9 @@ function Profil() {
     } else if (offers.statut === "ok" && offers.offers.length === 0) {
         historique = <div className="wrapper-historique"><p>Vous n'avez pas effectué de trajet ou n'avez aucune demande de trajet en attente.</p></div>;
     } else {
-        historique = <article className="wrapper-historique">{offers.offers.map((offre, index) => (
-            <Link to={"../offre/" + offre["idfOffre"]} key={index}>
-                {Offer(offre)}
-            </Link>
+        historique = <article className="wrapper-historique">{
+            offers.offers.map((offre, index) => (
+                <div key={index}>{Offer(offre)}</div>
         ))}</article>;
     }
 

@@ -4,6 +4,14 @@ function Offer(data) {
     var inter = <></>;
     var date = new Date(data["dateDepart"]);
     var hour = new Date("July 1 2023 " + data["heureDepart"]);
+    
+    const dateD = new Date(date)
+    dateD.setHours(hour.getHours())
+    dateD.setMinutes(hour.getMinutes())
+    const dateAuj = new Date()
+    
+    console.log("D : " + dateD)
+    console.log("Auj : " + dateAuj)
 
     if (data["infos"].length > 1)
         info = (
@@ -36,7 +44,12 @@ function Offer(data) {
     if(data["nbPlaceDisponible"] === 1) placedispo = <p>Nombre de place disponible : {data["nbPlaceDisponible"]}</p>;
     if(data["nbPlaceDisponible"] === 0) placedispo = <p>Aucune place disponible.</p>;
 
+    function handleNoterParticipants(){
+        alert("NoterParticipants")
+    }
+
     return (
+        
         <section key={data["idfOffre"]}>
             <h2>
                 {data["villeDepart"]} &#8594; {data["villeArrivee"]}
@@ -62,7 +75,7 @@ function Offer(data) {
             {inter}
             {precision}
             {info}
-            {placedispo}
+            {dateD < dateAuj ? <button onClick={handleNoterParticipants}>Noter les participants</button> : <>{placedispo}</>}
         </section>
     );
 }
