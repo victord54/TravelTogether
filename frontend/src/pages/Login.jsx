@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 import {url_api} from "../data/url_api";
 import "../styles/Login.css";
 import {useAuth} from "../components/AuthProvider";
+import closeEye from "../assets/closeeye.svg";
+import openEye from "../assets/openeye.svg";
 
 function Login() {
     const initialValue = { mail: "", password: "" };
@@ -11,6 +13,8 @@ function Login() {
     const [error, setError] = useState(null);
     const { setAuth } = useAuth();
     const navigate = useNavigate();
+    const [passwordIsVisible, setPasswordIsVisible] = useState(false);
+    
 
     /**
      * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
@@ -79,7 +83,7 @@ function Login() {
                 <p className="error">{error}</p>
                 <input
                     className="input-connexion"
-                    type="text"
+                    type="mail"
                     name="mail"
                     value={formValues.mail}
                     placeholder="Email"
@@ -88,12 +92,22 @@ function Login() {
                 <br />
                 <input
                     className="input-connexion"
-                    type="password"
+                    type={passwordIsVisible ? 'text' : 'password'}
                     name="password"
                     value={formValues.password}
                     placeholder="Mot de passe"
                     onChange={handleChange}
                 ></input>
+                <span
+                    className="button-show"
+                    name="show"
+                    onClick={() => setPasswordIsVisible((prevState) => !prevState)}>
+                    <img 
+                        src={passwordIsVisible ? closeEye : openEye}
+                        alt={passwordIsVisible ? "Closed Eye" : "open Eye"}
+                        width="32"
+                    />
+                </span>
                 <br />
                 <br />
                 <div className="button-wrap">
