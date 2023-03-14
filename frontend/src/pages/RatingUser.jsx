@@ -31,33 +31,37 @@ function RatingUser() {
         console.log(users);
         return (
             <>
-                <h1>Notez vos passagers du trajet {params.id}</h1>
+                <h1>Notez les participants du trajet</h1>
                 <form className="rating_form">
                     {users.map((user, index) => {
-                        return (
-                            <div key={index} className="user_stars">
-                                {user.nom + " " + user.prenom}
-                                {stars.map((star, index1) => {
-                                    return (
-                                        <div
-                                            key={index1}
-                                            className="star_button_pair"
-                                        >
-                                            <label
-                                                htmlFor={"star" + star + index}
+                        if (user.email != localStorage.getItem('mail')){
+                            return (
+                                <div key={index} className="user_stars">
+                                    {user.nom + " " + user.prenom}
+                                    <br/>
+                                    {user.email == user.notifie ? <>Conducteur</> : <>Passager</>}
+                                    {stars.map((star, index1) => {
+                                        return (
+                                            <div
+                                                key={index1}
+                                                className="star_button_pair"
                                             >
-                                                {star}
-                                            </label>
-                                            <input
-                                                type="radio"
-                                                name="stars"
-                                                id={"star" + star + index}
-                                            />
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        );
+                                                <label
+                                                    htmlFor={"star" + star + index}
+                                                >
+                                                    {star}
+                                                </label>
+                                                <input
+                                                    type="radio"
+                                                    name="stars"
+                                                    id={"star" + star + index}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        }
                     })}
                 </form>
             </>
