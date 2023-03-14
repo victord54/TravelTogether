@@ -23,6 +23,7 @@ import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
 import ModifyOffer from "../pages/ModifyOffer";
 import ModifGroup from "../pages/ModifGroup";
+import RecupCompte from "../pages/RecupCompte";
 
 function App() {
     const { auth } = useAuth();
@@ -166,6 +167,13 @@ function App() {
                         <PrivateRoute>
                             <ModifyOffer />
                         </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/recupcompte"
+                    element={
+                            <RecupCompte />
+
                     }
                 />
                 <Route path="*" element={<Unknow />} />

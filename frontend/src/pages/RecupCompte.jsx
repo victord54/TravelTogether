@@ -7,9 +7,8 @@ import {useAuth} from "../components/AuthProvider";
 import closeEye from "../assets/closeeye.svg";
 import openEye from "../assets/openeye.svg";
 import { Link } from "react-router-dom";
-import {Navigate} from 'react-router-dom';
 
-function Login() {
+function RecupCompte() {
     const initialValue = { mail: "", password: "" };
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
@@ -44,33 +43,19 @@ function Login() {
      */
     async function getUser() {
         await axios
-            .get(url_api.url + "/login", {
+            .get(url_api.url + "/recup_compte", {
                 params: {
                     mail: formValues["mail"],
-                    password: formValues["password"],
+                    code: "1234",
                 },
             })
             .then(function (reponse) {
                 if (reponse.data == null) {
-                    setError("Identifiant et/ou mot de passe incorrect.");
+                    setError("Mail invalide");
                 } else {
+                    console.log("sent");
                     console.log("Reponse : " + reponse.data);
-                    localStorage.setItem("mail", reponse.data["email"]);
-                    localStorage.setItem("nom", reponse.data["nom"]);
-                    localStorage.setItem("prenom", reponse.data["prenom"]);
-                    localStorage.setItem("genre", reponse.data["genre"]);
-                    localStorage.setItem("numTel", reponse.data["numTel"]);
-                    localStorage.setItem(
-                        "aUneVoiture",
-                        reponse.data["aUneVoiture"]
-                    );
-                    localStorage.setItem(
-                        "notificationParMail",
-                        reponse.data["notificationParMail"]
-                    );
-                    localStorage.setItem("photo", reponse.data["photo"]);
-                    setAuth(true);
-                    navigate("/");
+                    
                 }
             })
             .catch(function (error) {
@@ -92,36 +77,15 @@ function Login() {
                     onChange={handleChange}
                 ></input>
                 <br />
-                <input
-                    className="input-connexion"
-                    type={passwordIsVisible ? 'text' : 'password'}
-                    name="password"
-                    value={formValues.password}
-                    placeholder="Mot de passe"
-                    onChange={handleChange}
-                ></input>
-                <span
-                    className="button-show"
-                    name="show"
-                    onClick={() => setPasswordIsVisible((prevState) => !prevState)}>
-                    <img 
-                        src={passwordIsVisible ? closeEye : openEye}
-                        alt={passwordIsVisible ? "Closed Eye" : "open Eye"}
-                        width="32"
-                    />
-                </span>
-                <br />
-                <br />
+            
                 <div className="button-wrap">
                     <button type="submit" className="button-connexion">
                         Se connecter
                     </button>
-                    
-                    <Link to="../RecupCompte">Recuperer son compte</Link > 
                 </div>
             </form>
         </div>
     );
 }
-/**Pretify button for recovery, check if email is in database before */
-export default Login;
+
+export default RecupCompte;
