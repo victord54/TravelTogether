@@ -1,0 +1,22 @@
+.star_button_pair {
+    width: fit-content;
+    min-width: 3vw;
+    padding: 1vh 1vw;
+    border-radius: 25px;
+    margin-top: 2wh;
+    margin-bottom: 2vh;
+    margin-left: 1vw;
+
+}
+
+.user_stars {
+    margin-left: 1vw;
+    padding: 1vh 1vw;
+    margin-bottom: 5vh;
+    width: fit-content;
+    display: flex;
+    border: 3px solid beige;
+    border-radius: 25px;
+    justify-content: center;
+    align-items: baseline;
+}

@@ -8,10 +8,13 @@
     text-align: center;
 }
 
+.notif {
+    transition: all 0.5s;
+}
+
 .notif:hover {
     transform: scale(1.1);
     box-shadow: 2% 2%;
-    transition: all 0.5s;
 
 }
 .title {

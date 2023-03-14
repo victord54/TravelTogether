@@ -91,7 +91,7 @@ function Notifications() {
             case "Offre":
                 return "Nouvelle offre privée";
             case "Resultat":
-                return "Réponse à votre demande de participation"
+                return "Réponse à votre demande de participation";
         }
     }
 
@@ -120,9 +120,7 @@ function Notifications() {
                                 onClick={() => handleClickOpen(tuple)}
                             >
                                 <Notif
-                                    className={
-                                        tuple.etat == 0 ? "non_lue" : ""
-                                    }
+                                    className={tuple.etat == 0 ? "non_lue" : ""}
                                     key={tuple.idfNotif + "notif"}
                                     titre={titleSwitch(tuple.typeNotif)}
                                     date={dateChange(tuple.dateNotif)}

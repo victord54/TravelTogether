@@ -1,7 +1,7 @@
-import {Route, Routes} from "react-router-dom";
-import {useAuth} from "../components/AuthProvider";
-import {PrivateRoute} from "./PrivateRoute";
-import {PrivateRouteAuth} from "./PrivateRouteAuth";
+import { Route, Routes } from "react-router-dom";
+import { useAuth } from "../components/AuthProvider";
+import { PrivateRoute } from "./PrivateRoute";
+import { PrivateRouteAuth } from "./PrivateRouteAuth";
 import Banner from "./Banner";
 import NotAuthBanner from "./NotAuthBanner";
 import Home from "../pages/Home";
@@ -23,6 +23,7 @@ import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
 import ModifyOffer from "../pages/ModifyOffer";
 import ModifGroup from "../pages/ModifGroup";
+import RatingUser from "../pages/RatingUser";
 
 function App() {
     const { auth } = useAuth();
@@ -106,19 +107,19 @@ function App() {
                 />
                 <Route
                     path="/deletemember-group/:id"
-                    element=
-                        {<PrivateRoute>
+                    element={
+                        <PrivateRoute>
                             <DeleteMember_group />
                         </PrivateRoute>
                     }
                 />
                 <Route
                     path="/addmember-group/:id"
-                    element=
-                        {<PrivateRoute>
+                    element={
+                        <PrivateRoute>
                             <AddMember_group />
                         </PrivateRoute>
-                        }
+                    }
                 />
                 <Route
                     path="/friends-group-list"
@@ -144,7 +145,7 @@ function App() {
                         </PrivateRoute>
                     }
                 />
-                 <Route
+                <Route
                     path="offre/:id"
                     element={
                         <PrivateRoute>
@@ -152,19 +153,27 @@ function App() {
                         </PrivateRoute>
                     }
                 />
-                 <Route
+                <Route
                     path="modif-group/:id"
                     element={
                         <PrivateRoute>
-                        <ModifGroup/>
+                            <ModifGroup />
                         </PrivateRoute>
                     }
                 />
-                 <Route
+                <Route
                     path="modify-offer/:id"
                     element={
                         <PrivateRoute>
                             <ModifyOffer />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="rating-user/:id"
+                    element={
+                        <PrivateRoute>
+                            <RatingUser />
                         </PrivateRoute>
                     }
                 />
