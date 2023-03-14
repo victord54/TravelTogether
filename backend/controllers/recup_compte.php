@@ -21,17 +21,22 @@ $mail->host = 'localhost';
 $mail->Port = "25";
 $mail->username = "";
 $mail->password = "";
-$mail->setFrom('test@test.com', 'name');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+$mail->setFrom('recup@traveltogether.fr', 'Recuperation de compte TravelTogether');
 // Recipient, the name can also be stated
-$mail->addAddress('test@test.com', 'name');
-$mail->Subject = 'test';
+$mail->addAddress($_POST["email"], "name");
+$mail->Subject = ($_POST["code"]); //save temporary code in localstorage to compare against
 // HTML content
 $mail->Body = 'test';
 $mail->CharSet = 'UTF-8';
 $mail->Encoding = 'base64';
 $mail-> send();
+}
 
-mail($to,$subject,$txt,$headers);
+
+
 
 
     /*$statement = $pdo->prepare("SELECT * FROM UTILISATEUR WHERE email = :mail");
