@@ -23,16 +23,25 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     // Parse json body and notify when error occurs
     $data = json_decode($body, true);
     
-    print_r($data);
+    //print_r($data);
     $statement->bindValue(":idf", $data["idf"]);
     $statement->bindValue(":ref", $data["ref"]);
     $statement->execute();
-    echo json_encode("j'ai bien reçu que tu as change le statut de la notification " . $data["ref"]);
+    //echo json_encode("j'ai bien reçu que tu as change le statut de la notification " . $data["ref"]);
     $statement = $pdo->prepare("SELECT * FROM NOTIFICATION WHERE idfNotif=(:idf)");
     $statement->bindValue(":idf", $data["idf"]);
     $statement->execute();
     $data2 = $statement->fetchAll();
-    echo json_encode($data2[0]["interesse"]);
+    //echo json_encode($data2[0]["interesse"]);
+
+    if (strcmp($data["ref"], "accepte")) {
+        $statement = $pdo->prepare("SELECT numTel FROM UTILISATEUR WHERE email=:mail");
+        $statement->bindValue(":mail", $data['email']);
+        $statement->execute();
+        $numTel = $statement->fetch();
+        echo json_encode($numTel['numTel']);
+    }
+
     $statement = $pdo->prepare("INSERT INTO NOTIFICATION (typeNotif, dateNotif, notifie, etat, informations) 
     VALUES (:typeNotif, :dateNotif, :notifie, :etat, :info)");
     $statement->bindValue(":typeNotif", "Resultat");
@@ -40,6 +49,13 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $statement->bindValue(":notifie", $data2[0]["interesse"]);
     $statement->bindValue(":etat", 0);
     
-    $statement->bindValue(":info", "Vous avez été ".substr($data["ref"], 0, -1)." pour votre voyage.");
+    if (strcmp($data["ref"], "accepte")){
+        $statement->bindValue(":info", "Votre demande de participation a été acceptée. Voici le numéro du conducteur : " . $numTel['numTel']);
+    } else {
+        $statement->bindValue(":info", "Votre demande de participation a été refusée");
+
+    }
+
+    
     $statement->execute();
 }

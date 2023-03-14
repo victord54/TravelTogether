@@ -59,6 +59,7 @@ function Notifications() {
             .put(url_api.url + "/notifications", {
                 idf: idNotif,
                 ref: ref,
+                email: localStorage.getItem("mail"),
             })
             .then(function (response) {
                 console.log(response.data);
