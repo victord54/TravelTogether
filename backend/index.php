@@ -36,4 +36,6 @@ if ($_GET["request"] == "login") {
     require_once("controllers/modify_offer.php");
 } else if ($_GET["request"] == "grade_participants"){
     require_once("controllers/grade_participants.php");
+}else if ($_GET["request"] == "recup_compte"){
+    require_once("controllers/recup_compte.php");
 }
