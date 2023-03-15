@@ -1,17 +1,27 @@
+nav {
+    padding: 2px;
+}
+
 ul.navButton {
     background-color: #dddddd;
+  
 }
 
 .buttonsNav {
     float: left;
+    padding: 10px;
+    
 }
 
 .buttonsNav {
     display: block;
     padding: 8px;
     background-color: #dddddd;
+    padding: 10px;
+    margin-right:3px;
 }
 
 .buttonsNav:hover {
     background-color: #89ced6;
+    padding: 10px;
 }
