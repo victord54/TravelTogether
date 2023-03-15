@@ -44,13 +44,13 @@ function Groupe() {
         navBar = (
 
             <nav>
-                <ul className='navButton'>
-                <li className='buttonsNav'><Link to={"../delete-group/" + id}>
-                        Supprimer ce groupe
-                    </Link></li></ul>
-                    <Link to={"../addmember-group/" + id}>
-                        Ajouter un nouveau membre
-                    </Link>
+                    <ul className='navButton'><li className='buttonsNav'>
+                    <Link to={"../delete-group/" + id}>Supprimer ce groupe</Link>
+                    </li></ul>
+
+                    <ul className='navButton'><li className='buttonsNav'>
+                    <Link to={"../addmember-group/" + id}>Ajouter un nouveau membre</Link>
+                    </li></ul>
                     <Link to={"../deletemember-group/" + id}>
                         Supprimer un membre
                     </Link>
