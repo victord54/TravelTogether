@@ -22,36 +22,34 @@ $mail->Port = "25";
 $mail->username = "";
 $mail->password = "";
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+$pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
-$mail->setFrom('recup@traveltogether.fr', 'Recuperation de compte TravelTogether');
-// Recipient, the name can also be stated
-$mail->addAddress($_GET["mail"], "name");
-$mail->Subject = ($_GET["code"]); //save temporary code in localstorage to compare against
-// HTML content
-$mail->Body = 'test';
-$mail->CharSet = 'UTF-8';
-$mail->Encoding = 'base64';
-$mail-> send();
-echo json_encode("ok");
-}
-
-
-
-
-
-    /*$statement = $pdo->prepare("SELECT * FROM UTILISATEUR WHERE email = :mail");
-    $statement->setFetchMode(PDO::FETCH_ASSOC);
-    $statement->bindValue(":mail", $_GET['mail']);
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == null) {
+    $statement = $pdo->prepare("SELECT email FROM utilisateurs  WHERE email = :mail");
+    $statement->bindValue(":mail", $_GET["mail"]);
     $statement->execute();
     $data = $statement->fetch();
-
-    $reponse = null;
-    if ($data) {
-        if (password_verify($_GET['password'], $data['motDePasse'])) {
-            $reponse = $data;
-        }
+    if($data){
+    $mail->setFrom('recup@traveltogether.fr', 'Recuperation de compte TravelTogether');
+    // Recipient, the name can also be stated
+    $mail->addAddress($_GET["mail"], "name");
+    $mail->Subject = ($_GET["code"]); //save temporary code in localstorage to compare against
+    // HTML content
+    $mail->Body = 'test';
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+    $mail-> send();
+    echo json_encode("ok");}
+    else{
+        echo "lied";
     }
+}
+if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != null){
+    $statement = $pdo->prepare("UPDATE utilisateurs set motDePasse = :pass WHERE email = :mail");
+    $statement->bindValue(":pass", $_GET["pass"]);
+    $statement->bindValue(":mail", $_GET["mail"]);
+    $statement->execute();
+    echo "ok";
+}
 
-    echo json_encode($reponse);*/
     ?>
