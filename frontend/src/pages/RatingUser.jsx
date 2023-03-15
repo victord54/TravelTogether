@@ -77,47 +77,50 @@ function RatingUser() {
                 <h1>Notez les participants du trajet</h1>
                 <form className="rating_form" onSubmit={handleSubmit}>
                     {users.map((user, index) => {
-                        // if (user.email != localStorage.getItem('mail')){
-                        return (
-                            <div key={index} className="user_stars">
-                                {user.nom + " " + user.prenom}
-                                <br />
-                                {user.email == user.notifie ? (
-                                    <>Conducteur</>
-                                ) : (
-                                    <>Passager</>
-                                )}
-                                {stars.map((star, index1) => {
-                                    return (
-                                        <div
-                                            key={index1}
-                                            className="star_button_pair"
-                                        >
-                                            <label
-                                                htmlFor={"star" + star + index}
+                        if (user.email != localStorage.getItem("mail")) {
+                            return (
+                                <div key={index} className="user_stars">
+                                    {user.nom + " " + user.prenom}
+                                    <br />
+                                    {user.email == user.notifie ? (
+                                        <>Conducteur</>
+                                    ) : (
+                                        <>Passager</>
+                                    )}
+                                    {stars.map((star, index1) => {
+                                        return (
+                                            <div
+                                                key={index1}
+                                                className="star_button_pair"
                                             >
-                                                {star}
-                                            </label>
-                                            <input
-                                                type="radio"
-                                                name={user.email}
-                                                value={index1}
-                                                onChange={handleChange}
-                                                checked={
-                                                    rate[user.email] == index1
-                                                }
-                                            />
-                                        </div>
-                                    );
-                                })}
-                                <button
-                                    onClick={() => handleDelete(user.email)}
-                                >
-                                    Supprimer
-                                </button>
-                            </div>
-                        );
-                        // }
+                                                <label
+                                                    htmlFor={
+                                                        "star" + star + index
+                                                    }
+                                                >
+                                                    {star}
+                                                </label>
+                                                <input
+                                                    type="radio"
+                                                    name={user.email}
+                                                    value={index1}
+                                                    onChange={handleChange}
+                                                    checked={
+                                                        rate[user.email] ==
+                                                        index1
+                                                    }
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                    <button
+                                        onClick={() => handleDelete(user.email)}
+                                    >
+                                        Supprimer
+                                    </button>
+                                </div>
+                            );
+                        }
                     })}
                     <button type="submit" className="formulaire-submit">
                         Valider
