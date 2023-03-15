@@ -9,13 +9,22 @@ import openEye from "../assets/openeye.svg";
 import { Link } from "react-router-dom";
 
 function RecupCompte() {
-    const initialValue = { mail: "", password: "" };
+    const initialValue = { mail: "", password: "", code: ""};
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
-    const [hasSub, setHasSub] = useState(false);
+    const [hasSub, setHasSub] = useState(0);
+
+    //source https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    function getRandomInt() {
+        var min = Math.ceil(1000);
+        var max = Math.floor(10000);
+        var number =  Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+        localStorage.setItem("code", number);
+        return number;
+    }
     
 
     /**
@@ -27,7 +36,17 @@ function RecupCompte() {
     function handleSubmit(e) {
         e.preventDefault();
         getUser();
-        setHasSub(true);
+        setHasSub(1);
+    }
+
+    function handleSubmit2(e) {
+        e.preventDefault();
+        console.log(formValues.code);
+        console.log(localStorage.getItem("code"));
+        if(formValues.code == localStorage.getItem("code")){
+            setHasSub(2);
+        }
+        
     }
 
     /**
@@ -41,7 +60,7 @@ function RecupCompte() {
 
     function Display(){
         console.log(hasSub);
-        if (!hasSub){
+        if (hasSub == 0){
             return(
             <div className="form--connexion-box">
                         <form onSubmit={handleSubmit}>
@@ -65,8 +84,30 @@ function RecupCompte() {
                         </form>
                     </div>
     
-    );}else{return(
-            <div className="form--connexion-box">
+    );}else if(hasSub == 1){return(
+        <div className="form--connexion-box">
+        <form onSubmit={handleSubmit2}>
+            <h1 className="bienvenue">Bienvenue ! </h1>
+            <p className="error">{error}</p>
+            <input
+                className="input-connexion"
+                type="text"
+                name="code"
+                value={formValues.code}
+                onChange={handleChange}
+            ></input>
+            <br />
+        
+            <div className="button-wrap">
+                <button type="submit" className="button-connexion">
+                    Saisir le code.
+                </button>
+            </div>
+        </form>
+    </div>
+        );}else if(hasSub == 2){return(
+            
+<div className="form--connexion-box">
                         <form onSubmit={handleSubmit}>
                             <h1 className="bienvenue">Bienvenue ! </h1>
                             <p className="error">{error}</p>
@@ -98,7 +139,7 @@ function RecupCompte() {
             .get(url_api.url + "/recup_compte", {
                 params: {
                     mail: formValues["mail"],
-                    code: "1234",
+                    code: getRandomInt(),
                 },
             })
             .then(function (reponse) {
@@ -107,7 +148,7 @@ function RecupCompte() {
                 } else {
                     console.log("sent");
                     console.log("Reponse : " + reponse.data);
-                    setHasSub(true);
+                    setHasSub(1);
                     console.log(hasSub);
                 }
             })
