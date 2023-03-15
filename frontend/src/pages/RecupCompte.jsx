@@ -15,6 +15,7 @@ function RecupCompte() {
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
+    const [hasSub, setHasSub] = useState(false);
     
 
     /**
@@ -26,6 +27,7 @@ function RecupCompte() {
     function handleSubmit(e) {
         e.preventDefault();
         getUser();
+        setHasSub(true);
     }
 
     /**
@@ -35,6 +37,56 @@ function RecupCompte() {
      */
     function handleChange(e) {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
+    }
+
+    function Display(){
+        console.log(hasSub);
+        if (!hasSub){
+            return(
+            <div className="form--connexion-box">
+                        <form onSubmit={handleSubmit}>
+                            <h1 className="bienvenue">Bienvenue ! </h1>
+                            <p className="error">{error}</p>
+                            <input
+                                className="input-connexion"
+                                type="mail"
+                                name="mail"
+                                value={formValues.mail}
+                                placeholder="Email"
+                                onChange={handleChange}
+                            ></input>
+                            <br />
+                        
+                            <div className="button-wrap">
+                                <button type="submit" className="button-connexion">
+                                    Se connecter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+    
+    );}else{return(
+            <div className="form--connexion-box">
+                        <form onSubmit={handleSubmit}>
+                            <h1 className="bienvenue">Bienvenue ! </h1>
+                            <p className="error">{error}</p>
+                            <input
+                                className="input-connexion"
+                                type="password"
+                                name="password"
+                                value={formValues.password}
+                                onChange={handleChange}
+                            ></input>
+                            <br />
+                        
+                            <div className="button-wrap">
+                                <button type="submit" className="button-connexion">
+                                    Reinitialiser le mot de passe
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+        );}
     }
 
     /**
@@ -55,7 +107,8 @@ function RecupCompte() {
                 } else {
                     console.log("sent");
                     console.log("Reponse : " + reponse.data);
-                    
+                    setHasSub(true);
+                    console.log(hasSub);
                 }
             })
             .catch(function (error) {
@@ -64,27 +117,9 @@ function RecupCompte() {
     }
 
     return (
-        <div className="form--connexion-box">
-            <form onSubmit={handleSubmit}>
-                <h1 className="bienvenue">Bienvenue ! </h1>
-                <p className="error">{error}</p>
-                <input
-                    className="input-connexion"
-                    type="mail"
-                    name="mail"
-                    value={formValues.mail}
-                    placeholder="Email"
-                    onChange={handleChange}
-                ></input>
-                <br />
-            
-                <div className="button-wrap">
-                    <button type="submit" className="button-connexion">
-                        Se connecter
-                    </button>
-                </div>
-            </form>
-        </div>
+        
+        <Display/>
+        
     );
 }
 
