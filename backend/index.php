@@ -28,12 +28,14 @@ if ($_GET["request"] == "login") {
     require_once('controllers/search_offer.php');
 } else if ($_GET["request"] == "notifications") {
     require_once('controllers/notifications.php');
-} else if ($_GET["request"] == "reply"){
+} else if ($_GET["request"] == "reply") {
     require_once("controllers/reply.php");
-} else if ($_GET["request"] == "check_notifications"){
+} else if ($_GET["request"] == "check_notifications") {
     require_once("controllers/check_notifications.php");
-} else if ($_GET["request"] == "modify_offer"){
+} else if ($_GET["request"] == "modify_offer") {
     require_once("controllers/modify_offer.php");
-} else if ($_GET["request"] == "grade_participants"){
+} else if ($_GET["request"] == "grade_participants") {
     require_once("controllers/grade_participants.php");
+} else if ($_GET["request"] == "rate_user") {
+    require_once("controllers/rate_user.php");
 }
