@@ -68,6 +68,7 @@ function Groupe() {
     return (
         <div>
             {navBar}
+            <br></br>
             <h1>{groupe.value["nomDeGroupe"]}</h1>
             {Group(groupe.value)}
         </div>
