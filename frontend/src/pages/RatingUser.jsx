@@ -9,6 +9,21 @@ function RatingUser() {
     const [users, setUsers] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const stars = [0, 1, 2, 3, 4, 5];
+    const [rate, setRate] = useState([null]);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        console.log(rate)
+    }
+
+    function handleChange(e) {
+        setRate({ ...rate, [e.target.name]: e.target.value });
+    }
+
+    function handleDelete(id){
+        console.log("delete " + id)
+        setRate({ ...rate, [id] : null})
+    }
 
     async function handleNoterParticipants() {
         await axios
@@ -20,19 +35,17 @@ function RatingUser() {
             .then(function (reponse) {
                 console.log(reponse.data);
                 setUsers(reponse.data);
-                console.log(users);
-            });
+            })
     }
     if (!isLoaded) {
         handleNoterParticipants();
         setIsLoaded(true);
     }
     if (isLoaded) {
-        console.log(users);
         return (
             <>
                 <h1>Notez les participants du trajet</h1>
-                <form className="rating_form">
+                <form className="rating_form" onSubmit={handleSubmit}>
                     {users.map((user, index) => {
                         if (user.email != localStorage.getItem('mail')){
                             return (
@@ -53,16 +66,22 @@ function RatingUser() {
                                                 </label>
                                                 <input
                                                     type="radio"
-                                                    name="stars"
-                                                    id={"star" + star + index}
+                                                    name={user.email}
+                                                    value={index1}
+                                                    onChange={handleChange}
+                                                    checked={rate[user.email] == index1}
                                                 />
                                             </div>
                                         );
                                     })}
+                                    <button onClick={() => handleDelete(user.email)}>Supprimer</button>
                                 </div>
                             );
                         }
                     })}
+                    <button type="submit" className="formulaire-submit">
+                            Valider
+                    </button>
                 </form>
             </>
         );
