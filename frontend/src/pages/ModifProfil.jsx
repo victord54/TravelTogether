@@ -330,7 +330,7 @@ function ModifProfil() {
         if (file) {
             formData.append("file", file);
         } else {
-            formData.append("link_picture", localStorage.getItem("picture"));
+            formData.append("link_picture", localStorage.getItem("photo"));
         }
         //console.log(formData);
 
