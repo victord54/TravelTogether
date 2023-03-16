@@ -76,6 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $statement->execute();
             $data = $statement->fetch();
             $data["nbPlacesReserves"] = 0;
+        } else {
+            $data = $data[0];
         }
     
         $reponse = $data;

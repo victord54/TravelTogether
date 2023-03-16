@@ -96,7 +96,9 @@ function ModifyOffer() {
             }
         })
             .then(function (response) {
-                setOffer({statut : "ok", offer : response.data[0]});
+                console.log(response.data);
+                setOffer({statut : "ok", offer : response.data});
+                setInputValues(response.data);
             })
             .catch(function (err) {
                 console.log('Error : ' + err);
