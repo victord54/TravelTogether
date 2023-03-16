@@ -24,6 +24,7 @@ import SeeOffer from "../pages/SeeOffer";
 import ModifyOffer from "../pages/ModifyOffer";
 import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
+import DeleteAccount from "../pages/DeleteAccount";
 
 function App() {
     const { auth } = useAuth();
@@ -174,6 +175,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <RatingUser />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/delete-account"
+                    element={
+                        <PrivateRoute>
+                            <DeleteAccount />
                         </PrivateRoute>
                     }
                 />
