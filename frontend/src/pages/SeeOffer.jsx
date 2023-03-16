@@ -121,7 +121,10 @@ function SeeOffer() {
     }
     return (
         <main>
-            {buttons}
+            <nav>
+                {buttons}
+            </nav>
+            <br/>
             <article>
                 {Offer(offers.offer)}
                 <div key="form">

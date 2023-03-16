@@ -2,7 +2,7 @@ import {useState} from "react";
 import axios from "axios";
 import {url_api} from "../data/url_api";
 import "../styles/Create-offer.css";
-import {useNavigate, useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 
 function ModifyOffer() {
     let { id } = useParams();
@@ -22,6 +22,9 @@ function ModifyOffer() {
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
     const [offer, setOffer] = useState({statut : "", offer : null});
+    const [reply, setIsReplied] = useState(false);
+
+    if(reply) return <Navigate replace to={"/offre/" + offer.offer["idfOffre"]} />;
 
     /**
      * Fonction appelé lors de la tentative d'envoie du questionnaire au serveur.
@@ -30,11 +33,11 @@ function ModifyOffer() {
      * @param {*} e Un évènement
      */
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
         setFormErrors(validateForm(formValues));
         if (Object.keys(formErrors).length === 0) {
-            sendDataToServer();
+            await sendDataToServer();
         }
     }
 
@@ -42,8 +45,25 @@ function ModifyOffer() {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
-    function sendDataToServer() {
+    async function sendDataToServer() {
+        const formData = new FormData();
+        formData.append("nbPlaceDisponible", (formValues.size ? formValues.size : offer.offer["nbPlaceDisponible"]));
+        formData.append("idfOffre", id);
+        formData.append("infos", (formValues.informations ? formValues.informations : offer.offer["infos"]));
+        formData.append("precisions", (formValues.precisions ? formValues.precisions : offer.offer["precisions"]));
+        formData.append("prix", (formValues.price ? formValues.price : offer.offer["prix"]));
+        formData.append("heureDepart", (formValues.time ? formValues.time : offer.offer["heureDepart"]));
+        formData.append("dateDepart", (formValues.date ? formValues.date : offer.offer["dateDepart"]));
 
+        await axios
+            .post(url_api.url + "/modify_offer", formData)
+            .then(function (response) {
+                console.log(response.data);
+                setIsReplied(true);
+            })
+            .catch(function (error) {
+                console.log("Error :" + error);
+            });
     }
 
     function validateForm(values) {

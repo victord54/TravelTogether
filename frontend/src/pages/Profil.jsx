@@ -133,7 +133,7 @@ function Profil() {
         historique = (
             <article className="wrapper-historique">
                 {offers.offers.map((offre, index) => (
-                    <div key={index}>{Offer(offre)}</div>
+                    <Link to={"../offre/" + offre["idfOffre"]} key={index}>{Offer(offre)}</Link>
                 ))}
             </article>
         );
