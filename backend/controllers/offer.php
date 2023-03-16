@@ -13,7 +13,7 @@ function getCity($code) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    if(isset($_GET["idfOffre"])) {
+    if(isset($_GET["idfOffre"]) && !(isset($_GET["type"]) && $_GET["type"] == "sizeInformation")) {
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idfOffre");
         $statement->bindValue(":idfOffre", $_GET['idfOffre']);
         $statement->execute();
@@ -65,28 +65,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
         $reponse = $data;
     } else if (isset($_GET["type"]) && $_GET["type"] == "sizeInformation") {
-        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) JOIN NOTIFICATION USING(idfOffre) WHERE idfOffre = :idfOffre");
-        $statement->bindValue(":email", $_GET['email']);
+        $statement = $pdo->prepare("SELECT idfOffre, dateDepart, heureDepart, prix, nbPlaceDisponible, precisions, infos, sum(nbPlaceSouhaitees) as nbPlacesReserves FROM OFFRE JOIN NOTIFICATION USING (idfOffre) where typeNotif = 'reponse' AND statutReponse = 'accepter' AND idfOffre = :idfOffre GROUP BY idfOffre;");
+        $statement->bindValue(":idfOffre", $_GET['idfOffre']);
         $statement->execute();
         $data = $statement->fetchAll();
-
-        foreach($data as $index=>$offer) {
-            $villeDep = getCity($offer["villeDepart"]);
-            $data[$index]["villeDepart"] = $villeDep;
-            $villeArrivee = getCity($offer["villeArrivee"]);
-            $data[$index]["villeArrivee"] = $villeArrivee;
-
-            $statement = $pdo->prepare("SELECT ville FROM PASSE_PAR JOIN OFFRE USING(idfOffre)
-            WHERE idfOffre = :idfOffre ORDER BY position");
-            $statement->setFetchMode(PDO::FETCH_ASSOC);
-            $statement->bindValue(":idfOffre", $offer['idfOffre']);
+        
+        if(count($data) <= 0) {
+            $statement = $pdo->prepare("SELECT idfOffre, dateDepart, heureDepart, prix, nbPlaceDisponible, precisions, infos FROM OFFRE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idfOffre");
+            $statement->bindValue(":idfOffre", $_GET['idfOffre']);
             $statement->execute();
-            $villes = $statement->fetchAll();
-
-            foreach($villes as $indexVille=>$ville) {
-                $test = getCity($ville["ville"]);
-                $data[$index]["inter"][$indexVille] = $test;
-            }
+            $data = $statement->fetch();
+            $data["nbPlacesReserves"] = 0;
         }
     
         $reponse = $data;

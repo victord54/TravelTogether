@@ -35,8 +35,10 @@ function ModifyOffer() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        setFormErrors(validateForm(formValues));
-        if (Object.keys(formErrors).length === 0) {
+        var error = validateForm(formValues);
+        setFormErrors(error);
+        console.log(error);
+        if (Object.keys(error).length === 0) {
             await sendDataToServer();
         }
     }
@@ -68,8 +70,20 @@ function ModifyOffer() {
 
     function validateForm(values) {
         let errors = {};
-
+        console.log(offer.offer["nbPlacesReserves"]);
         if(values.price && values.price < 0) errors.price = "Le prix ne peut pas avoir de valeur négative !";
+        if(values.size < offer.offer["nbPlacesReserves"]) errors.size = "Le nombre de place ne peut pas être inférieur au nombre de place actuellement reservée (actuellement " + offer.offer["nbPlacesReserves"] + ").";
+        // Vérification date
+        if (new Date(values.date + " " + values.time) <= new Date())
+        errors.time = "La date et l'heure sont déjà passées.";
+
+        // Vérification prix
+        if (values.price < 0)
+        errors.price = "Le prix doit avoir une valeur positive ou nulle.";
+
+        // Vérification nombre de place
+        if (values.size <= 0)
+        errors.size = "Le nombre de place doit être strictement positif.";
 
         return errors;
     }
@@ -77,11 +91,12 @@ function ModifyOffer() {
     function load_data() { 
         axios.get(url_api.url + "/offer", {
             params: {
-                idfOffre : id
+                idfOffre : id,
+                type: "sizeInformation"
             }
         })
             .then(function (response) {
-                setOffer({statut : "ok", offer : response.data});
+                setOffer({statut : "ok", offer : response.data[0]});
             })
             .catch(function (err) {
                 console.log('Error : ' + err);
