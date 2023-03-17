@@ -3,32 +3,26 @@ include 'header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("DELETE FROM GROUPE WHERE idfGroupe = :idfGroupe AND dirigeant = :email");
-    $statement->setFetchMode(PDO::FETCH_ASSOC);
 
-    $statement->bindValue(":idfGroupe", $_POST["idfGroupe"]);
-    $statement->bindValue(":email", $_POST["mail"]);
+    $statement = $pdo->prepare("SELECT nomDeGroupe from GROUPE WHERE (nomDeGroupe = :nom)");
 
-    $statement->execute() or die(print_r($statement->errorInfo(), true));
-    echo "1";
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT motDePasse FROM UTILISATEUR WHERE email = :mail");
-    $statement->setFetchMode(PDO::FETCH_ASSOC);
-    $statement->bindValue(":mail", $_GET['mail']);
-    $statement->execute() or die(print_r($statement->errorInfo(), true));
-    $data = $statement->fetch();
-
-    $reponse = null;
-    if ($data) {
-        if (password_verify($_GET['password'], $data['motDePasse'])) {
-            $reponse = '1';
-        } else {
-            $reponse = '0';
-        }
+    $statement->bindValue(":nom", $_POST["nom"]);
+    $statement->execute();
+    $data = $statement->fetchAll();
+    if ($data){
+        // Le groupe existe deja 
+        echo json_encode(0);
+        $exists = 1;
     }
+    else{
+        // Si le groupe n'existe pas 
+        $statement = $pdo->prepare("UPDATE SET (nomDEGroupe =:nom) WHERE id = ");
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->bindValue(":nom", $_POST["nom"]);
+        if (!$statement->execute()) {
+            echo "died";
+        }
 
-    echo json_encode($reponse);
+        echo $pdo->lastInsertId();
+        }
 }
