@@ -2,7 +2,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import {url_api} from "../data/url_api";
 import Offer from "../components/Offer";
-import {useParams, Link, useNavigate} from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 import "../styles/SeeOffer.css";
 import "../styles/NavButton.css";
 
@@ -16,7 +16,7 @@ function SeeOffer() {
     const [offers, setOffers] = useState({statut : "", offer : null});
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    const [viensDeRepondre, setReponse] = useState(false);
     var buttons = <nav className='navButton'></nav>;
 
     function load_data() { 
@@ -62,9 +62,11 @@ function SeeOffer() {
                         setError("Vous avez déjà répondu à cette offre.")
                     }else if(response.data === "not enough places available"){
                         setError("Il n'y pas assez de places disponibles pour cette offre.")
+                    } else {
+                        setReponse(true);
                     }
                 }else{
-                    navigate("/offre/" + id);
+                    setError(null);
                 }
             })
             .catch(function (error) {
@@ -110,7 +112,7 @@ function SeeOffer() {
                 }
                 let index = search_reponses(offers.offer["reponses"], localStorage.getItem("mail"));
 
-                if(index == -1) {
+                if(index == -1 && !viensDeRepondre && offers.offer["nbPlaceDisponible"] > 0) {
                     console.log(offers.offer["reponses"]);
                     for(let i = 1; i<=offers.offer["nbPlaceDisponible"]; i++) places.push(<option key={i} value={i}>{i}</option>);
                     
@@ -130,7 +132,7 @@ function SeeOffer() {
                         </div>
                         <p className="error">{error}</p>
                     </form>;
-                } else {
+                } else if(index != -1) {
                     let statut = offers.offer["reponses"][index]["statutReponse"];
                     if(statut != 'refuser') {
                         // Code de Dan
