@@ -1,12 +1,13 @@
 import {useState} from "react";
-import {Navigate} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
 import {url_api} from "../data/url_api";
 
 //check if user is logged in
 
-function ModifGroup() {
+function Modif_group() {
+    let { id } = useParams();
     const initialValue = {
         group: "",
     };
@@ -40,10 +41,11 @@ function ModifGroup() {
     async function sendDataToServer() {
         const errors = {};
         const formData = new FormData();
+        formData.append("idfGroupe", id);
         formData.append("nom", formValues.group);
         formData.append("mail", localStorage.getItem("mail"));
         await axios
-            .post(url_api.url + "/create_group", formData)
+            .post(url_api.url + "/modif_group", formData)
             .then(function (response) {
                 console.log("response", response.data);
                 console.log("test", response.data === "exists")
@@ -55,7 +57,7 @@ function ModifGroup() {
                     setFormErrors(errors);
                     return errors;
                 }else{
-                   // console.log("hi");
+                    console.log("hi");
                     setInputValues({ group: response.data });
                 setIsLoaded(true);
             }
@@ -75,11 +77,11 @@ function ModifGroup() {
         return errors;
     }
     if (isLoaded) {
-        return <Navigate replace to={"/groupe/" + formValues.group} />;
+        return <Navigate replace to="../friends-group-list" />;
     } else
         return (
             <div className="form-box">
-                <h1 className="creation-titre">Modification du groupe</h1>
+                <h1 className="creation-titre">Modification d'un groupe</h1>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -98,4 +100,4 @@ function ModifGroup() {
         );
 }
 
-export default ModifGroup;
+export default Modif_group;
