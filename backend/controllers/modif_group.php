@@ -9,12 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->bindValue(":nom", $_POST["nom"]);
     $statement->execute();
     $data = $statement->fetchAll();
-    if ($data){
-            echo json_encode(0);
-            $exists = 1;
-        }
-    else{
-       
+
+    if (!empty($data)){
+        echo json_encode(0);
+        $exists = 1;
+    }else{
         $statement = $pdo->prepare("UPDATE GROUPE SET nomDeGroupe = :nom WHERE (dirigeant = :dig) AND (idfGroupe = :idfGroupe)");
 
         $statement->setFetchMode(PDO::FETCH_ASSOC);
@@ -23,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $statement->bindValue(":dig", $_POST["mail"]);
         if (!$statement->execute()) {
             echo "died";
-        }
-
-        echo $pdo->lastInsertId();
-        }
+        }else{
+            echo 1;
+        } 
+    }
 }

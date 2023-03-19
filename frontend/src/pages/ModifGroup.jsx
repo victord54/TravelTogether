@@ -3,6 +3,7 @@ import {Navigate, useParams} from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
 import {url_api} from "../data/url_api";
+import {useNavigate} from "react-router-dom";
 
 //check if user is logged in
 
@@ -15,6 +16,8 @@ function Modif_group() {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -47,20 +50,17 @@ function Modif_group() {
         await axios
             .post(url_api.url + "/modif_group", formData)
             .then(function (response) {
-                console.log("response", response.data);
-                console.log("test", response.data === "exists")
+                //console.log("response", response.data);
+                //console.log("test", response.data === "exists")
                 if(response.data == 0){
-                    //console.log("exists");
-                    
                     setIsLoaded(false);
                     errors.group = "Vous avez un nom de groupe de ce nom deja existant.";
                     setFormErrors(errors);
                     return errors;
                 }else{
-                    console.log("hi");
                     setInputValues({ group: response.data });
-                setIsLoaded(true);
-            }
+                    setIsLoaded(true);
+                }
             })
             .catch(function (error) {
                 console.log("Error :" + error);
