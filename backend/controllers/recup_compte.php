@@ -1,6 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+include 'header.php';
 
 /*Tester en local:
 http://nilhcem.com/FakeSMTP/
@@ -17,32 +18,33 @@ $mail = new PHPMailer(TRUE);
 $mail->isSMTP();
 $mail->SMTPAuth = true;
 // Personal data
-$mail->host = 'localhost';
-$mail->Port = "25";
-$mail->username = "";
-$mail->password = "";
+$mail->Host = 'smtp-mail.outlook.com';
+$mail->Port = "587";
+$mail->Username = "trialling027@outlook.fr";
+$mail->Password = "@!Password123";
+$mail->SMTPSecure = "STARTTLS";
 
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == null) {
-    $statement = $pdo->prepare("SELECT email FROM utilisateurs  WHERE email = :mail");
-    $statement->bindValue(":mail", $_GET["mail"]);
-    $statement->execute();
-    $data = $statement->fetch();
-    if($data){
-    $mail->setFrom('recup@traveltogether.fr', 'Recuperation de compte TravelTogether');
+   // $statement = $pdo->prepare("SELECT email FROM utilisateurs  WHERE email = :mail");
+    //$statement->bindValue(":mail", $_GET["mail"]);
+    //$statement->execute();
+    //$data = $statement->fetch();
+    //if($data){
+    $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
     // Recipient, the name can also be stated
     $mail->addAddress($_GET["mail"], "name");
-    $mail->Subject = ($_GET["code"]); //save temporary code in localstorage to compare against
+    $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
     // HTML content
     $mail->Body = 'test';
     $mail->CharSet = 'UTF-8';
     $mail->Encoding = 'base64';
     $mail-> send();
-    echo json_encode("ok");}
-    else{
-        echo "lied";
-    }
+    echo json_encode("ok");
+//}else{
+   //     echo "lied";
+   // }
 }
 if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != null){
     $statement = $pdo->prepare("UPDATE utilisateurs set motDePasse = :pass WHERE email = :mail");
