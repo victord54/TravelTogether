@@ -43,6 +43,7 @@ CREATE TABLE
         infos TEXT,
         villeDepart INT NOT NULL,
         villeArrivee INT NOT NULL,
+        annule BOOLEAN NOT NULL DEFAULT 0,
         FOREIGN KEY (email) REFERENCES UTILISATEUR(email)
     );
 
