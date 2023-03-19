@@ -28,7 +28,7 @@ function Profil() {
                                     Math.random()
                                 }
                                 height="175px"
-                                width="125px"
+                                width="175px"
                             />
                         </div>
                         <div className="profil-infos">
