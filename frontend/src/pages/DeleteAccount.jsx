@@ -47,13 +47,14 @@ function DeleteAccount() {
   
 
     return (
-    <div className="delete-account-box">
+    <div className="form--connexion-box">
     <h1>Supprimer votre compte</h1>
     <p>Attention ! Cette action est irréversible.</p>
     <form onSubmit={handleSubmit}>
       <input
         type="mail"
         name="mail"
+        className="input-connexion"
         placeholder="Email"
         value={formValues.mail}
         onChange={handleChange}
@@ -62,13 +63,15 @@ function DeleteAccount() {
       <input
         type="password"
         name="password"
+        className="input-connexion"
         placeholder="Mot de passe"
         value={formValues.password}
         onChange={handleChange}
       ></input>
       <br />
-      <p className="error">{error}</p>
-      <button type="submit">Supprimer mon compte</button>
+      <div className="button-wrap">
+      <button type="submit" className="button-connexion">Supprimer mon compte</button>
+      </div>
     </form>
   </div>
   );

@@ -80,11 +80,17 @@ function Profil() {
                             </button>
                         </Link>
                         <br />
-                        <Link to="../delete-account">
-                            <button className="Button-profil">
-                                Supprimer mon compte
-                            </button>
-                        </Link>
+                        {offers.offers.length === 0 ? (
+                            <Link to="../delete-account">
+                                <button className="Button-profil">
+                                    Supprimer mon compte
+                                </button>
+                            </Link>
+                        ) : (
+                            <p className="button-disabled">
+                                Vous ne pouvez pas supprimer votre compte.
+                            </p>
+                        )}
                     </div>
                 </div>
             </React.Fragment>
