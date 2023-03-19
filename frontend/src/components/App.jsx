@@ -22,6 +22,7 @@ import SearchOffer from "../pages/SearchOffer";
 import Notifications from "../pages/Notifications";
 import SeeOffer from "../pages/SeeOffer";
 import ModifyOffer from "../pages/ModifyOffer";
+import DeleteOffer from "../pages/DeleteOffer"
 import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
 
@@ -166,6 +167,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <ModifyOffer />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="delete-offer/:id"
+                    element={
+                        <PrivateRoute>
+                            <DeleteOffer />
                         </PrivateRoute>
                     }
                 />

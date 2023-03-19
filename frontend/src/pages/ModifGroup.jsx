@@ -4,22 +4,34 @@ import axios from "axios";
 import "../styles/Signin.css";
 import {url_api} from "../data/url_api";
 
-function ModifGroup() {
+//check if user is logged in
+
+function Modif_group() {
     let { id } = useParams();
     const initialValue = {
-        mdp: "",
+        group: "",
     };
     const [formValues, setInputValues] = useState(initialValue);
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
-    const [isReplied, setIsReplied] = useState(false);
-    const [isLoaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     async function handleSubmit(e) {
         e.preventDefault();
         var errors = await validateForm(formValues);
         setFormErrors(errors);
         setIsSubmit(true);
+
+        console.log(
+            "submit : " +
+                isSubmit +
+                "; length : " +
+                Object.keys(formErrors).length
+        );
+
+        if (Object.keys(errors).length === 0) {
+            sendDataToServer();
+        }
     }
 
     function handleChange(e) {
@@ -27,73 +39,57 @@ function ModifGroup() {
     }
 
     async function sendDataToServer() {
+        const errors = {};
         const formData = new FormData();
         formData.append("idfGroupe", id);
-        formData.append("password", formValues.mdp);
+        formData.append("nom", formValues.group);
         formData.append("mail", localStorage.getItem("mail"));
         await axios
             .post(url_api.url + "/modif_group", formData)
             .then(function (response) {
-                setIsReplied(true);
+                console.log("response", response.data);
+                console.log("test", response.data === "exists")
+                if(response.data == 0){
+                    //console.log("exists");
+                    
+                    setIsLoaded(false);
+                    errors.group = "Vous avez un nom de groupe de ce nom deja existant.";
+                    setFormErrors(errors);
+                    return errors;
+                }else{
+                    console.log("hi");
+                    setInputValues({ group: response.data });
+                setIsLoaded(true);
+            }
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
     }
 
-    async function validateForm(data) {
+    function validateForm(data) {
         const errors = {};
 
-        //Vérification si l'utilisateur a rentrer un mdp
-        if (!data.mdp) {
-            errors.mdp = "Aucun mot de passe saisie.";
-        } else {
-            await axios
-                .get(url_api.url + "/modif_group", {
-                    params: {
-                        password: formValues.mdp,
-                        mail: localStorage.getItem("mail"),
-                    },
-                })
-                .then(function (response) {
-                    if (response.data === "1") {
-                        setLoaded(true);
-                    } else {
-                        errors.mdp =
-                            "Le mots de passe saisie n'est pas correct.";
-                    }
-                })
-                .catch(function (error) {
-                    console.log("Error :" + error);
-                });
+        //Vérification nom
+        if (!data.group) {
+            errors.group = "Le nom de groupe est obligatoire.";
         }
-
         return errors;
     }
-
-    if (
-        isLoaded &&
-        isSubmit &&
-        !isReplied &&
-        Object.keys(formErrors).length === 0
-    ) {
-        sendDataToServer();
-    }
-
-    if (isReplied) return <Navigate replace to="../friends-group-list" />;
-    else
+    if (isLoaded) {
+        return <Navigate replace to="../friends-group-list" />;
+    } else
         return (
             <div className="form-box">
-                <h1 className="suppression-titre">Modification du group</h1>
+                <h1 className="creation-titre">Modification d'un groupe</h1>
                 <form onSubmit={handleSubmit}>
                     <input
-                        name="nvxNom"
-                        placeholder="Saisir le nouveau nom du group"
-                        value={formValues.mdp}
+                        type="text"
+                        name="group"
+                        value={formValues.group}
                         onChange={handleChange}
                     ></input>
-                    <p className="error-form">{formErrors.mdp}</p>
-
+                    <p className="error-form">{formErrors.group}</p>
                     <div className="button-forms-wrap">
                         <button type="submit" className="formulaire-submit">
                             Valider
@@ -104,4 +100,4 @@ function ModifGroup() {
         );
 }
 
-export default ModifGroup;
+export default Modif_group;

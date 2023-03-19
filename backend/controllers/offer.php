@@ -35,6 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $data["villeDepart"] = $villeDep;
         $villeArrivee = getCity($data["villeArrivee"]);
         $data["villeArrivee"] = $villeArrivee;
+
+        $statement = $pdo->prepare("SELECT interesse, statutReponse FROM NOTIFICATION WHERE idfOffre = :idfOffre AND typeNotif = 'Reponse';");
+        $statement->bindValue(":idfOffre", $_GET['idfOffre']);
+        $statement->execute();
+        $rep = $statement->fetchAll();
+        $data["reponses"] = $rep;
     
         $reponse = $data;
     } else if (isset($_GET["type"]) && $_GET["type"] == "historique") {
@@ -83,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $reponse = $data;
     } else {
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE dateDepart > :dateDepart AND
-        idfOffre in (SELECT idfOffre from OFFREPUBLIC) OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE WHERE idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)) ORDER BY dateDepart LIMIT 10");
+        idfOffre in (SELECT idfOffre from OFFREPUBLIC) OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE WHERE dateDepart > :dateDepart AND idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)) ORDER BY dateDepart LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
         $statement->bindValue(":dateDepart", date('Y-m-d H:i:s'));
         $statement->execute();

@@ -1,7 +1,6 @@
-import { url_api } from "../data/url_api";
-import axios from "axios";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import "../styles/SeeOffer.css";
+
 
 function Offer(data) {
     var info = <></>;
@@ -42,14 +41,15 @@ function Offer(data) {
             </main>
         );
 
+    var nbPlaceDispo = data["nbPlaceDisponible"] - ( data["nbPlacesReserves"] ? data["nbPlacesReserves"] : 0);
     var placedispo = (
-        <p>Nombre de places disponibles : {data["nbPlaceDisponible"]}</p>
+        <p>Nombre de places disponibles : {nbPlaceDispo}</p>
     );
-    if (data["nbPlaceDisponible"] === 1)
+    if (nbPlaceDispo === 1)
         placedispo = (
-            <p>Nombre de place disponible : {data["nbPlaceDisponible"]}</p>
+            <p>Nombre de place disponible : {nbPlaceDispo}</p>
         );
-    if (data["nbPlaceDisponible"] === 0)
+    if (nbPlaceDispo === 0)
         placedispo = <p>Aucune place disponible.</p>;
 
     return (
@@ -57,6 +57,9 @@ function Offer(data) {
             <h2>
                 {data["villeDepart"]} &#8594; {data["villeArrivee"]}
             </h2>
+            <h1>
+                {data["prix"]} €
+            </h1>
             <img
                 alt="profil"
                 src={data["photo"] + "?" + Math.random()}
