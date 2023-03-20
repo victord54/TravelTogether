@@ -36,7 +36,7 @@ function RecupCompte() {
     function handleSubmit(e) {
         e.preventDefault();
         getUser();
-        setHasSub(1);
+
     }
 
     function handleSubmit2(e) {
@@ -141,6 +141,7 @@ function RecupCompte() {
      * Si les informations sont récupérés, redirige l'utilisateur vers la page d'accueil. Sinon, affiche un message d'erreur.
      */
     async function getUser() {
+        const errors = {}
         await axios
             .get(url_api.url + "/recup_compte", {
                 params: {
@@ -152,7 +153,12 @@ function RecupCompte() {
             .then(function (reponse) {
                 if (reponse.data == null) {
                     setError("Mail invalide");
-                } else {
+                } 
+                else if (reponse.data == "lied"){
+                    console.log("hi");
+                    errors.email = "L'émail spécifié n'existe pas dans la base";
+                }
+                else {
                     console.log("sent");
                     console.log("Reponse : " + reponse.data);
                     setHasSub(1);
@@ -180,7 +186,7 @@ function RecupCompte() {
                     console.log("sent");
                     console.log(formValues["password"])
                     console.log("Reponse : " + reponse.data);
-                    setHasSub(1);
+                    setHasSub(2);
                     console.log(hasSub);
                 }
             })

@@ -37,18 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
         $mail->addAddress($_GET["mail"], "name");
         $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
         // HTML content
-        $mail->Body = 'test';
+        $mail->Body = 'Votre code de recuperation de compte TravelTogether est '.$_GET["code"];
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';
         $mail-> send();
         echo json_encode("ok");
     }else{
-        echo "lied";
+        echo json_encode("lied");
    }
 }
 if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != "0"){
     $statement = $pdo->prepare("UPDATE utilisateur set motDePasse = :pass WHERE email = :mail");
-    $statement->bindValue(":pass", $_GET["pass"]);
+    $hash = password_hash($_GET["pass"], PASSWORD_DEFAULT);
+    $statement->bindValue(":pass", $hash);
     $statement->bindValue(":mail", $_GET["mail"]);
     $statement->execute();
     echo json_encode("ok");
@@ -58,9 +59,8 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != "0"){
 /**currently broken:
    - if escape sequence is broken, state changes anyway 
    - if wrong email, state changes anyway
-   - not sending code atm
+        - set to display error
    - not checking password conformity
-   - not salting new password
    **/ 
     ?>
 
