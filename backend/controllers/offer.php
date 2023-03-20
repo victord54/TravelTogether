@@ -14,7 +14,7 @@ function getCity($code) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     if(isset($_GET["idfOffre"]) && !(isset($_GET["type"]) && $_GET["type"] == "sizeInformation")) {
-        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idfOffre");
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idfOffre AND annule = 0");
         $statement->bindValue(":idfOffre", $_GET['idfOffre']);
         $statement->execute();
         $data = $statement->fetch();
@@ -44,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
         $reponse = $data;
     } else if (isset($_GET["type"]) && $_GET["type"] == "historique") {
-        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE email = :email OR 
-        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse != 'refuser') ORDER BY DateDepart");
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND (email = :email OR 
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse != 'refuser')) ORDER BY DateDepart");
         $statement->bindValue(":email", $_GET['email']);
         $statement->execute();
         $data = $statement->fetchAll();
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     
         $reponse = $data;
     } else {
-        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE dateDepart > :dateDepart AND
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND
         idfOffre in (SELECT idfOffre from OFFREPUBLIC) OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE WHERE dateDepart > :dateDepart AND idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)) ORDER BY dateDepart LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
         $statement->bindValue(":dateDepart", date('Y-m-d H:i:s'));
