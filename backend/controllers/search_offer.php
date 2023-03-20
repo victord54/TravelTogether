@@ -11,10 +11,22 @@
         return $res;
     }
 
+    function getNbPlacesDispo($pdo, $idfOffre, $nbPlace) {
+        $statement = $pdo->prepare("SELECT sum(nbPlaceSouhaitees) as nbPlacesReserves FROM OFFRE JOIN NOTIFICATION USING (idfOffre) where typeNotif = 'reponse' AND statutReponse = 'accepter' AND idfOffre = :idfOffre GROUP BY idfOffre;");
+        $statement->bindValue(":idfOffre", $idfOffre);
+        $statement->execute();
+        $data = $statement->fetchAll();
+    
+        $res = $nbPlace;
+    
+        if(count($data) > 0) $res = $nbPlace - $data[0]["nbPlacesReserves"];
+        return $res;
+    }  
+
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
         $statement = $pdo->prepare("SELECT *, ABS(TIME_TO_SEC(o.heureDepart) - TIME_TO_SEC(:heure)) as diffTemps FROM OFFRE o JOIN UTILISATEUR USING(email)
-        WHERE dateDepart = :dateDepart AND nbPlaceDisponible >= :nbPlaceDisponible AND
+        WHERE annule = 0 AND dateDepart = :dateDepart AND nbPlaceDisponible >= :nbPlaceDisponible AND
         (idfOffre in (SELECT idfOffre FROM OFFREPUBLIC)
         OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE JOIN GROUPE USING (idfGroupe) WHERE
         idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)))
@@ -59,6 +71,7 @@
                 $test = getCity($ville["ville"]);
                 $data[$index]["inter"][$indexVille] = $test;
             }
+            $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
         }
         
         $reponse = $data;

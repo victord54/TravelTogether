@@ -93,6 +93,10 @@ function Notifications() {
                 return "Nouvelle offre privée";
             case "Resultat":
                 return "Réponse à votre demande de participation";
+            case "ModifOffre":
+                return "Modification d'une offre";
+            case "Annulation":
+                return "Annulation d'une offre";
         }
     }
 
@@ -141,7 +145,7 @@ function Notifications() {
                                 </DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        {dialogTuple.typeNotif === "Offre" ? (
+                                        {dialogTuple.typeNotif === "Offre" || dialogTuple.typeNotif === "ModifOffre" ? (
                                             <>
                                                 <Link
                                                     className="offre "
