@@ -23,7 +23,7 @@
         $members = $statement->fetchAll();
 
         foreach($members as $member) {
-            $statement = $pdo->prepare("INSERT INTO NOTIFICATION(typeNotif, dateNotif, notifie, idfOffre, informations) VALUES('Offre', :dateNotif, :notifie, :idfOffre, :informations)");
+            $statement = $pdo->prepare("INSERT INTO NOTIFICATION(typeNotif, dateNotif, notifie, idfOffre, informations) VALUES('ModifOffre', :dateNotif, :notifie, :idfOffre, :informations)");
             $statement->bindValue(':idfOffre', $_POST['idfOffre']);
             $statement->bindValue(':dateNotif', date('y-m-d'));
             $statement->bindValue(':notifie', $member["interesse"]);

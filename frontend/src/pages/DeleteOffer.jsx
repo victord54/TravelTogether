@@ -32,6 +32,7 @@ function DeleteOffer() {
         await axios
             .post(url_api.url + "/delete_offer", formData)
             .then(function (response) {
+                console.log(response.data);
                 setIsReplied(true);
             })
             .catch(function (error) {

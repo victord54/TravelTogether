@@ -9,17 +9,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
+    $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idfOffre");
+    $statement->bindValue(":idfOffre", $_POST["idfOffre"]);
+    $statement->execute() or die(print_r($statement->errorInfo(), true));
+    $data = $statement->fetch();
+    $date = new DateTime($data["dateDepart"]);
+    $information = 'Une offre à la quelle vous participez/comptez participer a était annulée ! Elle était prévue par '.$data["prenom"]." ".$data["nom"]." pour le ".$date->format("d/m/Y").".";
+
     $statement = $pdo->prepare("SELECT interesse FROM NOTIFICATION WHERE typeNotif = 'Reponse' AND idfOffre = :idfOffre AND (statutReponse = 'accepter' OR statutReponse = 'attente')");
         $statement->bindValue(':idfOffre', $_POST['idfOffre']);
         $statement->execute() or die(print_r($statement->errorInfo(), true));
         $members = $statement->fetchAll();
 
         foreach($members as $member) {
-            $statement = $pdo->prepare("INSERT INTO NOTIFICATION(typeNotif, dateNotif, notifie, idfOffre, informations) VALUES('Offre', :dateNotif, :notifie, :idfOffre, :informations)");
-            $statement->bindValue(':idfOffre', $_POST['idfOffre']);
+            $statement = $pdo->prepare("INSERT INTO NOTIFICATION(typeNotif, dateNotif, notifie, informations) VALUES('Annulation', :dateNotif, :notifie, :informations)");
             $statement->bindValue(':dateNotif', date('y-m-d'));
             $statement->bindValue(':notifie', $member["interesse"]);
-            $statement->bindValue(':informations', 'Une offre à la quelle vous participez/comptez parcticiper a était supprimée !');
+            $statement->bindValue(':informations', $information);
             $statement->execute() or die(print_r($statement->errorInfo(), true));
         }
 
