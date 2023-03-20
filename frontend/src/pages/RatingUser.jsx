@@ -16,6 +16,7 @@ function RatingUser() {
         await axios
             .get(url_api.url + "/rate_user", { params: { id: params.id } })
             .then(function (reponse) {
+                delete reponse.data[localStorage.getItem("mail")];
                 console.log(reponse.data);
                 setRate(reponse.data);
             });
