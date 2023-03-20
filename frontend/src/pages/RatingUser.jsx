@@ -71,9 +71,9 @@ function RatingUser() {
                 },
             })
             .then(function (reponse) {
-                // reponse.data = reponse.data.filter(
-                //     (elem) => elem.email !== localStorage.getItem("mail")
-                // );
+                reponse.data = reponse.data.filter(
+                    (elem) => elem.email !== localStorage.getItem("mail")
+                );
                 console.log(reponse.data);
 
                 setUsers(reponse.data);
