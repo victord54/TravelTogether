@@ -26,32 +26,42 @@ $mail->SMTPSecure = "STARTTLS";
 
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == null) {
-   // $statement = $pdo->prepare("SELECT email FROM utilisateurs  WHERE email = :mail");
-    //$statement->bindValue(":mail", $_GET["mail"]);
-    //$statement->execute();
-    //$data = $statement->fetch();
-    //if($data){
-    $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
-    // Recipient, the name can also be stated
-    $mail->addAddress($_GET["mail"], "name");
-    $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
-    // HTML content
-    $mail->Body = 'test';
-    $mail->CharSet = 'UTF-8';
-    $mail->Encoding = 'base64';
-    $mail-> send();
-    echo json_encode("ok");
-//}else{
-   //     echo "lied";
-   // }
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
+    $statement = $pdo->prepare("SELECT email FROM utilisateur  WHERE email = :mail");
+    $statement->bindValue(":mail", $_GET["mail"]);
+    $statement->execute();
+    $data = $statement->fetch();
+    if($data){
+        $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
+        // Recipient, the name can also be stated
+        $mail->addAddress($_GET["mail"], "name");
+        $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
+        // HTML content
+        $mail->Body = 'test';
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+        $mail-> send();
+        echo json_encode("ok");
+    }else{
+        echo "lied";
+   }
 }
-if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != null){
-    $statement = $pdo->prepare("UPDATE utilisateurs set motDePasse = :pass WHERE email = :mail");
+if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != "0"){
+    $statement = $pdo->prepare("UPDATE utilisateur set motDePasse = :pass WHERE email = :mail");
     $statement->bindValue(":pass", $_GET["pass"]);
     $statement->bindValue(":mail", $_GET["mail"]);
     $statement->execute();
-    echo "ok";
+    echo json_encode("ok");
 }
 
+
+/**currently broken:
+   - if escape sequence is broken, state changes anyway 
+   - if wrong email, state changes anyway
+   - not sending code atm
+   - not checking password conformity
+   - not salting new password
+   **/ 
     ?>
+
+

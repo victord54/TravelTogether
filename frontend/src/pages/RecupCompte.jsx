@@ -49,6 +49,12 @@ function RecupCompte() {
         
     }
 
+    function handleSubmit3(e) {
+        e.preventDefault();
+        resetPass();
+        
+    }
+
     /**
      * Fonction qui permet de réagir quand on change la valeur d'un champs.
      *
@@ -108,7 +114,7 @@ function RecupCompte() {
         );}else if(hasSub == 2){return(
             
 <div className="form--connexion-box">
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit3}>
                             <h1 className="bienvenue">Bienvenue ! </h1>
                             <p className="error">{error}</p>
                             <input
@@ -139,6 +145,7 @@ function RecupCompte() {
             .get(url_api.url + "/recup_compte", {
                 params: {
                     mail: formValues["mail"],
+                    pass: "0",
                     code: getRandomInt(),
                 },
             })
@@ -157,11 +164,40 @@ function RecupCompte() {
             });
     }
 
+    async function resetPass() {
+        await axios
+            .get(url_api.url + "/recup_compte", {
+                params: {
+                    mail: formValues["mail"],
+                    pass: formValues["password"],
+                    code: getRandomInt(),
+                },
+            })
+            .then(function (reponse) {
+                if (reponse.data == null) {
+                    setError("Mail invalide");
+                } else {
+                    console.log("sent");
+                    console.log(formValues["password"])
+                    console.log("Reponse : " + reponse.data);
+                    setHasSub(1);
+                    console.log(hasSub);
+                }
+            })
+            .catch(function (error) {
+                console.log("Error :" + error);
+            });
+    }
+
     return (
         
         <Display/>
         
     );
 }
+
+
+
+
 
 export default RecupCompte;
