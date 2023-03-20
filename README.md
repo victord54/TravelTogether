@@ -135,6 +135,7 @@ put your db infos in the file like this :
 
 $login = "your_login";
 $password = "your_password";
+$url = "same url than js file";
 ```
 
 #### API config file
