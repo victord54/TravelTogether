@@ -14,6 +14,9 @@ pour l'instant ne fonctionnera qu'en local
 require 'C:\phpmailer\PHPMailer-master\src\Exception.php';
 require 'C:\phpmailer\PHPMailer-master\src\PHPMailer.php';
 require 'C:\phpmailer\PHPMailer-master\src\SMTP.php';
+
+
+//setup as included function, prep backup methods if outlook dies
 $mail = new PHPMailer(TRUE);
 $mail->isSMTP();
 $mail->SMTPAuth = true;
@@ -57,7 +60,6 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != "0"){
 
 
 /**currently broken:
-   - if escape sequence is broken, state changes anyway 
    - if wrong email, state changes anyway
         - set to display error
    - not checking password conformity

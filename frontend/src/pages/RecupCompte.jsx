@@ -52,7 +52,6 @@ function RecupCompte() {
     function handleSubmit3(e) {
         e.preventDefault();
         resetPass();
-        
     }
 
     /**
@@ -64,8 +63,9 @@ function RecupCompte() {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
+
+    //utilisation de autofocus pour contourner la perte de focus liee a la facon dont j'ai implementee, le temps de pouvoir correctement tester la suite
     function Display(){
-        console.log(hasSub);
         if (hasSub == 0){
             return(
             <div className="form--connexion-box">
@@ -75,6 +75,7 @@ function RecupCompte() {
                             <input
                                 className="input-connexion"
                                 type="mail"
+                                autoFocus="autoFocus"
                                 name="mail"
                                 value={formValues.mail}
                                 placeholder="Email"
@@ -101,6 +102,7 @@ function RecupCompte() {
                 name="code"
                 value={formValues.code}
                 onChange={handleChange}
+                autoFocus="autoFocus"
             ></input>
             <br />
         
@@ -123,6 +125,7 @@ function RecupCompte() {
                                 name="password"
                                 value={formValues.password}
                                 onChange={handleChange}
+                                autoFocus="autoFocus"
                             ></input>
                             <br />
                         
@@ -195,11 +198,12 @@ function RecupCompte() {
             });
     }
 
+
     return (
-        
         <Display/>
         
     );
+
 }
 
 
