@@ -8,6 +8,7 @@ import Offer from "../components/Offer";
 
 function Profil() {
     const [offers, setOffers] = useState({ statut: "", offers: [] });
+    const [index, setIndex] = useState(0);
 
     //Fonction qui affiche les informations du profil
     function affichageProfil() {
@@ -90,36 +91,67 @@ function Profil() {
         return contenu;
     }
 
-    async function getOffres() {
+    function getOffersIndex(event) {
+        getOffres(event.target.value);
+    }
+    async function getOffres(indx) {
         await axios
             .get(url_api.url + "/offer", {
                 params: {
                     email: localStorage.getItem("mail"),
                     type: "historique",
+                    offset: indx
                 },
             })
             .then(function (reponse) {
                 console.log(reponse.data);
                 if (reponse.data == null) {
-                    setOffers({ offers: [], statut: "ok" });
+                    setOffers({ offers: [], statut: "ok", size:offers.size, charged:indx/5 });
                 } else {
-                    setOffers({ offers: reponse.data, statut: "ok" });
+                    setOffers({ offers: reponse.data, statut: "ok", size:offers.size, charged:indx/5 });
                 }
             })
             .catch(function (error) {
                 console.log("Error :" + error);
             });
     }
+    
+    async function getNbOffres() {
+        await axios
+        .get(url_api.url + "/offer", {
+            params: {
+                email: localStorage.getItem("mail"),
+                type: "nbOffer",
+            },
+        })
+        .then(function (reponse) {
+            if (reponse.data == null) {
+                setOffers({ offers: [], statut: "sizeOnly", size:0, charged:0 });
+            } else {
+                setOffers({ offers: [], statut: "sizeOnly", size:reponse.data["nbOffre"]/5, charged:0 });
+            }
+        })
+        .catch(function (error) {
+            console.log("Error :" + error);
+        });
+    }
 
     var historique = <></>;
 
     if (offers.statut === "") {
+        getNbOffres();
         historique = (
             <div className="wrapper-historique">
                 <p>Chargement de vos trajets</p>
             </div>
         );
-        getOffres();
+    } else if (offers.statut === "sizeOnly") {
+        historique = (
+            <div className="wrapper-historique">
+                <p>Chargement de vos trajets</p>
+            </div>
+        );
+        getOffres(index);
     } else if (offers.statut === "ok" && offers.offers.length === 0) {
         historique = (
             <div className="wrapper-historique">
@@ -130,8 +162,14 @@ function Profil() {
             </div>
         );
     } else {
+        var indexList = [];
+        for(var i = 1; i <= Math.ceil(offers.size); i++) indexList.push(i);
+        var indexBar = <nav className="index-bar">
+            {indexList.map((val) => <button className="index-button" disabled={val==offers.charged+1} value={(val-1)*5} key={val} onClick={getOffersIndex}>{val}</button>)}
+        </nav>;
         historique = (
             <article className="wrapper-historique">
+                {indexBar}
                 {offers.offers.map((offre, index) => (
                     <Link to={"../offre/" + offre["idfOffre"]} key={index}>{Offer(offre)}</Link>
                 ))}

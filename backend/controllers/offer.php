@@ -57,11 +57,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $data["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data["idfOffre"], $data["nbPlaceDisponible"]);
     
         $reponse = $data;
+    } else if ((isset($_GET["type"]) && $_GET["type"] == "nbOffer")) {
+        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+        $statement =  $pdo->prepare("SELECT count(idfOffre) as nbOffre FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND (email = :email OR 
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse != 'refuser'))");
+        $statement->bindValue(":email", $_GET['email']);
+        $statement->execute();
+        $res = 0;
+        $data = $statement->fetch();
+        if(count($data) == 0) $data["nbOffre"] = $res;
+        $reponse = $data;
     } else if (isset($_GET["type"]) && $_GET["type"] == "historique") {
         // Offre historique
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND (email = :email OR 
-        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse != 'refuser')) ORDER BY DateDepart");
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse != 'refuser')) ORDER BY DateDepart LIMIT 5 OFFSET :offs");
         $statement->bindValue(":email", $_GET['email']);
+        $statement->bindValue(":offs", $_GET['offset'], PDO::PARAM_INT);
         $statement->execute();
         $data = $statement->fetchAll();
 
