@@ -92,7 +92,8 @@ function Profil() {
     }
 
     function getOffersIndex(event) {
-        getOffres(event.target.value);
+        setIndex(event.target.value);
+        setOffers({offers: [], statut: "changeIndex", size:offers.size, charged:offers.charged})
     }
     async function getOffres(indx) {
         await axios
@@ -161,6 +162,19 @@ function Profil() {
                 </p>
             </div>
         );
+    } else if (offers.statut === "changeIndex") {
+        var indexList = [];
+        for(var i = 1; i <= Math.ceil(offers.size); i++) indexList.push(i);
+        var indexBar = <nav className="index-bar">
+            {indexList.map((val) => <button className="index-button" disabled={val==offers.charged+1} value={(val-1)*5} key={val} onClick={getOffersIndex}>{val}</button>)}
+        </nav>;
+        historique = (
+            <article className="wrapper-historique">
+                {indexBar}
+                Chargement en cours...
+            </article>
+        );
+        getOffres(index);
     } else {
         var indexList = [];
         for(var i = 1; i <= Math.ceil(offers.size); i++) indexList.push(i);
