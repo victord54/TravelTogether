@@ -49,9 +49,29 @@ function RecupCompte() {
         
     }
 
-    function handleSubmit3(e) {
+    async function handleSubmit3(e) {
         e.preventDefault();
-        resetPass();
+        var errors = await validateForm(formValues);
+        if (Object.keys(errors).length === 0) {
+            resetPass();
+        }else{
+        console.log("caught");
+    }
+    }
+
+    async function validateForm(data) {
+        const errors = {};
+        if (!data.password) {
+            errors.password = "Le mot de passe est obligatoire.";
+        } else {
+            const regexPassword =
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!data.password.match(regexPassword)) {
+                errors.password =
+                    "Le mot de passe doit être composé d’au moins 8 caractères dont au moins une majuscule, une minuscule, un chiffre et un caractère spécial.";
+            }
+        }
+        return errors;
     }
 
     /**
@@ -85,7 +105,7 @@ function RecupCompte() {
                         
                             <div className="button-wrap">
                                 <button type="submit" className="button-connexion">
-                                    Se connecter
+                                    Envoyer le mail
                                 </button>
                             </div>
                         </form>
