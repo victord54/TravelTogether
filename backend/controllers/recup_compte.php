@@ -2,6 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 include 'header.php';
+include 'mailer_setup.php';
 
 /*Tester en local:
 http://nilhcem.com/FakeSMTP/
@@ -11,21 +12,13 @@ https://www.ionos.com/digitalguide/e-mail/technical-matters/phpmailer/
 pour l'instant ne fonctionnera qu'en local
 */
 
-require 'C:\phpmailer\PHPMailer-master\src\Exception.php';
-require 'C:\phpmailer\PHPMailer-master\src\PHPMailer.php';
-require 'C:\phpmailer\PHPMailer-master\src\SMTP.php';
+
+require $exception;
+require $mailer;
+require $smtp;
 
 
-//setup as included function, prep backup methods if outlook dies
-$mail = new PHPMailer(TRUE);
-$mail->isSMTP();
-$mail->SMTPAuth = true;
-// Personal data
-$mail->Host = 'smtp-mail.outlook.com';
-$mail->Port = "587";
-$mail->Username = "trialling027@outlook.fr";
-$mail->Password = "@!Password123";
-$mail->SMTPSecure = "STARTTLS";
+
 
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
@@ -35,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
     $statement->execute();
     $data = $statement->fetch();
     if($data){
+        $mail = instanciateMailer();
         $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
         // Recipient, the name can also be stated
         $mail->addAddress($_GET["mail"], "name");
