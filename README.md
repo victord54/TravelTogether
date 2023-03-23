@@ -92,8 +92,8 @@ Add these lines :
     ServerName api-traveltogether
     
     <Directory "chemin vers le dossier backend (../htdocs/TravelTogether/backend)">
-        Order allow,deny
-        Allow from all
+        Options FollowSymLinks
+        AllowOverride all
         Require all granted
     </Directory>
 </VirtualHost>
