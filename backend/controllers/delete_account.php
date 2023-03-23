@@ -21,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $statement->bindValue(":mail", $_GET['mail']);
             $statement->execute();
 
+            // Supprimer les appartenance des utilisateurs aux groupes avant suppression du groupe
+            $statement = $pdo->prepare("DELETE FROM APPARTIENT WHERE idfGroupe IN (SELECT idfGroupe FROM GROUPE WHERE dirigeant = :mail)");
+            $statement->bindValue(":mail", $_GET['mail']);
+            $statement->execute();
+
             // Supprimer les appartenance de l'utilisateur aux groupes dans lesquels il est dirigeant
             $statement = $pdo->prepare("DELETE FROM GROUPE WHERE dirigeant = :mail");
             $statement->bindValue(":mail", $_GET['mail']);
