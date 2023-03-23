@@ -152,7 +152,7 @@ function Signin() {
         if (!data.phoneNumber) {
             errors.phoneNumber = "Le numéro de téléphone est obligatoire.";
         } else {
-            const regex = /^(0|\\+33)[1-9][0-9]{8}$/;
+            const regex = /^(0|\+33)[1-9][0-9]{8}$/;
             if (!data.phoneNumber.match(regex)) {
                 errors.phoneNumber =
                     "Le numéro de téléphone doit être un numéro français commençant par 0 ou +33.";
