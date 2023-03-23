@@ -24,7 +24,7 @@
     }  
 
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', 'travel_together', 'travel_together');
+        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
         $statement = $pdo->prepare("SELECT *, ABS(TIME_TO_SEC(o.heureDepart) - TIME_TO_SEC(:heure)) as diffTemps FROM OFFRE o JOIN UTILISATEUR USING(email)
         WHERE annule = 0 AND dateDepart = :dateDepart AND nbPlaceDisponible >= :nbPlaceDisponible AND
         (idfOffre in (SELECT idfOffre FROM OFFREPUBLIC)
