@@ -98,7 +98,7 @@ Add these lines :
     </Directory>
 </VirtualHost>
 ```
-Save the file and restart XAMPP.
+Save the file and restart XAMP.
 
 Now you can acces to api from http://api-traveltogether/
 
