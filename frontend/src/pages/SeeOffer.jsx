@@ -102,7 +102,7 @@ function SeeOffer() {
 
 
                 function email_equals(obj1, email) {
-                    return obj1["email"] = email;
+                    return obj1["interesse"] === email;
                 }
                 function search_reponses(array, email) {
                     for(var i = 0; i < array.length; i++) {
