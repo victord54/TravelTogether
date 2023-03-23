@@ -12,6 +12,10 @@
     color: green;
 }
 
+.modificationProfile-titre {
+    text-align: center;
+}
+
 .form-box {
     display: flex;
     flex-direction: column;
@@ -26,19 +30,6 @@
     list-style-type: none;
     padding:0;
     margin: 0;
-}
-
-input:not(.not-text-input) {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-.radiobutton {
-    margin: 15px 8px 5px 15px;
 }
 
 .formulaire-submit {
@@ -111,6 +102,11 @@ input:not(.not-text-input) {
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
+label {
+    text-align: center;
+    padding-right: 15px;
+}
+
 .index-button {
     margin-top: 8px;
     height: 50px;
@@ -120,4 +116,38 @@ input:not(.not-text-input) {
 
 .index-bar {
     text-align: center;
+}
+
+input:not(.not-text-input) {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.radiobutton {
+    margin: 15px 8px 5px 15px;
+}
+
+.backButton {
+    background-color: #808080;
+    color: white;
+    margin: 5px 0 5px 0;
+    padding: 7px 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    width: 50%;
+    text-align: center;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.backButton:hover {
+    background-color: rgb(235, 225, 225);
+    color: #2b2c2b;
+    border: 1px solid #000000;
 }
