@@ -175,7 +175,7 @@ function Profil() {
             </article>
         );
         getOffres(index);
-    } else {
+    } else {  //affichage des offres en général
         var indexList = [];
         for(var i = 1; i <= Math.ceil(offers.size); i++) indexList.push(i);
         var indexBar = <nav className="index-bar">

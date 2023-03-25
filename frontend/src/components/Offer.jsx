@@ -6,13 +6,31 @@ function Offer(data) {
     var info = <></>;
     var precision = <></>;
     var inter = <></>;
+    var annulerParticipation = <></>;
     var date = new Date(data["dateDepart"]);
     var hour = new Date("July 1 2023 " + data["heureDepart"]);
+    var boutonAnnulerParticipation; //affichage du bouton d'annulation de la participation à cette offre
+
+
+
+
+    /*
+    vérifier si la case du tableau "annulable" existe
+    afficher le bouton 
+    Récupérer l'utilisateur dans le localstorage
+    */
 
     const dateD = new Date(date);
     dateD.setHours(hour.getHours());
     dateD.setMinutes(hour.getMinutes());
     const dateAuj = new Date();
+
+    if(typeof data["participationAnnulable"] !== 'undefined'){ //l'offre n'est pas annulable
+        console.log("ZEBIED");
+        annulerParticipation = (
+            <button> Annuler participation </button>
+        ); //rendre moins dégueu
+    }
 
     if (data["infos"].length > 1)
         info = (
@@ -86,7 +104,7 @@ function Offer(data) {
                     <button>Noter les participants</button>
                 </Link>
             ) : (
-                <>{placedispo}</>
+                <>{placedispo}{annulerParticipation}</>
             )}
         </section>
     );

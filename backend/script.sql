@@ -84,7 +84,7 @@ CREATE TABLE
         interesse VARCHAR(50) DEFAULT NULL,
         informations TEXT NOT NULL,
         etat BOOLEAN NOT NULL DEFAULT 0,
-        statutReponse ENUM('attente', 'accepter', 'refuser'),
+        statutReponse ENUM('attente', 'accepter', 'refuser', 'annuler'),
         nbPlaceSouhaitees INT DEFAULT 0,
         FOREIGN KEY (notifie) REFERENCES UTILISATEUR(email),
         FOREIGN KEY (idfGroupe) REFERENCES GROUPE(idfGROUPE),
