@@ -25,6 +25,7 @@ import ModifyOffer from "../pages/ModifyOffer";
 import DeleteOffer from "../pages/DeleteOffer"
 import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
+import RecupCompte from "../pages/RecupCompte";
 
 function App() {
     const { auth } = useAuth();
@@ -180,6 +181,14 @@ function App() {
                 />
                 <Route
                     path="rating-user/:id"
+                    element={
+                        <PrivateRoute>
+                            <RatingUser />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/recupcompte"
                     element={
                         <PrivateRoute>
                             <RatingUser />

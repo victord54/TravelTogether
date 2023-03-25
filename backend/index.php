@@ -60,4 +60,6 @@ if ($_GET["request"] == "login") {
     
 } else if ($_GET["request"] == "rate_user") {
     require_once("controllers/rate_user.php");
+}else if ($_GET["request"] == "recup_compte"){
+    require_once("controllers/recup_compte.php");
 }

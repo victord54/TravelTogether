@@ -6,6 +6,8 @@ import "../styles/Login.css";
 import {useAuth} from "../components/AuthProvider";
 import closeEye from "../assets/closeeye.svg";
 import openEye from "../assets/openeye.svg";
+import { Link } from "react-router-dom";
+import {Navigate} from 'react-router-dom';
 
 function Login() {
     const initialValue = { mail: "", password: "" };
@@ -114,10 +116,12 @@ function Login() {
                     <button type="submit" className="button-connexion">
                         Se connecter
                     </button>
+                    
+                    <Link to="../RecupCompte">Recuperer son compte</Link > 
                 </div>
             </form>
         </div>
     );
 }
-
+/**Pretify button for recovery, check if email is in database before */
 export default Login;
