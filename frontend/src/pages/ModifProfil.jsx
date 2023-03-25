@@ -23,21 +23,6 @@ function ModifProfil() {
     const [file, setFile] = useState();
     const [formErrors, setFormErrors] = useState({});
 
-    //console.log(initialValue.mailUpdates);
-
-    //Fonction qui permet affichage bouton retour
-    function affichageBienvenue() {
-        var message;
-        message = (
-            <nav>
-                <ul>
-                    <Link to="../profile">Retour</Link>
-                </ul>
-            </nav>
-        );
-        return message;
-    }
-
     function handleChange(event) {
         console.log("handleChange()");
         console.log(event.target.value);
@@ -58,15 +43,11 @@ function ModifProfil() {
     function modificationProfil() {
         //éventuellement rajouter des onChange pour vérifier que l'utilisateur ne rentre pas nimp
         return (
-            <form onSubmit={submitFormulaire} className="form-box">
-                <p>
-                    {" "}
-                    <strong> Modifications: </strong>
-                </p>
-                <ul className="liste-sans-puces">
-                    <li>
-                        {" "}
-                        Photo de profil :{" "}
+            <div>
+                <div className="form-box">
+                    <form onSubmit={submitFormulaire}>
+                        <h1 className="modificationProfile-titre">Modifications</h1>
+                        <div>Photo de profil :</div>
                         <input
                             type="file"
                             name="picture"
@@ -74,121 +55,126 @@ function ModifProfil() {
                             accept="image/png, image/jpeg"
                             onChange={handleFile}
                         ></input>
-                    </li>
-                    <li>
-                        {" "}
-                        Nom :{" "}
+                        <p></p>
+
+                        <div>Nom :</div>
                         <input
                             type="text"
                             name="lastName"
                             className="fullTexte"
                             value={formValues.lastName}
                             onChange={handleChange}
-                        ></input>{" "}
+                        ></input>
                         <p className="error-form">{formErrors.lastName}</p>{" "}
-                    </li>
-                    <li>
-                        {" "}
-                        Prénom :{" "}
+                            
+                        <div>Prénom :</div>
                         <input
                             type="text"
                             name="firstName"
                             className="fullTexte"
                             value={formValues.firstName}
                             onChange={handleChange}
-                        ></input>{" "}
+                        ></input>
                         <p className="error-form">{formErrors.firstName}</p>{" "}
-                    </li>
-                    <li className="radio">
-                        {" "}
-                        Genre :
-                        <input
-                            type="radio"
-                            name="gender"
-                            className="not-text-input radiobutton"
-                            value="f"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.gender === "f"}
-                        ></input>
-                        Femme
-                        <input
-                            type="radio"
-                            name="gender"
-                            className="not-text-input radiobutton"
-                            value="h"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.gender === "h"}
-                        ></input>
-                        Homme
-                        <input
-                            type="radio"
-                            name="gender"
-                            className="not-text-input radiobutton"
-                            value="n"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.gender === "n"}
-                        ></input>
-                        Neutre
-                    </li>
-                    <li>
-                        {" "}
-                        Numéro de tel :{" "}
+                            
+                        <div>Sélectionner votre genre : </div>
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                className="not-text-input radiobutton"
+                                value="f"
+                                onChange={handleChange}
+                                defaultChecked={initialValue.gender === "f"}
+                            ></input>
+                            Femme
+                        </label>
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                className="not-text-input radiobutton"
+                                value="h"
+                                onChange={handleChange}
+                                defaultChecked={initialValue.gender === "h"}
+                            ></input>
+                            Homme
+                        </label>
+
+                        <label>
+                            <input
+                                type="radio"
+                                name="gender"
+                                className="not-text-input radiobutton"
+                                value="n"
+                                onChange={handleChange}
+                                defaultChecked={initialValue.gender === "n"}
+                            ></input>
+                            Neutre
+                         </label>
+                         <p></p>
+                                                   
+                        <div>Numéro de téléphone : </div>
                         <input
                             type="text"
                             name="phoneNumber"
                             className="fullTexte"
                             value={formValues.phoneNumber}
                             onChange={handleChange}
-                        ></input>{" "}
+                        ></input>
                         <p className="error-form">{formErrors.phoneNumber}</p>{" "}
-                    </li>
-                    <li className="radio">
-                        {" "}
-                        En possession d'une voiture :
-                        <input
-                            type="radio"
-                            name="car"
-                            className="not-text-input radiobutton"
-                            value="1"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.car === "1"}
-                        ></input>
-                        Oui
-                        <input
-                            type="radio"
-                            name="car"
-                            className="not-text-input radiobutton"
-                            value="0"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.car === "0"}
-                        ></input>
-                        Non
-                    </li>
-                    <li className="radio">
-                        {" "}
-                        Notifications par mail :
-                        <input
-                            type="radio"
-                            name="mailUpdates"
-                            className="not-text-input radiobutton"
-                            value="1"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.mailUpdates === "1"}
-                        ></input>
-                        Oui
-                        <input
-                            type="radio"
-                            name="mailUpdates"
-                            className="not-text-input radiobutton"
-                            value="0"
-                            onChange={handleChange}
-                            defaultChecked={initialValue.mailUpdates === "0"}
-                        ></input>
-                        Non
-                    </li>
-                    <li>
-                        {" "}
-                        Mot de passe :{" "}
+                        
+                        <div>En possession d'une voiture :</div>
+                        <label>
+                            <input
+                                type="radio"
+                                name="car"
+                                className="not-text-input radiobutton"
+                                value="1"
+                                onChange={handleChange}
+                                defaultChecked={initialValue.car === "1"}
+                            ></input>
+                            Oui
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="car"
+                                className="not-text-input radiobutton"
+                                value="0"
+                                onChange={handleChange}
+                                defaultChecked={initialValue.car === "0"}
+                                ></input>
+                                Non
+                        </label>
+                        <p></p>
+                        <div>Notifications par mail :</div>
+                        <label>
+                                <input
+                                    type="radio"
+                                    name="mailUpdates"
+                                    className="not-text-input radiobutton"
+                                    value="1"
+                                    onChange={handleChange}
+                                    defaultChecked={initialValue.mailUpdates === "1"}
+                                ></input>
+                                Oui
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="mailUpdates"
+                                className="not-text-input radiobutton"
+                                value="0"
+                                onChange={handleChange}
+                                defaultChecked={initialValue.mailUpdates === "0"}
+                            ></input>
+                            Non
+                        </label>
+                        <p></p>
+
+                        <div>Mot de passe :</div>
                         <input
                             type="password"
                             name="password"
@@ -197,27 +183,26 @@ function ModifProfil() {
                             onChange={handleChange}
                         ></input>{" "}
                         <p className="error-form">{formErrors.password}</p>{" "}
-                    </li>
-                    <li>
-                        {" "}
-                        Confirmation Mot de Passe :{" "}
+                        
+                        <div>Confirmation Mot de Passe :</div>
                         <input
                             type="password"
                             name="passwordConfirmation"
                             className="fullTexte"
                             value={formValues.passwordConfirmation}
                             onChange={handleChange}
-                        ></input>{" "}
-                        <p className="error-form">
-                            {formErrors.passwordConfirmation}
-                        </p>{" "}
-                    </li>
-                </ul>
-                <button type="submit" className="formulaire-submit">
-                    {" "}
-                    Valider changements{" "}
-                </button>
-            </form>
+                        ></input>
+                        <p className="error-form">{formErrors.passwordConfirmation}</p>
+                        
+                        <button type="submit" className="formulaire-submit">
+                            Valider changements
+                        </button>
+                    </form>
+                    <nav className="backButton">
+                        <Link to="../profile">Annuler</Link>
+                    </nav>
+                </div>
+            </div>
         );
     }
 
@@ -368,7 +353,6 @@ function ModifProfil() {
 
     return (
         <main>
-            {affichageBienvenue()}
             {modificationProfil()}
         </main>
     );
