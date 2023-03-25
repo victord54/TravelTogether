@@ -41,10 +41,13 @@ function RecupCompte() {
 
     function handleSubmit2(e) {
         e.preventDefault();
-        console.log(formValues.code);
-        console.log(localStorage.getItem("code"));
+        //console.log(formValues.code);
+        //console.log(localStorage.getItem("code"));
         if(formValues.code == localStorage.getItem("code")){
             setHasSub(2);
+            setError("");
+        }else{
+            setError("Code invalide");
         }
         
     }
@@ -52,23 +55,23 @@ function RecupCompte() {
     async function handleSubmit3(e) {
         e.preventDefault();
         var errors = await validateForm(formValues);
+        //console.log(errors);
         if (Object.keys(errors).length === 0) {
             resetPass();
         }else{
-        console.log("caught");
+        //console.log("caught");
     }
     }
 
     async function validateForm(data) {
         const errors = {};
         if (!data.password) {
-            errors.password = "Le mot de passe est obligatoire.";
+            setError("Le mot de passe est obligatoire.");
         } else {
             const regexPassword =
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             if (!data.password.match(regexPassword)) {
-                errors.password =
-                    "Le mot de passe doit être composé d’au moins 8 caractères dont au moins une majuscule, une minuscule, un chiffre et un caractère spécial.";
+                setError("Le mot de passe doit être composé d’au moins 8 caractères dont au moins une majuscule, une minuscule, un chiffre et un caractère spécial.");
             }
         }
         return errors;
@@ -174,18 +177,21 @@ function RecupCompte() {
                 },
             })
             .then(function (reponse) {
-                if (reponse.data == null) {
+                if (formValues.mail == " ") {
                     setError("Mail invalide");
+                    //console.log("hi1");
                 } 
                 else if (reponse.data == "lied"){
-                    console.log("hi");
-                    errors.email = "L'émail spécifié n'existe pas dans la base";
+                    //console.log("hi");
+                    //console.log(formValues.mail);
+                    setError("L'émail spécifié n'existe pas dans la base ou n'est pas un mail valide");
                 }
                 else {
-                    console.log("sent");
-                    console.log("Reponse : " + reponse.data);
+                    //console.log("sent");
+                    //console.log("Reponse : " + reponse.data);
+                    setError("");
                     setHasSub(1);
-                    console.log(hasSub);
+                    //console.log(hasSub);
                 }
             })
             .catch(function (error) {
@@ -206,11 +212,13 @@ function RecupCompte() {
                 if (reponse.data == null) {
                     setError("Mail invalide");
                 } else {
-                    console.log("sent");
-                    console.log(formValues["password"])
-                    console.log("Reponse : " + reponse.data);
+                    //console.log("sent");
+                    //console.log(formValues["password"])
+                    //console.log("Reponse : " + reponse.data);
+                    setError("");
                     setHasSub(2);
-                    console.log(hasSub);
+                    //console.log(hasSub);
+                    navigate("/login");
                 }
             })
             .catch(function (error) {
@@ -225,8 +233,6 @@ function RecupCompte() {
     );
 
 }
-
-
 
 
 
