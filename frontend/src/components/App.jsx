@@ -190,9 +190,7 @@ function App() {
                 <Route
                     path="/recupcompte"
                     element={
-                        <PrivateRoute>
-                            <RatingUser />
-                        </PrivateRoute>
+                            <RecupCompte />
                     }
                 />
                 <Route path="*" element={<Unknow />} />
