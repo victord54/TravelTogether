@@ -176,6 +176,12 @@ function Profil() {
         );
         getOffres(index);
     } else {  //affichage des offres en général
+    
+        //pour chaque offre affichée dans le profil, on doit pouvoir l'annuler
+        offers.offers = offers.offers.map(item => {
+            return { ...item, isCancellable: true };
+        });
+
         var indexList = [];
         for(var i = 1; i <= Math.ceil(offers.size); i++) indexList.push(i);
         var indexBar = <nav className="index-bar">
@@ -189,6 +195,7 @@ function Profil() {
                 ))}
             </article>
         );
+        //explication du code précédent : pour chaque offre sur la page, on link l'offre vers une nouvelle page contenant l'offre seule
     }
 
     return (

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import "../styles/SeeOffer.css";
 
-
 function Offer(data) {
     var info = <></>;
     var precision = <></>;
@@ -9,23 +8,14 @@ function Offer(data) {
     var annulerParticipation = <></>;
     var date = new Date(data["dateDepart"]);
     var hour = new Date("July 1 2023 " + data["heureDepart"]);
-    var boutonAnnulerParticipation; //affichage du bouton d'annulation de la participation à cette offre
-
-
-
-
-    /*
-    vérifier si la case du tableau "annulable" existe
-    afficher le bouton 
-    Récupérer l'utilisateur dans le localstorage
-    */
+    var annulable = (typeof data["isCancellable"] !== 'undefined'); //affichage du bouton d'annulation de la participation à cette offre
 
     const dateD = new Date(date);
     dateD.setHours(hour.getHours());
     dateD.setMinutes(hour.getMinutes());
     const dateAuj = new Date();
 
-    if(typeof data["participationAnnulable"] !== 'undefined'){ //l'offre n'est pas annulable
+    if(annulable){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
         console.log("ZEBIED");
         annulerParticipation = (
             <button> Annuler participation </button>
@@ -110,4 +100,7 @@ function Offer(data) {
     );
 }
 
+
+
 export default Offer;
+
