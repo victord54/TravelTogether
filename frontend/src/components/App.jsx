@@ -26,6 +26,7 @@ import DeleteOffer from "../pages/DeleteOffer"
 import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
 import RecupCompte from "../pages/RecupCompte";
+import AdminPage from "../pages/AdminPage";
 
 function App() {
     const { auth } = useAuth();
@@ -194,6 +195,14 @@ function App() {
                     }
                 />
                 <Route path="*" element={<Unknow />} />
+                <Route
+                    path="/admin-page"
+                    element={
+                        <PrivateRoute>
+                            <AdminPage />
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
         </div>
     );

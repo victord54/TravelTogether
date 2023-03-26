@@ -54,12 +54,13 @@ function Login() {
                 if (reponse.data == null) {
                     setError("Identifiant et/ou mot de passe incorrect.");
                 } else {
-                    console.log("Reponse : " + reponse.data);
+                    console.log(reponse.data);
                     localStorage.setItem("mail", reponse.data["email"]);
                     localStorage.setItem("nom", reponse.data["nom"]);
                     localStorage.setItem("prenom", reponse.data["prenom"]);
                     localStorage.setItem("genre", reponse.data["genre"]);
                     localStorage.setItem("numTel", reponse.data["numTel"]);
+                    localStorage.setItem("estAdmin", reponse.data["estAdmin"]);
                     localStorage.setItem(
                         "aUneVoiture",
                         reponse.data["aUneVoiture"]

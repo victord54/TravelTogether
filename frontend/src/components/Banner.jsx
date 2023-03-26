@@ -66,6 +66,18 @@ function Banner() {
                     }
                 >
                     <ul>
+                        {
+                            localStorage.getItem("estAdmin") === "1" ? (
+                                <li>
+                                <Link
+                                    to="admin-page"
+                                    onClick={() => setIsNavExpanded(false)}
+                                >
+                                    Pannel administrateur
+                                </Link>
+                            </li>
+                            ) : (<></>)
+                        }
                         {car ? (
                             <li>
                                 <Link
