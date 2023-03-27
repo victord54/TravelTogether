@@ -1,0 +1,14 @@
+
+.buttonsNavAdmin {
+    display: list-item;
+    float: right;
+    padding: 8px;
+    background-color: #dddddd;
+    padding: 10px;
+    margin-right:3px;
+}
+
+.buttonsNavAdmin:hover {
+    background-color: #89ced6;
+    padding: 10px;
+}

@@ -1,6 +1,9 @@
 import {useState} from "react";
 import {url_api} from "../data/url_api";
+import {Link} from "react-router-dom";
 import axios from "axios";
+import "../styles/Admin-page.css";
+
 
 
 function AdminPage() {
@@ -64,6 +67,10 @@ function AdminPage() {
                         </tr>
                     </tbody>
                 </table>
+                <ul className='navButton' align="right">
+                    <li className='buttonsNavAdmin'><Link to={"../delete-user/" + data["email"]}>Supprimer l'utilisateur</Link></li>
+                    <li className='buttonsNavAdmin'><Link to={"../admin-see-offers/" + data["email"]}>Consulter les offres de l'utilisateur</Link></li>
+                </ul>
             </section>)}
         </article>
         </main>
