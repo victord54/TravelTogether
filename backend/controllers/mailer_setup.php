@@ -22,4 +22,16 @@ function instanciateMailer(){
 
     return $mail;
 }
+
+function templateMail($email){
+    $mail = instanciateMailer();
+    $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
+        // Recipient, the name can also be stated
+    $mail->addAddress("randomynot02@gmail.com", "name");
+    $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
+        // HTML content
+    $mail->Body = 'email';
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+}
 ?>

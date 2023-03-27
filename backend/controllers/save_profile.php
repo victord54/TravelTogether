@@ -1,5 +1,13 @@
 <?php
 include 'header.php';
+include 'mailer_setup.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require $exception;
+require $mailer;
+require $smtp;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /*$data = json_decode(file_get_contents('php://input'), true);
@@ -53,7 +61,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
+    $mail = instanciateMailer();
+    $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
+        // Recipient, the name can also be stated
+    $mail->addAddress("randomynot02@gmail.com", "name");
+    $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
+        // HTML content
+    $mail->Body = 'email';
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+
+    $mail-> send();
+
+    json_encode("sent");
+
     $statement->execute() or die(print_r($statement->errorInfo(), true));;
+    
 }
 
 
