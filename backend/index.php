@@ -62,4 +62,6 @@ if ($_GET["request"] == "login") {
     require_once("controllers/rate_user.php");
 }else if ($_GET["request"] == "recup_compte"){
     require_once("controllers/recup_compte.php");
+} else if ($_GET["request"] == "admin_get_users") {
+    require_once("controllers/admin_get_users.php");
 }
