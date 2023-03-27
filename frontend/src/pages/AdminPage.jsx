@@ -14,7 +14,6 @@ function AdminPage() {
         }).then(function (response) {
             if(response.data == null) console.error("Problème");
             else {
-                console.log({statut: "size only", users:[], size:response.data});
                 setUsers({statut: "size only", users:[], size:response.data});
             }
         });
@@ -29,7 +28,6 @@ function AdminPage() {
         }).then(function (response) {
             if(response.data == null) console.error("Problème");
             else {
-                console.log(response.data);
                 setUsers({statut: "charged", users:response.data, size:users.size});
             }
         });
@@ -42,11 +40,31 @@ function AdminPage() {
         return (<h1>Chargement...</h1>)
     } else {
         return <main>
-        <h1>Yo</h1>
+        <h1>Liste des membres</h1>
         <article>
-            {users.users.map((data,index) => <section key={index}>
-            <h1>{data["nom"]} {data["prenom"]}</h1>
-            {data["email"]}</section>)}
+            {users.users.map((data,index) => 
+            <section key={index}>
+                <table align="left">
+                    <tbody>
+                        <tr>
+                            <td>
+                            <img
+                                alt="profil"
+                                src={data["photo"] + "?" + Math.random()}
+                                width="75px"
+                            />
+                            </td>
+                            <td>
+                            <h1>{data["nom"]} {data["prenom"]}</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>{data["email"]}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>)}
         </article>
         </main>
     }

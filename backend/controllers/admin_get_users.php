@@ -5,7 +5,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     if($_GET["type"] == "users") {
-        $statement = $pdo->prepare("SELECT email, nom, prenom FROM UTILISATEUR LIMIT 10 OFFSET :offs");
+        $statement = $pdo->prepare("SELECT email, nom, prenom, photo FROM UTILISATEUR LIMIT 10 OFFSET :offs");
         $statement->bindValue(":offs", $_GET['offset'], PDO::PARAM_INT);
         $statement->execute();
         $data = $statement->fetchAll();
