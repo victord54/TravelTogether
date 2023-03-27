@@ -39,3 +39,35 @@ section {
 section:hover {
     margin: 2vh 7vw;
 }
+
+.presentation_box {
+    width: 17%;
+    padding: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.presentation_frame {
+    display: flex;
+    justify-content: center;
+    margin: 0.5vh 2.25vw;
+    color: #14213D;
+  }
+
+h2 {
+    padding: 0;
+    margin: 0;
+    color: #FCA311;
+}
+
+.slogan{
+    display: flex;
+    justify-content: center;
+    font-size: 350%;
+    color: #FCA311;
+}
+
+.mainPicture{
+    display: flex;
+    justify-content: center;
+}
