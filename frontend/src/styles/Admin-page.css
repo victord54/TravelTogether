@@ -1,3 +1,6 @@
+ul {
+    list-style: none;
+}
 
 .buttonsNavAdmin {
     display: list-item;
