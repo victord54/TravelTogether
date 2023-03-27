@@ -97,6 +97,8 @@ function Notifications() {
                 return "Modification d'une offre";
             case "Annulation":
                 return "Annulation d'une offre";
+            default:
+                return "";
         }
     }
 
@@ -145,7 +147,9 @@ function Notifications() {
                                 </DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
-                                        {dialogTuple.typeNotif === "Offre" || dialogTuple.typeNotif === "ModifOffre" ? (
+                                        {dialogTuple.typeNotif === "Offre" ||
+                                        dialogTuple.typeNotif ===
+                                            "ModifOffre" ? (
                                             <>
                                                 <Link
                                                     className="offre "
