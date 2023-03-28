@@ -56,6 +56,8 @@ function SeeOffer() {
         await axios
             .post(url_api.url + "/reply", formData)
             .then(function (response) {
+                console.log("hello");
+                console.log(response.data);
                 if(response.data !== "ok"){
                     
                     if(response.data === "user already replied"){
