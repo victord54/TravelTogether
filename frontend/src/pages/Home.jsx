@@ -5,6 +5,11 @@ import { useAuth } from "../components/AuthProvider";
 import axios from "axios";
 import Offer from "../components/Offer";
 import { Link } from "react-router-dom";
+import coins from "../assets/coins.svg";
+import certificate from "../assets/certificate.svg";
+import time from "../assets/time.svg";
+import mens from "../assets/mens.svg";
+import car from "../assets/car.svg";
 
 function Home() {
     const { auth } = useAuth();
@@ -33,11 +38,61 @@ function Home() {
     if (!auth) {
         return (
             <main>
-                <div id="not_connected">
-                    <h1 id="title_not_connected">Bienvenue !</h1>
-                    <p id="home_not_connected">
-                        Inscrivez-vous pour profiter d'un covoiturage
+                <h1  class="slogan">Voyageons ensemble à moindre coût</h1>
+                <div class="mainPicture">
+                    <img 
+                        src={mens}
+                        alt="mens"
+                        width="350"
+                    />
+                    <img 
+                        src={car}
+                        alt="car"
+                        width="350"
+                    />
+                </div>
+                <div class="presentation_frame">
+                    <div class="presentation_box">
+                    <img 
+                        src={certificate}
+                        alt="certificate"
+                        width="52"
+                    />
+                    <h2>Sécurisé</h2>
+                    <p>
+                        Tous les membres de TravelTogether sont soumis à une notation des autres participants
+                        d’un trajet commun. Vous pouvez à tout moment prendre connaissance de celles-ci afin
+                        de vous assurez de voyager en bonne compagnie.
                     </p>
+                    </div>
+                    <div class="presentation_box">
+                    <img 
+                        src={time}
+                        alt="time"
+                        width="52"
+                    />
+                    <h2>Rapide</h2>
+                    <p>
+                        Vous n’avez pas le temps d’attendre,
+                        c’est pourquoi nous avons mis un point d’honneur à simplifier tous les aspects 
+                        de la mise en place d’un covoiturage : création de trajet efficiente,
+                        réservation de place instantanée, possibilité
+                        de retrouver tous vos trajets simplement.
+                    </p>
+                    </div>
+                    <div class="presentation_box">
+                    <img 
+                        src={coins}
+                        alt="coins"
+                        width="52"
+                    />
+                    <h2>Economique</h2>
+                    <p>
+                        Afin de promouvoir le covoiturage, TravelTogether s’engage à le rendre accessible à tous.
+                        C’est dans cette optique que nous vous laissons fixer le prix de vos trajets et que nous
+                        ne prenons aucune marge sur ceux-ci.
+                    </p>
+                    </div>
                 </div>
             </main>
         );
