@@ -8,12 +8,14 @@ import closeEye from "../assets/closeeye.svg";
 import openEye from "../assets/openeye.svg";
 import { Link } from "react-router-dom";
 import {Navigate} from 'react-router-dom';
+import { useCar } from "../components/CarProvider";
 
 function Login() {
     const initialValue = { mail: "", password: "" };
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
     const { setAuth } = useAuth();
+    const { setCar } = useCar();
     const navigate = useNavigate();
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
     
@@ -71,6 +73,7 @@ function Login() {
                     );
                     localStorage.setItem("photo", reponse.data["photo"]);
                     setAuth(true);
+                    setCar(localStorage.getItem("aUneVoiture") === "1");
                     navigate("/");
                 }
             })
