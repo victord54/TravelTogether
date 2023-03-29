@@ -135,7 +135,7 @@ function SeeOffer() {
                 } else if(index != -1) {
                     let statut = offers.offer["reponses"][index]["statutReponse"];
                     if(statut != 'refuser') {
-                        // Code de Dan
+                        // Code de Dan (mais en fait non? -Simon)
                     }
                 }
         }

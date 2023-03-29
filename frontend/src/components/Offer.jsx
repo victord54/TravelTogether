@@ -1,18 +1,54 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import axios from "axios";
+import { url_api } from "../data/url_api";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/SeeOffer.css";
 
-
 function Offer(data) {
+
+    //const navigate = useNavigate();
+
+    function cancelReply(){  //envoie au serv la demande d'annulation de participation à un trajet
+        
+        console.log("Envoi de l'annulation");
+        const formData = new FormData();
+        formData.append("mail", localStorage.getItem("mail"));
+        formData.append("idfOffre", data["idfOffre"]);
+
+        console.log("formdata: " + data["idfOffre"] + localStorage.getItem("mail"));
+
+        axios
+            .post(url_api.url + "/cancel_ride", formData)
+            .then(function (response) {
+                console.log("Response :" + response.data);
+                //éventuellement mettre ici des trucs pour afficher une notif
+                //navigate("/profile");
+            })
+            .catch(function (error) {
+                console.log("Error :" + error);
+            });
+    }
+
+
     var info = <></>;
     var precision = <></>;
     var inter = <></>;
+    var annulerParticipation = <></>;
     var date = new Date(data["dateDepart"]);
     var hour = new Date("July 1 2023 " + data["heureDepart"]);
+    var annulable = (typeof data["isCancellable"] !== 'undefined'); //affichage du bouton d'annulation de la participation à cette offre
 
     const dateD = new Date(date);
     dateD.setHours(hour.getHours());
     dateD.setMinutes(hour.getMinutes());
     const dateAuj = new Date();
+
+    if(annulable){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
+        console.log("ZEBIED");
+        annulerParticipation = (
+            <button className="bouton-annuler" onClick={cancelReply}> Annuler participation </button>
+        );
+    }
 
     if (data["infos"].length > 1)
         info = (
@@ -86,10 +122,13 @@ function Offer(data) {
                     <button>Noter les participants</button>
                 </Link>
             ) : (
-                <>{placedispo}</>
+                <>{placedispo}{annulerParticipation}</>
             )}
         </section>
     );
 }
 
+
+
 export default Offer;
+
