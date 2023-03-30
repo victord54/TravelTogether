@@ -119,10 +119,10 @@ function Login() {
                 <div className="button-wrap">
                     <button type="submit" className="button-connexion">
                         Se connecter
-                    </button>
-                    
-                    <Link to="../RecupCompte">Recuperer son compte</Link > 
+                    </button> 
                 </div>
+                <br />
+                    <Link to="../RecupCompte" className="under-button">Recuperer son compte</Link >
             </form>
         </div>
     );
