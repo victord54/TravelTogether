@@ -28,6 +28,7 @@ import RatingUser from "../pages/RatingUser";
 import RecupCompte from "../pages/RecupCompte";
 import AdminPage from "../pages/AdminPage";
 import DeleteAccount from "../pages/DeleteAccount";
+import AdminDeleteUser from "../pages/AdminDeleteUser";
 
 function App() {
     const { auth } = useAuth();
