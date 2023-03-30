@@ -1,5 +1,15 @@
 <?php
 include 'header.php';
+include 'mailer_setup.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require $exception;
+require $mailer;
+require $smtp;
+
+
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -43,6 +53,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statement->bindValue(":nbPlaces", $_POST["nbPlaces"]);
 
             $statement->execute();
+
+            $statement = $pdo->prepare("SELECT notificationParMail FROM UTILISATEUR WHERE email=:mail");
+            $statement->bindValue(":mail", $mail);
+            $statement->execute();
+            $notif= $statement->fetch();
+
+            json_encode($notif["notificationParMail"]);
+
+            if($notif["notificationParMail"] == 1){
+                $mail = instanciateMailer();
+                $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
+                // Recipient, the name can also be stated
+                $mail->addAddress("randomynot02@gmail.com", "name");
+                $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
+                // HTML content
+                $mail->Body = 'email';
+                $mail->CharSet = 'UTF-8';
+                $mail->Encoding = 'base64';
+        
+                $mail->send();
+                json_encode("sending");
+            }
+        
 
             echo "ok";
         }else{
