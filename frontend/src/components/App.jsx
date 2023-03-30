@@ -27,6 +27,7 @@ import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
 import RecupCompte from "../pages/RecupCompte";
 import AdminPage from "../pages/AdminPage";
+import DeleteAccount from "../pages/DeleteAccount";
 import AdminDeleteUser from "../pages/AdminDeleteUser";
 import AdminSeeOffers from "../pages/AdminSeeOffers";
 

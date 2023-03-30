@@ -70,3 +70,6 @@ if ($_GET["request"] == "login") {
 } else if ($_GET["request"] == "admin_get_users") {
     require_once("controllers/admin_get_users.php");
 }
+}else if ($_GET["request"] == "delete_account"){
+    require_once("controllers/delete_account.php");
+}
