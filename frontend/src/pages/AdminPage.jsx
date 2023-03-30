@@ -79,8 +79,8 @@ function AdminPage() {
                     </tbody>
                 </table>
                 <ul className='navButton' align="right">
-                    <li className='buttonsNavAdmin'><Link to={"../delete-user/" + data["email"]}>Supprimer l'utilisateur</Link></li>
-                    <li className='buttonsNavAdmin'><Link to={"../admin-see-offers/" + data["email"]}>Consulter les offres de l'utilisateur</Link></li>
+                    <li className='buttonsNavAdmin' disabled={localStorage.getItem("email") === data["email"]}><Link to={"../delete-user/" + data["email"]}>Supprimer l'utilisateur</Link></li>
+                    <li className='buttonsNavAdmin' disabled={localStorage.getItem("email") === data["email"]}><Link to={"../admin-see-offers/" + data["email"]}>Consulter les offres de l'utilisateur</Link></li>
                 </ul>
             </section>)}
         </article>
