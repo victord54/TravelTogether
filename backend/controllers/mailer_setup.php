@@ -1,7 +1,7 @@
 <?php
 
-use PHPMailer/PHPMailer/PHPMailer;
-use PHPMailer/PHPMailer/Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 
 //setup liens vers fichiers phpmailer requis
