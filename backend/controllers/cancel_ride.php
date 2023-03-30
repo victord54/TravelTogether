@@ -10,6 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
+    $statement = $pdo->prepare("UPDATE OFFRE SET nbPlaceDisponible = nbPlaceDisponible + 1 WHERE idfOffre = :idfOffre");
+
+    $statement->bindValue(":idfOffre", $_POST["idfOffre"]);
+
+    $statement->execute() or die(print_r($statement->errorInfo(), true));
+
     echo "1";
 }
 
