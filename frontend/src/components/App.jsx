@@ -27,6 +27,7 @@ import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
 import RecupCompte from "../pages/RecupCompte";
 import AdminPage from "../pages/AdminPage";
+import AdminDeleteUser from "../pages/AdminDeleteUser";
 
 function App() {
     const { auth } = useAuth();
@@ -200,6 +201,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <AdminPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/delete-user/:id"
+                    element={
+                        <PrivateRoute>
+                            <AdminDeleteUser />
                         </PrivateRoute>
                     }
                 />
