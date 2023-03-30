@@ -217,7 +217,7 @@ function Signin() {
 
     return (
         <div>
-            <div className="form-box">
+            <div className="form_box">
                 <h1 className="inscription-titre">Inscription</h1>
                 <form onSubmit={handleSubmit}>
                     <div>Nom* :</div>
@@ -226,6 +226,7 @@ function Signin() {
                         name="lastName"
                         value={formValues.lastName}
                         onChange={handleChange}
+                        placeholder="Dumas"
                     ></input>
                     <p className="error-form">{formErrors.lastName}</p>
 
@@ -235,6 +236,7 @@ function Signin() {
                         name="firstName"
                         value={formValues.firstName}
                         onChange={handleChange}
+                        placeholder="Michel"
                     ></input>
                     <p className="error-form">{formErrors.firstName}</p>
 
@@ -277,6 +279,7 @@ function Signin() {
                         name="phoneNumber"
                         value={formValues.phoneNumber}
                         onChange={handleChange}
+                        placeholder="0123456789"
                     ></input>
                     <p className="error-form">{formErrors.phoneNumber}</p>
 
@@ -286,6 +289,7 @@ function Signin() {
                         name="mail"
                         value={formValues.mail}
                         onChange={handleChange}
+                        placeholder="exemple@exemple.fr"
                     ></input>
                     <p className="error-form">{formErrors.mail}</p>
 
@@ -355,11 +359,10 @@ function Signin() {
 
                     <br />
                     <br />
-                    <div className="button-forms-wrap">
-                        <button type="submit" className="formulaire-submit">
-                            Valider
-                        </button>
-                    </div>
+                    
+                    <button type="submit" className="formulaire_submit">
+                        Valider
+                    </button>
                     <p className="info-obligatoire">
                         * : Information obligatoire.
                     </p>
