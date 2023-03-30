@@ -23,7 +23,7 @@ require $smtp;
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
-    $statement = $pdo->prepare("SELECT email FROM utilisateur  WHERE email = :mail");
+    $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :mail");
     $statement->bindValue(":mail", $_GET["mail"]);
     $statement->execute();
     $data = $statement->fetch();
