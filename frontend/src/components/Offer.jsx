@@ -100,7 +100,7 @@ function Offer(data, adminMode = false) {
                 src={data["photo"] + "?" + Math.random()}
                 width="75px"
             />
-            <h3>{data["nom"] + " " + data["prenom"]} {data["note"] !== -1 ? data["note"] + " étoiles (à changer)" : ""}</h3>
+            <h3>{data["nom"] + " " + data["prenom"]} {data["note"] !== null ? data["note"] + " étoiles (à changer)" : ""}</h3>
             <p>
                 Le{" "}
                 {date.getDate().toString().padStart(2, "0") +
