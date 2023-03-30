@@ -122,7 +122,7 @@ function Login() {
                     </button> 
                 </div>
                 <br />
-                    <Link to="../RecupCompte" className="under-button">Recuperer son compte</Link >
+                    <Link to="../RecupCompte" className="under-button">Recupérer son compte</Link >
             </form>
         </div>
     );
