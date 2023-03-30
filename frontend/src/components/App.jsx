@@ -30,6 +30,7 @@ import AdminPage from "../pages/AdminPage";
 import DeleteAccount from "../pages/DeleteAccount";
 import AdminDeleteUser from "../pages/AdminDeleteUser";
 import AdminSeeOffers from "../pages/AdminSeeOffers";
+import AdminDeleteOffer from "../pages/AdminDeleteOffer";
 
 function App() {
     const { auth } = useAuth();
@@ -219,6 +220,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <AdminSeeOffers />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/admin-delete-offer/:id"
+                    element={
+                        <PrivateRoute>
+                            <AdminDeleteOffer />
                         </PrivateRoute>
                     }
                 />

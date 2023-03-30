@@ -4,7 +4,7 @@ import { url_api } from "../data/url_api";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/SeeOffer.css";
 
-function Offer(data) {
+function Offer(data, adminMode = false) {
 
     //const navigate = useNavigate();
 
@@ -122,7 +122,7 @@ function Offer(data) {
                     <button>Noter les participants</button>
                 </Link>
             ) : (
-                <>{placedispo}{annulerParticipation}</>
+                <>{placedispo}{annulerParticipation}{adminMode ? (<Link to={"/admin-delete-offer/"+data["idfOffre"]}><button>Supprimer l'offre</button></Link>) : (<></>)}</>
             )}
         </section>
     );

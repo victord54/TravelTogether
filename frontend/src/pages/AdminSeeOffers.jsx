@@ -77,8 +77,7 @@ function AdminSeeOffers() {
         historique = (
             <div className="wrapper-historique">
                 <p>
-                    {id} n'a pas effectué de trajet ou ne possède aucune demande
-                    de trajet en attente.
+                    {id} n'a pas effectué de trajet.
                 </p>
             </div>
         );
@@ -111,7 +110,7 @@ function AdminSeeOffers() {
             <article className="wrapper-historique">
                 {indexBar}
                 {offers.offers.map((offre, index) => (
-                    <Link to={"../offre/" + offre["idfOffre"]} key={index}>{Offer(offre)}</Link>
+                    <Link to={"../offre/" + offre["idfOffre"]} key={index}>{Offer(offre, true)}</Link>
                 ))}
             </article>
         );
