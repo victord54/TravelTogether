@@ -43,7 +43,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="fill:#323232;stroke:none;stroke-width:0.5;stroke-linejoin:round;fill-opacity:1"
+       style="fill:#14213D;stroke:none;stroke-width:0.5;stroke-linejoin:round;fill-opacity:1"
        id="path1514"
        cx="256"
        cy="256"
@@ -56,25 +56,25 @@
        r="240" />
     <text
        xml:space="preserve"
-       style="font-weight:bold;font-size:400px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#b2f7ff;fill-opacity:1;stroke:none;stroke-width:32;stroke-linejoin:round;stroke-dasharray:none"
-       x="258.13739"
-       y="386.39999"
+       style="font-weight:bold;font-size:400px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#FCA311;fill-opacity:1;stroke:none;stroke-width:32;stroke-linejoin:round;stroke-dasharray:none"
+       x="248.13739"
+       y="399.39999"
        id="text3292"><tspan
          sodipodi:role="line"
          id="tspan3290"
-         x="258.13739"
-         y="386.39999"
-         style="font-size:400px;fill:#b2f7ff;fill-opacity:1">t</tspan></text>
+         x="240.13739"
+         y="399.39999"
+         style="font-size:470px;fill:#FCA311;fill-opacity:1">t</tspan></text>
     <text
        xml:space="preserve"
-       style="font-weight:bold;font-size:400px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:32;stroke-linejoin:round;stroke-dasharray:none"
-       x="83.86261"
-       y="386.39999"
+       style="font-weight:bold;font-size:400px;font-family:Arial;-inkscape-font-specification:'sans-serif Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:32;stroke-linejoin:round;stroke-dasharray:none"
+       x="93.86261"
+       y="399.39999"
        id="text6098"><tspan
          sodipodi:role="line"
          id="tspan6096"
-         x="83.86261"
-         y="386.39999"
-         style="font-size:400px;fill:#ffffff;fill-opacity:1">t</tspan></text>
+         x="101.86261"
+         y="399.39999"
+         style="font-size:470px;fill:#ffffff;fill-opacity:1">t</tspan></text>
   </g>
 </svg>
