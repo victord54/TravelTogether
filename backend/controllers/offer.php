@@ -99,6 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     
         $reponse = $data;
+    } else if ((isset($_GET["type"]) && $_GET["type"] == "adminNbOffer")) {
+        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+        $statement =  $pdo->prepare("SELECT count(idfOffre) as nbOffre FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND email = :email");
+
+        $statement->bindValue(":email", $_GET['email']);
+        $statement->execute();
+        $res = 0;
+        $data = $statement->fetch();
+        if(count($data) == 0) $data["nbOffre"] = $res;
+        $reponse = $data;
     } else if (isset($_GET["type"]) && $_GET["type"] == "sizeInformation") {
         // Offre form modifOffre
         $statement = $pdo->prepare("SELECT idfOffre, dateDepart, heureDepart, prix, nbPlaceDisponible, precisions, infos, sum(nbPlaceSouhaitees) as nbPlacesReserves FROM OFFRE JOIN NOTIFICATION USING (idfOffre) where typeNotif = 'reponse' AND statutReponse = 'accepter' AND idfOffre = :idfOffre GROUP BY idfOffre;");
@@ -117,6 +127,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     
         $reponse = $data;
+    } else if (isset($_GET["type"]) && $_GET["type"] == "admin historique") {
+        // Offre historique Admin
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND email = :email ORDER BY DateDepart LIMIT 5 OFFSET :offs");
+        $statement->bindValue(":email", $_GET['email']);
+        $statement->bindValue(":offs", $_GET['offset'], PDO::PARAM_INT);
+        $statement->execute();
+        $data = $statement->fetchAll();
+
+        foreach($data as $index=>$offer) {
+            $villeDep = getCity($offer["villeDepart"]);
+            $data[$index]["villeDepart"] = $villeDep;
+            $villeArrivee = getCity($offer["villeArrivee"]);
+            $data[$index]["villeArrivee"] = $villeArrivee;
+
+            $statement = $pdo->prepare("SELECT ville FROM PASSE_PAR JOIN OFFRE USING(idfOffre)
+            WHERE idfOffre = :idfOffre ORDER BY position");
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $statement->bindValue(":idfOffre", $offer['idfOffre']);
+            $statement->execute();
+            $villes = $statement->fetchAll();
+
+            foreach($villes as $indexVille=>$ville) {
+                $test = getCity($ville["ville"]);
+                $data[$index]["inter"][$indexVille] = $test;
+            }
+
+            $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
+        }
+    
+        $reponse = $data; 
     } else {
         // Offres du main
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND (email = :email OR 

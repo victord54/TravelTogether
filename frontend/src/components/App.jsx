@@ -28,6 +28,7 @@ import RatingUser from "../pages/RatingUser";
 import RecupCompte from "../pages/RecupCompte";
 import AdminPage from "../pages/AdminPage";
 import AdminDeleteUser from "../pages/AdminDeleteUser";
+import AdminSeeOffers from "../pages/AdminSeeOffers";
 
 function App() {
     const { auth } = useAuth();
@@ -209,6 +210,14 @@ function App() {
                     element={
                         <PrivateRoute>
                             <AdminDeleteUser />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/admin-see-offers/:id"
+                    element={
+                        <PrivateRoute>
+                            <AdminSeeOffers />
                         </PrivateRoute>
                     }
                 />
