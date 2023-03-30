@@ -52,7 +52,14 @@ section:hover {
     justify-content: center;
     margin: 0.5vh 2.25vw;
     color: #14213D;
-  }
+}
+
+.home_image{
+    width:25em;
+    min-width: 10em;
+    
+    height: auto;
+}
 
 h2 {
     padding: 0;
@@ -61,6 +68,7 @@ h2 {
 }
 
 .slogan{
+    text-align: center;
     display: flex;
     justify-content: center;
     font-size: 350%;
@@ -70,4 +78,24 @@ h2 {
 .mainPicture{
     display: flex;
     justify-content: center;
+}
+
+@media screen and (max-width: 810px) {
+
+    .presentation_box {
+        width: 30%;
+        padding: 20px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .presentation_frame {
+        font-size: smaller;
+        margin : 5vh 15% 2vh 15%;
+        border-radius: 20px;
+    }
+
+    .slogan{
+        font-size: 200%;
+    }
 }

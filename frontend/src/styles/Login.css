@@ -8,6 +8,20 @@
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
+@media screen and (max-width: 1400px) {
+    .form--connexion-box {
+        margin : 5vh 25% 2vh 25%;
+        border-radius: 20px;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    .form--connexion-box {
+        margin : 5vh 15% 2vh 15%;
+        border-radius: 20px;
+    }
+}
+
 .bienvenue {
     text-align: center;
     color: #FCA311;

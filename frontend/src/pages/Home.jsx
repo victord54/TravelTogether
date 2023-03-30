@@ -40,20 +40,20 @@ function Home() {
             <main>
                 <h1  class="slogan">Voyageons ensemble à moindre coût</h1>
                 <div class="mainPicture">
-                    <img 
+                    <img
+                        class="home_image"  
                         src={mens}
                         alt="mens"
-                        width="350"
                     />
-                    <img 
+                    <img
+                        class="home_image"  
                         src={car}
-                        alt="car"
-                        width="350"
+                        alt="car"  
                     />
                 </div>
                 <div class="presentation_frame">
                     <div class="presentation_box">
-                    <img 
+                    <img
                         src={certificate}
                         alt="certificate"
                         width="52"
