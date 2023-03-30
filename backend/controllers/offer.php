@@ -23,6 +23,18 @@ function getNbPlacesDispo($pdo, $idfOffre, $nbPlace) {
     return $res;
 }   
 
+function getMoyenne($pdo, $mail) {
+    $statement = $pdo->prepare("SELECT avg(valeur) as moyenne FROM NOTE WHERE email = :mail");
+    $statement->bindValue(":mail", $mail);
+    $statement->execute();
+    $data = $statement->fetch();
+
+    if(count($data) > 0) {
+        return $data["moyenne"];
+    }
+    return -1;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Offre page Offre
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
@@ -54,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $statement->execute();
         $rep = $statement->fetchAll();
         $data["reponses"] = $rep;
+        $data["note"] = getMoyenne($pdo, $data["email"]);
         $data["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data["idfOffre"], $data["nbPlaceDisponible"]);
 
         $reponse = $data;
@@ -94,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $test = getCity($ville["ville"]);
                 $data[$index]["inter"][$indexVille] = $test;
             }
-
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
             $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
         }
     
@@ -152,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $test = getCity($ville["ville"]);
                 $data[$index]["inter"][$indexVille] = $test;
             }
-
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
             $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
         }
     
@@ -183,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $test = getCity($ville["ville"]);
                 $data[$index]["inter"][$indexVille] = $test;
             }
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
             $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
         }
     

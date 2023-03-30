@@ -44,7 +44,6 @@ function Offer(data, adminMode = false) {
     const dateAuj = new Date();
 
     if(annulable){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
-        console.log("ZEBIED");
         annulerParticipation = (
             <button className="bouton-annuler" onClick={cancelReply}> Annuler participation </button>
         );
@@ -101,7 +100,7 @@ function Offer(data, adminMode = false) {
                 src={data["photo"] + "?" + Math.random()}
                 width="75px"
             />
-            <h3>{data["nom"] + " " + data["prenom"]}</h3>
+            <h3>{data["nom"] + " " + data["prenom"]} {data["note"] !== -1 ? data["note"] + " étoiles (à changer)" : ""}</h3>
             <p>
                 Le{" "}
                 {date.getDate().toString().padStart(2, "0") +
