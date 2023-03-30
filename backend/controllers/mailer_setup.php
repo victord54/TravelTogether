@@ -5,9 +5,9 @@ use PHPMailer/PHPMailer/Exception;
 
 
 //setup liens vers fichiers phpmailer requis
-$exception = 'PHPMailer-master\src\Exception.php';
-$mailer = 'PHPMailer-master\src\PHPMailer.php';
-$smtp = 'PHPMailer-master\src\SMTP.php';
+$exception = '/PHPMailer-master/src/Exception.php';
+$mailer = '/PHPMailer-master/src/PHPMailer.php';
+$smtp = '/PHPMailer-master/src/SMTP.php';
 
 function instanciateMailer(){
     //setup as included function, prep backup methods if outlook dies
