@@ -231,6 +231,14 @@ function App() {
                         </PrivateRoute>
                     }
                 />
+                <Route 
+                    path="/delete-account"
+                    element={
+                        <PrivateRoute>
+                            <DeleteAccount />
+                        </PrivateRoute>
+                    }
+                />
             </Routes>
         </div>
     );
