@@ -78,8 +78,8 @@ function AdminPage() {
                         </tr>
                     </tbody>
                 </table>
-                <ul className='navButton' align="right">
-                    <li className='buttonsNavAdmin'><Link to={"../delete-user/" + data["email"]}>Supprimer l'utilisateur</Link></li>
+               <ul className='navButton' align="right">
+               {data["estAdmin"] === '0' ? (<li className='buttonsNavAdmin'><Link to={"../delete-user/" + data["email"]}>Supprimer l'utilisateur</Link></li>) : (<></>) }
                     <li className='buttonsNavAdmin'><Link to={"../admin-see-offers/" + data["email"]}>Consulter les offres de l'utilisateur</Link></li>
                 </ul>
             </section>)}

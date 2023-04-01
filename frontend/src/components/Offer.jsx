@@ -4,7 +4,7 @@ import { url_api } from "../data/url_api";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/SeeOffer.css";
 
-function Offer(data) {
+function Offer(data, adminMode = false) {
 
     //const navigate = useNavigate();
 
@@ -44,7 +44,6 @@ function Offer(data) {
     const dateAuj = new Date();
 
     if(annulable){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
-        console.log("ZEBIED");
         annulerParticipation = (
             <button className="bouton-annuler" onClick={cancelReply}> Annuler participation </button>
         );
@@ -101,7 +100,7 @@ function Offer(data) {
                 src={data["photo"] + "?" + Math.random()}
                 width="75px"
             />
-            <h3>{data["nom"] + " " + data["prenom"]}</h3>
+            <h3>{data["nom"] + " " + data["prenom"]} {data["note"] !== null ? data["note"] + " étoiles (à changer)" : ""}</h3>
             <p>
                 Le{" "}
                 {date.getDate().toString().padStart(2, "0") +
@@ -122,7 +121,7 @@ function Offer(data) {
                     <button>Noter les participants</button>
                 </Link>
             ) : (
-                <>{placedispo}{annulerParticipation}</>
+                <>{placedispo}{annulerParticipation}{adminMode ? (<Link to={"/admin-delete-offer/"+data["idfOffre"]}><button>Supprimer l'offre</button></Link>) : (<></>)}</>
             )}
         </section>
     );

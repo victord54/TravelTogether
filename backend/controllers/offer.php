@@ -23,6 +23,18 @@ function getNbPlacesDispo($pdo, $idfOffre, $nbPlace) {
     return $res;
 }   
 
+function getMoyenne($pdo, $mail) {
+    $statement = $pdo->prepare("SELECT avg(valeur) as moyenne FROM NOTE WHERE email = :mail");
+    $statement->bindValue(":mail", $mail);
+    $statement->execute();
+    $data = $statement->fetch();
+
+    if(count($data) > 0) {
+        return $data["moyenne"];
+    }
+    return -1;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     // Offre page Offre
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
@@ -54,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $statement->execute();
         $rep = $statement->fetchAll();
         $data["reponses"] = $rep;
+        $data["note"] = getMoyenne($pdo, $data["email"]);
         $data["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data["idfOffre"], $data["nbPlaceDisponible"]);
 
         $reponse = $data;
@@ -94,10 +107,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $test = getCity($ville["ville"]);
                 $data[$index]["inter"][$indexVille] = $test;
             }
-
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
             $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
         }
     
+        $reponse = $data;
+    } else if ((isset($_GET["type"]) && $_GET["type"] == "adminNbOffer")) {
+        $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+        $statement =  $pdo->prepare("SELECT count(idfOffre) as nbOffre FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND email = :email");
+
+        $statement->bindValue(":email", $_GET['email']);
+        $statement->execute();
+        $res = 0;
+        $data = $statement->fetch();
+        if(count($data) == 0) $data["nbOffre"] = $res;
         $reponse = $data;
     } else if (isset($_GET["type"]) && $_GET["type"] == "sizeInformation") {
         // Offre form modifOffre
@@ -117,10 +140,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         }
     
         $reponse = $data;
+    } else if (isset($_GET["type"]) && $_GET["type"] == "admin historique") {
+        // Offre historique Admin
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND email = :email ORDER BY DateDepart LIMIT 5 OFFSET :offs");
+        $statement->bindValue(":email", $_GET['email']);
+        $statement->bindValue(":offs", $_GET['offset'], PDO::PARAM_INT);
+        $statement->execute();
+        $data = $statement->fetchAll();
+
+        foreach($data as $index=>$offer) {
+            $villeDep = getCity($offer["villeDepart"]);
+            $data[$index]["villeDepart"] = $villeDep;
+            $villeArrivee = getCity($offer["villeArrivee"]);
+            $data[$index]["villeArrivee"] = $villeArrivee;
+
+            $statement = $pdo->prepare("SELECT ville FROM PASSE_PAR JOIN OFFRE USING(idfOffre)
+            WHERE idfOffre = :idfOffre ORDER BY position");
+            $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $statement->bindValue(":idfOffre", $offer['idfOffre']);
+            $statement->execute();
+            $villes = $statement->fetchAll();
+
+            foreach($villes as $indexVille=>$ville) {
+                $test = getCity($ville["ville"]);
+                $data[$index]["inter"][$indexVille] = $test;
+            }
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
+            $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
+        }
+    
+        $reponse = $data; 
     } else {
         // Offres du main
-        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND (email = :email OR 
-        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse not in ('refuser', 'annuler'))) ORDER BY DateDepart LIMIT 5 OFFSET 0");
+        $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND (email = :email OR 
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse not in ('refuser', 'annuler'))) ORDER BY DateDepart LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
         $statement->bindValue(":dateDepart", date('Y-m-d H:i:s'));
         $statement->execute();
@@ -143,6 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $test = getCity($ville["ville"]);
                 $data[$index]["inter"][$indexVille] = $test;
             }
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
             $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
         }
     

@@ -27,6 +27,10 @@ import ModifGroup from "../pages/ModifGroup";
 import RatingUser from "../pages/RatingUser";
 import RecupCompte from "../pages/RecupCompte";
 import AdminPage from "../pages/AdminPage";
+import DeleteAccount from "../pages/DeleteAccount";
+import AdminDeleteUser from "../pages/AdminDeleteUser";
+import AdminSeeOffers from "../pages/AdminSeeOffers";
+import AdminDeleteOffer from "../pages/AdminDeleteOffer";
 
 function App() {
     const { auth } = useAuth();
@@ -200,6 +204,38 @@ function App() {
                     element={
                         <PrivateRoute>
                             <AdminPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/delete-user/:id"
+                    element={
+                        <PrivateRoute>
+                            <AdminDeleteUser />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/admin-see-offers/:id"
+                    element={
+                        <PrivateRoute>
+                            <AdminSeeOffers />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/admin-delete-offer/:id"
+                    element={
+                        <PrivateRoute>
+                            <AdminDeleteOffer />
+                        </PrivateRoute>
+                    }
+                />
+                <Route 
+                    path="/delete-account"
+                    element={
+                        <PrivateRoute>
+                            <DeleteAccount />
                         </PrivateRoute>
                     }
                 />

@@ -1,5 +1,13 @@
 <?php
 include 'header.php';
+include 'mailer_setup.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require $exception;
+require $mailer;
+require $smtp;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /*$data = json_decode(file_get_contents('php://input'), true);
@@ -53,7 +61,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
 
+    //email send
+
+
+
+    $mail = instanciateMailer();UTILISATEUR
+    $mail->setFrom('trialling027@outlook.fr', 'Modification de compte TravelTogether');
+        // Recipient, the name can also be stated
+    $mail->addAddress($_POST['mail'], "Utilisateur TravelTogether");
+    $mail->Subject = ("Une modification de votre compte a eu lieu"); //save temporary code in localstorage to compare against
+        // HTML content
+    $mail->Body = 'Votre compte a ete modifie. Si vous n\'etes pas a l\'origine de ce changement, veuillez modifier votre mot de passe.';
+    $mail->CharSet = 'UTF-8';
+    $mail->Encoding = 'base64';
+
+    $mail-> send();
+
+    //end email send
+
     $statement->execute() or die(print_r($statement->errorInfo(), true));;
+    
 }
 
 

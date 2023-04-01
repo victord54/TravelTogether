@@ -23,7 +23,7 @@ require $smtp;
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
-    $statement = $pdo->prepare("SELECT email FROM utilisateur  WHERE email = :mail");
+    $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :mail");
     $statement->bindValue(":mail", $_GET["mail"]);
     $statement->execute();
     $data = $statement->fetch();
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
    }
 }
 if($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] != "0"){
-    $statement = $pdo->prepare("UPDATE utilisateur set motDePasse = :pass WHERE email = :mail");
+    $statement = $pdo->prepare("UPDATE UTILISATEUR set motDePasse = :pass WHERE email = :mail");
     $hash = password_hash($_GET["pass"], PASSWORD_DEFAULT);
     $statement->bindValue(":pass", $hash);
     $statement->bindValue(":mail", $_GET["mail"]);
