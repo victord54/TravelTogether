@@ -14,11 +14,10 @@ function Profil() {
     function affichageProfil() {
         var contenu = (
             <React.Fragment>
-                <div className="wrapper-profil">
+                <div className="wrapper_profil">
                     <div className="affichageActuel">
-                        <p className="fonctionnel">
-                            {" "}
-                            <strong> Profil actuel: </strong>
+                        <p className="strong">
+                            <strong> Profil actuel :</strong>
                         </p>
                         <div className="picture">
                             <img
@@ -32,7 +31,7 @@ function Profil() {
                                 width="175px"
                             />
                         </div>
-                        <div className="profil-infos">
+                        <div className="profil_infos">
                             <ul>
                                 <li> Nom : {localStorage.getItem("nom")}</li>
                                 <li>
@@ -68,22 +67,22 @@ function Profil() {
                         </div>
                     </div>
 
-                    <div className="wrapper-nav">
+                    <div className="wrapper_nav">
                         <Link to="../Friends-group-list">
-                            <button className="Button-profil">
+                            <button className="Button_profil">
                                 Mes Groupes
                             </button>
                         </Link>
                         <br />
                         <Link to="../modif-profile">
-                            <button className="Button-profil">
+                            <button className="Button_profil">
                                 Modifier mon profil
                             </button>
                         </Link>
                         <br />
                         {offers.offers.length === 0 ? (
                             <Link to="../delete-account">
-                                <button className="Button-profil">
+                                <button className="Button_profil">
                                     Supprimer mon compte
                                 </button>
                             </Link>

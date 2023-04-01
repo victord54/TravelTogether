@@ -1,15 +1,20 @@
-.form-box {
-    display: flex;
-    flex-direction: column;
-    margin: 5vh 15vh 2vh 15vh;
-    border: 1px solid #f1f1f1;
-    padding-left: 1vh;
+.form_box {
+    margin : 5vh 30% 2vh 30%;
+    border-radius: 20px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
     background: #fff;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    color: #14213D;
+    accent-color: #FCA311;
 }
+
 
 .inscription-titre {
     text-align: center;
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2)
 }
 
 .button-forms-wrap {
@@ -17,8 +22,9 @@
     justify-content: center;
 }
 
-.formulaire-submit {
-    background-color: #b7a9eb;
+.formulaire_submit {
+    border-radius: 20px;
+    background-color: #14213D;
     color: white;
     margin: 5px 0 5px 0;
     padding: 14px 20px;
@@ -26,12 +32,14 @@
     cursor: pointer;
     transition: all 0.5s;
     width: 50%;
+    transition-duration: 0s ;
 }
 
-.formulaire-submit:hover {
-    background-color: rgb(235, 225, 225);
-    color: #2b2c2b;
-    border: 1px solid #000000;
+.formulaire_submit:hover {
+    background-color: #FCA311;
+    color: white;
+    top: 100;
+    transition-duration: 0s ;
 }
 
 .error-form {
@@ -55,10 +63,56 @@ label {
 }
 
 input:not(.not-text-input) {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    background: transparent;
+    padding: 1em;
+    margin-bottom: 2em;
+    border: none;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    border-radius: 5000px;
+    box-shadow: 1px 1px 15px rgba(0,0,0,0.2);
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+}
+
+input:not(.not-text-input):hover{
+    background: rgba(255,255,255,0.1);
+    box-shadow: 2px 2px 30px 4px rgba(0,0,0,0.2);
+}
+
+input:not(.not-text-input):active {
+    background: rgba(255,255,255,0.1);
+    box-shadow: 2px 2px 30px 4px rgba(0,0,0,0.2);
+}
+
+input:not(.not-text-input)::placeholder{
+    background: transparent;
+}
+
+
+@media screen and (max-width: 810px) {
+    .form_box {
+        margin : 2.5vh 2% 1vh 2%;
+        border-radius: 10px;
+    }
+
+    input:not(.not-text-input) {
+        width: 25%;
+        padding: 6px 10px;
+        margin: 4px 0;
+    }
+
+    .radiobutton {
+        margin: 5px 4px 2.5px 4px;
+    }
+
+    label {
+        padding-right: 5px;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .form_box {
+        margin : 5vh 15% 2vh 15%;
+    }
 }

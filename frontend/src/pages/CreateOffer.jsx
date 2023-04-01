@@ -3,6 +3,8 @@ import axios from "axios";
 import {url_api} from "../data/url_api";
 import "../styles/Create-offer.css";
 import {useNavigate} from "react-router-dom";
+import plus from "../assets/plus.svg";
+import moins from "../assets/moins.svg";
 
 function Create_offer() {
     const initialValue = {
@@ -403,7 +405,7 @@ function Create_offer() {
     if (localStorage.getItem("aUneVoiture") === 0)
         return (
             <div className="form-box">
-                <h1 className="creation-titre">
+                <h1 className="offer_titre">
                     Vous ne pouvez pas créer d'offre.
                 </h1>
                 <p>
@@ -415,8 +417,8 @@ function Create_offer() {
     else
         return (
             <div>
-                <div className="form-box">
-                    <h1 className="creation-titre">Création de l'offre</h1>
+                <div className="form_box">
+                    <h1 className="offer_titre">Création de l'offre</h1>
                     <form onSubmit={handleSubmit}>
                         <div>Lieu de départ* :</div>
                         <input
@@ -439,18 +441,23 @@ function Create_offer() {
                         </datalist>
                         <p className="error-form">{formErrors.end}</p>
                         <div>Arrêtes intermédiaires : </div>
-                        <input
-                            list="proposition_inter"
-                            name="inter"
-                            onChange={handleCity}
-                        />{" "}
-                        <button
-                            type="button"
-                            className="cityButton"
-                            onClick={add}
-                        >
-                            +
-                        </button>
+                        <div className="division_city">
+                            <input
+                                list="proposition_inter"
+                                name="inter"
+                                onChange={handleCity}
+                            />{" "}
+                            <span
+                                className="add_city_button"
+                                onClick={add}
+                            >
+                                <img 
+                                src={plus}
+                                alt="plus"
+                                width="32"
+                                />
+                            </span>
+                        </div>
                         <datalist id="proposition_inter">
                             {proposition.inter}
                         </datalist>
@@ -467,8 +474,9 @@ function Create_offer() {
                                                 value={i}
                                                 onClick={moveUp}
                                                 disabled={i === 0}
+                                    
                                             >
-                                                &#8593;
+                                                &#8593; 
                                             </button>
                                         </td>
                                         <td>
@@ -488,14 +496,17 @@ function Create_offer() {
                                             </button>
                                         </td>
                                         <td>
-                                            <button
-                                                type="button"
+                                            <span
                                                 className="cityButton"
                                                 value={i}
                                                 onClick={remove}
                                             >
-                                                -
-                                            </button>
+                                                <img 
+                                                    src={moins}
+                                                    alt="moins"
+                                                    width="32"
+                                                />
+                                            </span>
                                         </td>
                                     </tr>
                                 ))}
@@ -580,7 +591,7 @@ function Create_offer() {
                         <br />
                         <br />
                         <div className="button-forms-wrap">
-                            <button type="submit" className="formulaire-submit">
+                            <button type="submit" className="formulaire_submit">
                                 Valider
                             </button>
                         </div>

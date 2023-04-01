@@ -44,9 +44,9 @@ function ModifProfil() {
         //éventuellement rajouter des onChange pour vérifier que l'utilisateur ne rentre pas nimp
         return (
             <div>
-                <div className="form-box">
+                <div className="form_box">
                     <form onSubmit={submitFormulaire}>
-                        <h1 className="modificationProfile-titre">Modifications</h1>
+                        <h1 className="modificationProfile_titre">Modifications</h1>
                         <div>Photo de profil :</div>
                         <input
                             type="file"
@@ -194,13 +194,13 @@ function ModifProfil() {
                         ></input>
                         <p className="error-form">{formErrors.passwordConfirmation}</p>
                         
-                        <button type="submit" className="formulaire-submit">
+                        <button type="submit" className="formulaire_submit">
                             Valider changements
                         </button>
+                        <nav className="backButton">
+                            <Link to="../profile">Annuler</Link>
+                        </nav>
                     </form>
-                    <nav className="backButton">
-                        <Link to="../profile">Annuler</Link>
-                    </nav>
                 </div>
             </div>
         );

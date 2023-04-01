@@ -12,8 +12,15 @@
     color: green;
 }
 
-.modificationProfile-titre {
+.modificationProfile_titre {
     text-align: center;
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.strong {
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2)
 }
 
 .form-box {
@@ -24,32 +31,13 @@
     padding-left: 1vh;
     background: #fff;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    color: #14213D;
 }
 
 .liste-sans-puces{
     list-style-type: none;
     padding:0;
     margin: 0;
-}
-
-.formulaire-submit {
-    background-color: #b7a9eb;
-    color: white;
-    margin: 5px 0 5px 0;
-    padding: 14px 20px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.5s;
-    width: 50%;
-
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.formulaire-submit:hover {
-    background-color: rgb(235, 225, 225);
-    color: #2b2c2b;
-    border: 1px solid #000000;
 }
 
 .par-pitié-sois-centré{
@@ -62,34 +50,56 @@
     height:250px;
     width: 60%;
     padding-left: 1vh;
-    float:left;
-    background: #fff;
+    background: none;
 }
 
-
-.wrapper-profil {
+.wrapper_profil {
+    margin : 5vh 1% 2vh 1%;
+    border-radius: 20px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
     height: 250px;
-    margin : 40px 10px 0px 10px;
     border: 1px solid #f1f1f1;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
-
-.wrapper-nav{
+.wrapper_nav{
     float:right;
     margin-top: 40px;
     margin-right: 5px;
+    
 }
 
-.Button-profil {
+.Button_profil {
     margin-top: 8px;
     height: 50px;
     width: 200px;
+
+    border-radius: 20px;
+    background-color: #14213D;
+    color: white;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    transition-duration: 0s ;
 }
 
-.profil-infos {
+.Button_profil:hover {
+    background-color: #FCA311;
+    color: white;
+    top: 100;
+    transition-duration: 0s ;
+}
+
+.profil_infos {
     float : left;
     width: max-content;
+    color: #14213D;
 }
 
 .picture {
@@ -131,23 +141,50 @@ input:not(.not-text-input) {
     margin: 15px 8px 5px 15px;
 }
 
-.backButton {
-    background-color: #808081;
-    color: white;
-    margin: 5px 0 5px 0;
-    padding: 7px 10px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.5s;
-    width: 50%;
-    text-align: center;
+@media screen and (max-width: 710px) {
 
-    margin-left: auto;
-    margin-right: auto;
-}
+    .wrapper_profil {
+        height: 600px;
+        margin : 5vh 5% 2vh 5%;
+        text-align: center;
+        align-items: center;
+        
+    }
 
-.backButton:hover {
-    background-color: rgb(235, 225, 225);
-    color: #2b2c2b;
-    border: 1px solid #000000;
+    .affichageActuel{
+        float: none;
+        text-align: right;
+        margin: 0%;
+    }
+
+    .profil_infos {
+        float : right;
+        text-align: center;
+        margin-right: -2.5em;
+    }
+
+    .picture{
+        float: none;
+        text-align: right;
+        margin-right: -2em;
+    }
+
+    .Button_profil {
+        float: none;
+        margin-top: 8px;
+        height: 50px;
+        width: 400px;
+    }
+
+    .wrapper_nav{
+        float: none;
+        margin-top: 8em;
+        text-align: center; 
+    }
+
+    .strong {
+        text-align: right;
+        margin-left: 0em;
+        font-size: larger;
+    }
 }

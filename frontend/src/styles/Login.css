@@ -8,17 +8,29 @@
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
+@media screen and (max-width: 1400px) {
+    .form--connexion-box {
+        margin : 5vh 25% 2vh 25%;
+        border-radius: 20px;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    .form--connexion-box {
+        margin : 5vh 15% 2vh 15%;
+        border-radius: 20px;
+    }
+}
+
 .bienvenue {
     text-align: center;
-    color: #b7a9eb;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2)
-
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 form {
     padding-bottom: 1vh;
     text-align: center;
-    transition: all 0.2s ease-in-out;
   
 }
 
@@ -60,7 +72,7 @@ form {
 
 .button-connexion {
     border-radius: 20px;
-    background-color: #b7a9eb;
+    background-color: #14213D;
     color: white;
     margin: 5px 0 5px 0;
     padding: 14px 20px;
@@ -68,18 +80,27 @@ form {
     cursor: pointer;
     transition: all 0.5s;
     width: 50%;
+    transition-duration: 0s ;
 }
 
 .button-connexion:hover {
-    background-color: rgb(235, 225, 225);
-    color: #2b2c2b;
-    border: 1px solid #000000;
+    background-color: #FCA311;
+    color: white;
     top: 100;
+    transition-duration: 0s ;
 }
 
-.button-show {
+.button_show {
     position: absolute;
     top: 155px;
     
+}
+
+.under-button {
+    color: #14213D;
+}
+
+.under-button:hover {
+    color: #FCA311;
 }
 
