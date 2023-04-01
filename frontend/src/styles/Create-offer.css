@@ -32,7 +32,7 @@ td {
 }
 
 th:nth-child(odd) {
-    color: #ffffff;
+    color: white;
     background: #324960;
 }
 
@@ -41,7 +41,7 @@ table{
     margin-right: auto;
 }
 
-.creation_titre{
+.offer_titre{
     text-align: center;
     color: #FCA311;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2)

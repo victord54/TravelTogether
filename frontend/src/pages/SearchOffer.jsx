@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import axios from 'axios';
 import {url_api} from "../data/url_api";
+import "../styles/Create-offer.css";
 import Offer from "../components/Offer";
 import {Link} from "react-router-dom";
 
@@ -114,8 +115,11 @@ function Search_offer() {
     }
 
     var searchForm =(
-    <div className="form-box">
+    <div className="form_box">
         <form onSubmit={handleSubmit}>
+            <h1 className="offer_titre">
+                    Recherche d'offres
+            </h1>
             <div>Date de départ* : </div>
             <input type="date" name="date" value={formValues.date} onChange={handleChange} />
             <p className="error-form">{formErrors.date}</p>
@@ -143,7 +147,7 @@ function Search_offer() {
             <p className="error-form">{formErrors.size}</p>
 
             <br/><br/>
-            <div className="button-forms-wrap"><button type='submit' className="formulaire-submit">Valider</button></div>
+            <div className="button-forms-wrap"><button type='submit' className="formulaire_submit">Valider</button></div>
             <p className="info-obligatoire">* : Information obligatoire.</p>
 
         </form>

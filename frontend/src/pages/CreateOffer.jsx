@@ -405,7 +405,7 @@ function Create_offer() {
     if (localStorage.getItem("aUneVoiture") === 0)
         return (
             <div className="form-box">
-                <h1 className="creation_titre">
+                <h1 className="offer_titre">
                     Vous ne pouvez pas créer d'offre.
                 </h1>
                 <p>
@@ -418,7 +418,7 @@ function Create_offer() {
         return (
             <div>
                 <div className="form_box">
-                    <h1 className="creation_titre">Création de l'offre</h1>
+                    <h1 className="offer_titre">Création de l'offre</h1>
                     <form onSubmit={handleSubmit}>
                         <div>Lieu de départ* :</div>
                         <input
