@@ -14,20 +14,13 @@
 .inscription-titre {
     text-align: center;
     color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2)
 }
 
 .button-forms-wrap {
     display: flex;
     justify-content: center;
 }
-
-
-
-
-
-
-
-
 
 .formulaire_submit {
     border-radius: 20px;

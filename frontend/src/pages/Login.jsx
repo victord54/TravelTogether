@@ -85,8 +85,7 @@ function Login() {
     return (
         <div className="form--connexion-box">
             <form onSubmit={handleSubmit}>
-                <h1 className="bienvenue">Bienvenue ! </h1>
-                <p className="error">{error}</p>
+                <h1 className="bienvenue">Connection</h1>
                 <input
                     className="input-connexion"
                     type="mail"
@@ -105,7 +104,7 @@ function Login() {
                     onChange={handleChange}
                 ></input>
                 <span
-                    className="button-show"
+                    className="button_show"
                     name="show"
                     onClick={() => setPasswordIsVisible((prevState) => !prevState)}>
                     <img 
@@ -115,6 +114,7 @@ function Login() {
                     />
                 </span>
                 <br />
+                <p className="error">{error}</p>
                 <br />
                 <div className="button-wrap">
                     <button type="submit" className="button-connexion">

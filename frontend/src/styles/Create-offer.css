@@ -1,3 +1,27 @@
+.form_box{
+    margin : 5vh 20% 2vh 20%;
+    border-radius: 20px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(10px);
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    color: #14213D;
+    accent-color: #FCA311;
+}
+
+@media screen and (max-width: 1600px) {
+    .form_box {
+        margin : 5vh 15% 2vh 15%;
+    }
+}
+
+@media screen and (max-width: 810px) {
+    .form_box {
+        margin : 5vh 10% 2vh 10%;
+    }
+}
+
 td, th {
     text-align: center;
     padding: 8px;
@@ -17,17 +41,31 @@ table{
     margin-right: auto;
 }
 
-.cityButton {
-    border: none;
-    cursor: pointer;
-    appearance: none;
-    background-color: beige;
-    font-size: 150%;
+.creation_titre{
     text-align: center;
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2)
+}
+.division_city{
+    position: relative;
+    left: 1.1em;
 }
 
-.cityButton:hover {
-    background-color: #3e8e41;
+/* Ce déplace avec les erreurs*/
+.add_city_button { 
+    position: relative;
+    top: 0.6em;
+}
+
+.cityButton{
+    background: none;
+    background-color: none;
+    border: none;
+    
+}
+
+.cityButton:enabled:hover{
+    color: #FCA311;
 }
 
 select{
@@ -40,4 +78,24 @@ select{
 }
 .not-text-input:disabled {
     visibility: hidden;
+}
+
+.formulaire_submit {
+    border-radius: 20px;
+    background-color: #14213D;
+    color: white;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    width: 50%;
+    transition-duration: 0s ;
+}
+
+.formulaire_submit:hover {
+    background-color: #FCA311;
+    color: white;
+    top: 100;
+    transition-duration: 0s ;
 }

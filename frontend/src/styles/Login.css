@@ -26,7 +26,6 @@
     text-align: center;
     color: #FCA311;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2)
-
 }
 
 form {
@@ -91,7 +90,7 @@ form {
     transition-duration: 0s ;
 }
 
-.button-show {
+.button_show {
     position: absolute;
     top: 155px;
     
