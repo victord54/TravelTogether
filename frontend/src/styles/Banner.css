@@ -1,4 +1,5 @@
 .navigation {
+    z-index: 10;
     height: 60px;
     margin: 1vh 1vh 1vh 1vh;
     display: flex;
