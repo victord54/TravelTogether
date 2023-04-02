@@ -9,13 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
 
-    $statement = $pdo->prepare("SELECT nbPlaceSouhaitees FROM NOTIFICATION WHERE idOffre = :idOffre");
+    $statement = $pdo->prepare("SELECT nbPlaceSouhaitees FROM NOTIFICATION WHERE idfOffre = :idfOffre");
     $statement->bindValue(":idfOffre", $_POST["idfOffre"]);
     $statement->execute() or die(print_r($statement->errorInfo(), true));
     $data = $statement->fetch();
 
 
-    $statement = $pdo->prepare("UPDATE OFFRE SET nbPlaceDisponible = nbPlaceDisponible + " + $data['nbPlaceSouhaitees'] + " WHERE idfOffre = :idfOffre");
+    $statement = $pdo->prepare("UPDATE OFFRE SET nbPlaceDisponible = nbPlaceDisponible + :nbPlace WHERE idfOffre = :idfOffre");
+    $statement->bindValue(":nbPlace", $data['nbPlaceSouhaitees']);
     $statement->bindValue(":idfOffre", $_POST["idfOffre"]);
     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
