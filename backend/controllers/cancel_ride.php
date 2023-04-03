@@ -22,3 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo "1";
 }
+
+if($_SERVER['REQUEST_METHOD'] === 'GET')
+{
+  $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+  $statement = $pdo->prepare("SELECT email FROM OFFRE WHERE idfOffre = :idfOffre");
+  $statement->setFetchMode(PDO::FETCH_ASSOC);
+  $statement->bindValue(":idfOffre", $_GET["idfOffre"]);
+  $statement->execute() or die(print_r($statement->errorInfo(), true));
+  $data = $statement->fetch();
+
+  $reponse = '1';
+  if($data['email'] == $_GET["mail"])
+  {
+    $reponse = '0';
+  }
+
+  echo json_encode($reponse);
+}
