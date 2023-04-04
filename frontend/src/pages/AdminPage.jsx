@@ -26,7 +26,7 @@ function AdminPage() {
         await axios.get(url_api.url + "/admin_get_users", {
             params:{
                 type:"users",
-                offset: index*5
+                offset: index
             }
         }).then(function (response) {
             if(response.data == null) console.error("Problème");
@@ -48,9 +48,10 @@ function AdminPage() {
         return (<h1>Chargement...</h1>)
     } else {
         var indexList = [];
-        for(var i = 1; i < Math.ceil(users.size/10); i++) indexList.push(i);
+        for(var i = 1; i < Math.ceil(users.size/10)+1; i++) indexList.push(i);
+        console.log(indexList);
         var indexBar = <nav className="index-bar">
-            {indexList.map((val) => <button className="index-button" disabled={val==users.charged+1} value={(val-1)*10} key={val} onClick={getUsersIndex}>{val}</button>)}
+            {indexList.map((val) => <button className="index-button" disabled={(val-1)*10==users.charged} value={(val-1)*10} key={val} onClick={getUsersIndex}>{val}</button>)}
         </nav>;
         return <main>
         <h1>Liste des membres</h1>
