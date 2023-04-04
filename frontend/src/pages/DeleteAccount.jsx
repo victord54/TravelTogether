@@ -48,7 +48,7 @@ function DeleteAccount() {
 
     return (
     <div className="form--connexion-box">
-    <h1>Supprimer votre compte</h1>
+    <h1 className="bienvenue">Supprimer votre compte</h1>
     <p>Attention ! Cette action est irréversible.</p>
     <form onSubmit={handleSubmit}>
       <input
