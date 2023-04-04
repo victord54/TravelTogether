@@ -4,7 +4,7 @@ include 'header.php';
 $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $statement = $pdo->prepare("SELECT email, valeur FROM NOTE WHERE idfOffre = :idf");
+    $statement = $pdo->prepare("SELECT email, valeur FROM NOTE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idf AND estSupprime = 0");
     $statement->bindValue(":idf", $_GET["id"]);
     $ok = $statement->execute();
     $data = $statement->fetchAll();

@@ -28,11 +28,10 @@ function AdminDeleteUser() {
 
     async function sendDataToServer() {
         const formData = new FormData();
-        formData.append("idfOffre", id);
+        formData.append("email", id);
         await axios
-            .post(url_api.url + "/delete_offer", formData)
+            .post(url_api.url + "/delete_user", formData)
             .then(function (response) {
-                console.log(response.data);
                 setIsReplied(true);
             })
             .catch(function (error) {

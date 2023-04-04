@@ -5,7 +5,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
     if($_GET["type"] == "users") {
-        $statement = $pdo->prepare("SELECT email, nom, prenom, photo FROM UTILISATEUR ORDER BY nom LIMIT 10 OFFSET :offs");
+        $statement = $pdo->prepare("SELECT email, nom, prenom, photo FROM UTILISATEUR WHERE estSupprime = 0 ORDER BY nom LIMIT 10 OFFSET :offs");
         $statement->bindValue(":offs", $_GET['offset'], PDO::PARAM_INT);
         $statement->execute();
         $data = $statement->fetchAll();
@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
 
         $reponse = $data;
     } else if ($_GET["type"] == "size") {
-        $statement = $pdo->prepare("SELECT count(email) as size FROM UTILISATEUR");
+        $statement = $pdo->prepare("SELECT count(email) as size FROM UTILISATEUR WHERE estSupprime = 0");
         $statement->execute();
         $data = $statement->fetch();
         $reponse = $data["size"];
