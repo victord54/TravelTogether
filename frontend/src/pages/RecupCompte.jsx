@@ -19,7 +19,7 @@ function RecupCompte() {
     const navigate = useNavigate();
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
     const [isInputFocused, setInputFocused] = useState(false);
-    const [hasSub, setHasSub] = useState(2);
+    const [hasSub, setHasSub] = useState(0);
 
     //source https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     function getRandomInt() {
