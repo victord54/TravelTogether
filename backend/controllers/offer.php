@@ -172,8 +172,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $reponse = $data; 
     } else {
         // Offres du main
+        /*$statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND (email = :email OR 
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse not in ('refuser', 'annuler'))) ORDER BY DateDepart LIMIT 10");*/
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND (email = :email OR 
-        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse not in ('refuser', 'annuler'))) ORDER BY DateDepart LIMIT 10");
+        idfOffre in (SELECT idfOffre FROM OFFREPUBLIC) OR idfOffre in (SELECT idfOffre from OFFREPRIVEE where idfGroupe in (SELECT idfGroupe from APPARTIENT where email = :email)) ORDER BY DateDepart LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
         $statement->bindValue(":dateDepart", date('Y-m-d H:i:s'));
         $statement->execute();

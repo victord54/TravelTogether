@@ -43,7 +43,7 @@ function Offer(data, adminMode = false) {
     dateD.setMinutes(hour.getMinutes());
     const dateAuj = new Date();
 
-    if(annulable){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
+    if(annulable && data['email'] !== localStorage.getItem('mail')){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
         annulerParticipation = (
             <button className="bouton-annuler" onClick={cancelReply}> Annuler participation </button>
         );
