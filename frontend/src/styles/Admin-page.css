@@ -2,11 +2,12 @@ ul {
     list-style: none;
 }
 
-.buttonsNavAdmin {
+
+
+.buttonsNavAdmin * {
     display: list-item;
     float: right;
-    padding: 8px;
-    background-color: #dddddd;
+    background-color: #14213D;
     padding: 10px;
     margin-right:3px;
     border-radius: 20px;
@@ -15,8 +16,9 @@ ul {
 .buttonsNavAdmin:hover {
     background-color: #FCA311;
     padding: 10px;
+
 }
 
-.buttonsNavAdmin :disabled {
+.buttonsNavAdmin :disabled * {
     background-color: #dddddd4f;
 }

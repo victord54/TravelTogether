@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
   $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-  $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :email");
+  $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :email AND estSupprime = 0");
   $statement->setFetchMode(PDO::FETCH_ASSOC);
   $statement->bindValue(":email", $_GET['email']);
   $statement->execute() or die(print_r($statement->errorInfo(), true));

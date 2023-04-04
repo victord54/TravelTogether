@@ -51,7 +51,7 @@ function Create_group() {
                     //console.log("exists");
                     
                     setIsLoaded(false);
-                    errors.group = "Vous avez un nom de groupe de ce nom deja existant.";
+                    errors.group = "Ce nom de groupe est déjà existant.";
                     setFormErrors(errors);
                     return errors;
                 }else{

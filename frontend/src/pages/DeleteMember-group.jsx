@@ -3,40 +3,49 @@ import {Navigate, useParams} from "react-router-dom";
 import axios from "axios";
 import "../styles/Signin.css";
 import {url_api} from "../data/url_api";
+import { useEffect } from "react";
 
 function DeleteMember_group()
 {
   let {id} = useParams();
-  const initialValue = {
-    email: "",
-  };
-  const [formValues, setInputValues] = useState(initialValue);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  
+  const [selectValue, setSelectValue] = useState('');
   const [isReplied, setIsReplied] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
+  const [members, setMembers] = useState([])
+
+  if (!isLoaded){
+    getMembers();
+  }
+
+  async function getMembers(){
+    await axios.get(url_api.url + "/deletemember_group", { params: { idf: id } })
+      .then((function (reponse) {
+        setMembers(reponse.data);
+        setSelectValue(reponse.data[0].email)
+        setLoaded(true)
+    }))
+  }
 
   async function handleSubmit(e)
   {
     e.preventDefault();
-    var errors = await validateForm(formValues);
-    setFormErrors(errors);
-    setIsSubmit(true);
+    sendDataToServer();
   }
 
   function handleChange(e)
   {
-    setInputValues({...formValues, [e.target.name]: e.target.value});
+    setSelectValue(e.target.value);
   }
 
   async function sendDataToServer()
   {
     const formData = new FormData();
     formData.append("idfGroupe", id);
-    formData.append("email", formValues.email);
+    formData.append("email", selectValue);
     await axios
         .post(url_api.url + "/deletemember_group", formData)
-        .then(function()
+        .then(function(response)
         {
           setIsReplied(true);
         })
@@ -46,81 +55,30 @@ function DeleteMember_group()
         });
   }
 
-  async function validateForm(data)
-  {
-    const errors = {};
-
-    //Vérification si l'utilisateur a rentré un email
-    if(!data.email)
-    {
-      errors.email = "Aucun email n'a été saisie.";
-    }
-    else if(data.email === localStorage.getItem("mail"))
-    {
-      errors.email = "Ceci est votre email.";
-    }
-    else
-    {
-      await axios
-          .get(url_api.url + "/deletemember_group", {
-            params: {
-              email: formValues.email,
-            },
-          })
-          .then(function(response)
-          {
-            if(response.data === "1")
-            {
-              setLoaded(true);
-            }
-            else
-            {
-              errors.email =
-                  "Le mail saisie n'existe pas.";
-            }
-          })
-          .catch(function(error)
-          {
-            console.log("Error :" + error);
-          });
-    }
-
-    return errors;
-  }
-
-  if(
-      isLoaded &&
-      isSubmit &&
-      !isReplied &&
-      Object.keys(formErrors).length === 0
-  )
-  {
-    sendDataToServer();
-  }
-
-  if(isReplied) return <Navigate replace to="../friends-group-list"/>;
+  if(isReplied) return <Navigate replace to={"../groupe/" + id}/>;
   else
-    return (
-        <div className="form-box">
-          <h1 className="delete-titre">Supprimer un membre</h1>
-          <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="email"
-                placeholder="Saisir l'email du membre"
-                value={formValues.email}
-                onChange={handleChange}
-            ></input>
-            <p className="error-form">{formErrors.email}</p>
-
-            <div className="button-forms-wrap">
-              <button type="submit" className="formulaire-submit">
-                Valider
-              </button>
-            </div>
-          </form>
-        </div>
-    );
+    if (isLoaded){
+      return (
+          <div className="form-box">
+            <h1 className="inscription-titre ">Supprimer un membre</h1>
+            <form onSubmit={handleSubmit}>
+              
+              <select className="selectMember" value={selectValue} onChange={handleChange} >
+              {members.map((member,index) => {
+                return <option className="optionSelect" key={index} value={member.email}>{member.email}</option>
+              })}
+              </select>
+              <div className="button-forms-wrap">
+                <button type="submit" className="formulaire_submit">
+                  Valider
+                </button>
+              </div>
+            </form>
+          </div>
+      );
+  } else {
+    return <>Loading</>
+  }
 }
 
 export default DeleteMember_group;

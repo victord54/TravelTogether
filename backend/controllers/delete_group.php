@@ -3,13 +3,16 @@ include 'header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("DELETE FROM GROUPE WHERE idfGroupe = :idfGroupe AND dirigeant = :email");
-    $statement->setFetchMode(PDO::FETCH_ASSOC);
+    $statement = $pdo->prepare("DELETE FROM APPARTIENT WHERE idfGroupe = :idfGroupe");
+    $statement->bindValue(":idfGroupe", $_POST["idfGroupe"]);
+    $statement->execute() or die(print_r($statement->errorInfo(), true));
 
+
+    $statement = $pdo->prepare("DELETE FROM GROUPE WHERE idfGroupe = :idfGroupe AND dirigeant = :email");
     $statement->bindValue(":idfGroupe", $_POST["idfGroupe"]);
     $statement->bindValue(":email", $_POST["mail"]);
-
     $statement->execute() or die(print_r($statement->errorInfo(), true));
+    
     echo "1";
 }
 

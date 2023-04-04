@@ -76,7 +76,7 @@ function Search_offer() {
             errors.date = "La date de départ est obligatoire.";
         }
         if(!data.size) {
-            errors.size = "Le nombre de place est obligatoire.";
+            errors.size = "Le nombre de place(s) est obligatoire.";
         }
 
         // Vérification lieux

@@ -59,7 +59,7 @@ function AdminDeleteOffer() {
                         setLoaded(true);
                     } else {
                         errors.mdp =
-                            "Le mots de passe saisie n'est pas correct.";
+                            "Le mot de passe saisie n'est pas correct.";
                     }
                 })
                 .catch(function (error) {
@@ -88,7 +88,7 @@ function AdminDeleteOffer() {
                     <input
                         type="password"
                         name="mdp"
-                        placeholder="Saisir le mots de passe pour confirmer"
+                        placeholder="Saisir le mot de passe pour confirmer"
                         value={formValues.mdp}
                         onChange={handleChange}
                     ></input>

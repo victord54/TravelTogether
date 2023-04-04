@@ -43,7 +43,7 @@ function Offer(data, adminMode = false) {
     dateD.setMinutes(hour.getMinutes());
     const dateAuj = new Date();
 
-    if(annulable){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
+    if(annulable && data['email'] !== localStorage.getItem('mail')){ //l'offre est annulable, l'utilisateur qui l'annule est celui du localstorage
         annulerParticipation = (
             <button className="bouton-annuler" onClick={cancelReply}> Annuler participation </button>
         );
@@ -87,6 +87,28 @@ function Offer(data, adminMode = false) {
     if (nbPlaceDispo === 0)
         placedispo = <p>Aucune place disponible.</p>;
 
+
+    function getEtoiles(note) {
+        let res = "";
+        let nbEtoiles = 0;
+        while(note > 1) {
+            note -= 1;
+            nbEtoiles += 1;
+            res += 	"\u2605";
+        }
+        if(note > 0.5) {
+            note -= 1;
+            nbEtoiles += 1;
+            res += 	"\u2605";
+        }
+        while(nbEtoiles < 5) {
+            res += "\u2606";
+            nbEtoiles += 1;
+        }
+        console.log(res);
+        return res;
+    }
+
     return (
         <section key={data["idfOffre"]}>
             <h2>
@@ -100,7 +122,7 @@ function Offer(data, adminMode = false) {
                 src={data["photo"] + "?" + Math.random()}
                 width="75px"
             />
-            <h3>{data["nom"] + " " + data["prenom"]} {data["note"] !== null ? data["note"] + " étoiles (à changer)" : ""}</h3>
+            <h3>{data["nom"] + " " + data["prenom"]} {data["note"] !== null ? getEtoiles(data["note"]) : ""}</h3>
             <p>
                 Le{" "}
                 {date.getDate().toString().padStart(2, "0") +

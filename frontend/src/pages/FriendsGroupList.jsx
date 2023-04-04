@@ -39,6 +39,7 @@ function Friends_groupe_list() {
                 <nav>
                     <ul>
                         <Link to="../create-group"><button className="button_classical">Créer un groupe</button></Link>
+
                     </ul>
                 </nav>
                 <h1>Vos groupes d'amis</h1>

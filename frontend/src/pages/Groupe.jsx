@@ -10,7 +10,6 @@ function Groupe() {
     const [groupe, setGroupes] = useState({ value: null, state: null });
 
     async function getGroupes() {
-        // On récupère tout les groupes où l'utilisateur appartient (ou dirige).
         var reponse = await axios.get(url_api.url + "/friends_group", {
             params: {
                 idfGroupe: id,
@@ -52,10 +51,12 @@ function Groupe() {
                     <li className='buttons_Nav'>
                     <Link to={"../addmember-group/" + id}><button>Ajouter un nouveau membre</button></Link>
                     </li>
-
+                    
                     <li className='buttons_Nav'>
                     <Link to={"../deletemember-group/" + id}><button>Supprimer un membre</button></Link>
                     </li>
+                    }
+                    
 
                     <li className='buttons_Nav'>
                     <Link to={"../modif-group/" + id}><button>Modifier ce groupe</button></Link>
@@ -67,7 +68,7 @@ function Groupe() {
         
     }
     return (
-        <div>
+        <div className="groupe-centre">
             {navBar}
             <br></br><br></br><br></br><br></br><br></br>
             {Group(groupe.value)}

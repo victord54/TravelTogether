@@ -23,21 +23,22 @@ function DeleteAccount() {
     }
 
     async function deleteacc() {
+        let formData = new FormData();
+        formData.append("mail", formValues["mail"]);
+        formData.append("password", formValues["password"]);
+        formData.append("delete", 1);
         await axios
-        .get(url_api.url + "/delete_account", {
-            params: {
-                mail: formValues["mail"],
-                password: formValues["password"],
-            },
-        })
+        .post(url_api.url + "/delete_account", formData)
         .then(function (reponse) {
             if (reponse.data == null) {
                 setError("Identifiant et/ou mot de passe incorrect.");
             } else {
                 console.log("Reponse : " + reponse.data);
-                setAuth(false);
-                localStorage.clear();
-                navigate("/");
+                if(reponse.data === 1) {
+                    setAuth(false);
+                    localStorage.clear();
+                    navigate("/");
+                }
             }
         })
         .catch(function (error) {

@@ -7,15 +7,9 @@ ul.navButton {
   
 }
 
-.buttonsNav {
+.buttonsNav * {
     float: left;
-    padding: 10px;
-    
-}
-
-.buttonsNav {
     display: block;
-    padding: 8px;
     padding: 10px;
     margin-right:3px;
     color: white;
