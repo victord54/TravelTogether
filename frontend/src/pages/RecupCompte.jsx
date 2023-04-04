@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {url_api} from "../data/url_api";
@@ -7,15 +7,19 @@ import {useAuth} from "../components/AuthProvider";
 import closeEye from "../assets/closeeye.svg";
 import openEye from "../assets/openeye.svg";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 
 function RecupCompte() {
-    const initialValue = { mail: "", password: "", code: ""};
+    const password = useRef(null);
+    const password2= useRef(null);
+    const initialValue = { mail: "", password: "", code: "", password2: ""};
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
-    const [hasSub, setHasSub] = useState(0);
+    const [isInputFocused, setInputFocused] = useState(false);
+    const [hasSub, setHasSub] = useState(2);
 
     //source https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     function getRandomInt() {
@@ -42,7 +46,7 @@ function RecupCompte() {
     function handleSubmit2(e) {
         e.preventDefault();
         //console.log(formValues.code);
-        //console.log(localStorage.getItem("code"));
+        console.log(localStorage.getItem("code"));
         if(formValues.code == localStorage.getItem("code")){
             setHasSub(2);
             setError("");
@@ -55,7 +59,7 @@ function RecupCompte() {
     async function handleSubmit3(e) {
         e.preventDefault();
         var errors = await validateForm(formValues);
-        //console.log(errors);
+        console.log(Object.keys(errors).length);
         if (Object.keys(errors).length === 0) {
             resetPass();
         }else{
@@ -66,12 +70,18 @@ function RecupCompte() {
     async function validateForm(data) {
         const errors = {};
         if (!data.password) {
+            errors.password = 1;
             setError("Le mot de passe est obligatoire.");
         } else {
+            if(data.password != data.password2){
+                setError("Les mots de passe doivent etre identiques.");
+                errors.password2 = 1;
+            }
             const regexPassword =
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
             if (!data.password.match(regexPassword)) {
                 setError("Le mot de passe doit être composé d’au moins 8 caractères dont au moins une majuscule, une minuscule, un chiffre et un caractère spécial.");
+                errors.passwordM = 1;
             }
         }
         return errors;
@@ -86,6 +96,20 @@ function RecupCompte() {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
+    useEffect(() => {
+        if(!isInputFocused){
+        password.current.focus();
+    }else{
+        password2.current.focus();
+    }
+    })
+
+    function handleClick(){
+        setInputFocused(true);
+    }
+    function handleClick2(){
+        setInputFocused(false);
+    }
 
     //utilisation de autofocus pour contourner la perte de focus liee a la facon dont j'ai implementee, le temps de pouvoir correctement tester la suite
     function Display(){
@@ -143,12 +167,24 @@ function RecupCompte() {
                             <h1 className="bienvenue">Bienvenue ! </h1>
                             <p className="error">{error}</p>
                             <input
+                                ref={password}
                                 className="input-connexion"
                                 type="password"
                                 name="password"
+                                id="password"
                                 value={formValues.password}
                                 onChange={handleChange}
-                                autoFocus="autoFocus"
+                                onClick={handleClick2}
+                            ></input>
+                            <br />
+                            <input
+                                ref={password2}
+                                className="input-connexion"
+                                type="password"
+                                name="password2"
+                                value={formValues.password2}
+                                onChange={handleChange}
+                                onClick={handleClick}
                             ></input>
                             <br />
                         
@@ -161,6 +197,7 @@ function RecupCompte() {
                     </div>
         );}
     }
+
 
     /**
      * Fonction qui permet de récupérer les informations de l'utilisateur si celui-ci existe et que le mot de passe et le mail correspondent.
