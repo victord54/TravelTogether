@@ -304,7 +304,7 @@ function Notifications() {
                 </div>
             );
         } else {
-            return <div>Vous n'avez pas de notifications pour le moment</div>;
+            return <p>Vous n'avez de notifications pour le moment</p>;
         }
     }
 }

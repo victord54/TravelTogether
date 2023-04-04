@@ -66,7 +66,7 @@ function AdminDeleteUser() {
                 <input
                     type="password"
                     name="mdp"
-                    placeholder="Saisir le mots de passe pour confirmer"
+                    placeholder="Saisir le mot de passe pour confirmer"
                     value={formValues.mdp}
                     onChange={handleChange}
                 ></input>
