@@ -108,7 +108,7 @@ function Home() {
                     <p> Bienvenue !</p>
                 )}
                 <article>
-                    <p>Aucune offre disponible ! </p>
+                    <p class="rien">Aucune offre disponible ! </p>
                 </article>
             </main>
         );

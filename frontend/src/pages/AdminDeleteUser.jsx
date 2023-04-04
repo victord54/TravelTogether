@@ -61,7 +61,7 @@ function AdminDeleteUser() {
     if(isReplied) return <Navigate replace to="../admin-page" />;
     return (
         <div className="form-box">
-            <h1 className="suppression-titre">Suppression de l'utilisateur {id}</h1>
+            <h1 className="inscription-titre">Suppression de l'utilisateur {id}</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="password"
@@ -73,7 +73,7 @@ function AdminDeleteUser() {
                 <p className="error-form">{formErrors.mdp}</p>
 
                 <div className="button-forms-wrap">
-                    <button type="submit" className="formulaire-submit">
+                    <button type="submit" className="formulaire_submit">
                         Valider
                     </button>
                 </div>
