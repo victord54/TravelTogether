@@ -60,15 +60,16 @@ function DeleteMember_group()
     if (isLoaded){
       return (
           <div className="form-box">
-            <h1 className="delete-titre">Supprimer un membre</h1>
+            <h1 className="inscription-titre ">Supprimer un membre</h1>
             <form onSubmit={handleSubmit}>
-              <select className="selectMember" value={selectValue} onChange={handleChange}>
+              
+              <select className="selectMember" value={selectValue} onChange={handleChange} >
               {members.map((member,index) => {
                 return <option className="optionSelect" key={index} value={member.email}>{member.email}</option>
               })}
               </select>
               <div className="button-forms-wrap">
-                <button type="submit" className="formulaire-submit">
+                <button type="submit" className="formulaire_submit">
                   Valider
                 </button>
               </div>

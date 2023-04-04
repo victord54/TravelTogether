@@ -102,7 +102,7 @@ function AddMember_group()
   else
     return (
         <div className="form-box">
-          <h1 className="ajout-titre">Ajouter un nouveau membre</h1>
+          <h1 className="inscription-titre ">Ajouter un nouveau membre</h1>
           <form onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -114,7 +114,7 @@ function AddMember_group()
             <p className="error-form">{formErrors.email}</p>
 
             <div className="button-forms-wrap">
-              <button type="submit" className="formulaire-submit">
+              <button type="submit" className="formulaire_submit">
                 Valider
               </button>
             </div>

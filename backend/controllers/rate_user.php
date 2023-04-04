@@ -5,6 +5,7 @@ $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $logi
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $statement = $pdo->prepare("SELECT email, valeur FROM NOTE JOIN UTILISATEUR USING(email) WHERE idfOffre = :idf AND estSupprime = 0");
+    $statement->setFetchMode(PDO::FETCH_ASSOC);
     $statement->bindValue(":idf", $_GET["id"]);
     $ok = $statement->execute();
     $data = $statement->fetchAll();

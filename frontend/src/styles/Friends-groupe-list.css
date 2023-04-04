@@ -17,20 +17,27 @@
     padding-right: 5px;
 }
 
-.creer-groupe-wrapper button{
+
+.button-list-grp * {
     margin-top: 8px;
-    height: 35px;
+    height: 50px;
     width: 200px;
+    border-radius: 20px;
+    background-color: #14213D;
+    color: white;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    transition-duration: 0s ;
 }
 
-.creer-groupe-wrapper button:hover{
-    margin-top: 8px;
-    background-color:rgb(209, 193, 224);
-}
-
-.creer-groupe-wrapper button a{
-    text-decoration: none;
-    color:black;
+.button-list-grp:hover * {
+    background-color: #FCA311;
+    color: white;
+    top: 100;
+    transition-duration: 0s ;
 }
 
 .wrapper-titre-bouton {

@@ -36,8 +36,8 @@ function Friends_groupe_list() {
     if (groupes.values.length === 0)
         return (
             <div>
-                <nav>
-                    <ul>
+                <nav className="creer-groupe-wrapper">
+                    <ul className="button-list-grp">
                         <Link to="../create-group">Créer un groupe</Link>
                     </ul>
                 </nav>
@@ -50,11 +50,11 @@ function Friends_groupe_list() {
             <div className="wrapper-grp-list">
                 <div className="wrapper-titre-bouton">
                     <div className="vos-groupes">Vos groupes d'amis</div>
-                    <div className="creer-groupe-wrapper">
-                        <button>
+                    <nav className="creer-groupe-wrapper">
+                        <ul className="button-list-grp">
                             <Link to="../create-group">Créer un groupe</Link>
-                        </button>
-                    </div>
+                        </ul>
+                    </nav>
                 </div>
                 <br />
                 <div className="wrapper-list-group">
