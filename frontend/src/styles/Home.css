@@ -80,6 +80,25 @@ h2 {
     justify-content: center;
 }
 
+
+
+.bienvenue {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 3em;
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.oups{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+    color: #14213D;
+}
+
 @media screen and (max-width: 810px) {
 
     .presentation_box {

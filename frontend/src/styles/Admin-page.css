@@ -9,10 +9,11 @@ ul {
     background-color: #dddddd;
     padding: 10px;
     margin-right:3px;
+    border-radius: 20px;
 }
 
 .buttonsNavAdmin:hover {
-    background-color: #89ced6;
+    background-color: #FCA311;
     padding: 10px;
 }
 

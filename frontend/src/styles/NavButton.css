@@ -16,12 +16,15 @@ ul.navButton {
 .buttonsNav {
     display: block;
     padding: 8px;
-    background-color: #dddddd;
     padding: 10px;
     margin-right:3px;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    background-color: #14213D;
+    
 }
 
 .buttonsNav:hover {
     background-color: #FCA311;
-    padding: 10px;
 }

@@ -102,7 +102,7 @@ function Home() {
         return (
             <main>
                 {auth ? (
-                    <p>
+                    <p className="bienvenue">
                         Bienvenue {localStorage.getItem("nom")}{" "}
                         {localStorage.getItem("prenom")} !
                     </p>
@@ -110,7 +110,7 @@ function Home() {
                     <p> Bienvenue !</p>
                 )}
                 <article>
-                    <p>Aucune offre disponible</p>
+                    <h3 className="oups">Oups ! il semblerait qu’il n’y ait aucun trajet ici !</h3>
                 </article>
             </main>
         );

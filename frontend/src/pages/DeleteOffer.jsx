@@ -82,8 +82,8 @@ function DeleteOffer() {
     if (isReplied) return <Navigate replace to="/" />;
     else
         return (
-            <div className="form-box">
-                <h1 className="suppression-titre">Suppression de l'offre</h1>
+            <div className="form_box">
+                <h1 className="inscription-titre">Suppression de l'offre</h1>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="password"
@@ -95,7 +95,7 @@ function DeleteOffer() {
                     <p className="error-form">{formErrors.mdp}</p>
 
                     <div className="button-forms-wrap">
-                        <button type="submit" className="formulaire-submit">
+                        <button type="submit" className="formulaire_submit">
                             Valider
                         </button>
                     </div>
