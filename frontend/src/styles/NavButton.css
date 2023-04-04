@@ -7,18 +7,22 @@ ul.navButton {
   
 }
 
-.buttonsNav {
+.buttonsNav * {
     float: left;
-    padding: 10px;
-    
-}
-
-.buttonsNav {
     display: block;
     padding: 8px;
-    background-color: #dddddd;
+    background-color: #14213D;
     padding: 10px;
     margin-right:3px;
+    color: white;
+    border-radius: 20px;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    transition-duration: 0s ;
+    
 }
 
 .buttonsNav:hover {

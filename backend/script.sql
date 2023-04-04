@@ -14,7 +14,8 @@ CREATE TABLE
         motDePasse VARCHAR(60) NOT NULL,
         aUneVoiture BOOLEAN NOT NULL DEFAULT 0,
         notificationParMail BOOLEAN NOT NULL DEFAULT 0,
-        photo VARCHAR(150)
+        photo VARCHAR(150),
+        estSupprime BOOLEAN NOT NULL DEFAULT 0
     );
 
 CREATE TABLE

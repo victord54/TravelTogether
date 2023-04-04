@@ -5,8 +5,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 {
   $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
   $statement = $pdo->prepare("DELETE FROM APPARTIENT WHERE idfGroupe = :idfGroupe AND email = :email");
-  $statement->setFetchMode(PDO::FETCH_ASSOC);
-
   $statement->bindValue(":idfGroupe", $_POST["idfGroupe"]);
   $statement->bindValue(":email", $_POST["email"]);
 
@@ -16,7 +14,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
 
 if($_SERVER['REQUEST_METHOD'] === 'GET')
 {
-  $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+  /*$pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
   $statement = $pdo->prepare("SELECT email FROM UTILISATEUR WHERE email = :email");
   $statement->setFetchMode(PDO::FETCH_ASSOC);
   $statement->bindValue(":email", $_GET['email']);
@@ -29,5 +27,13 @@ if($_SERVER['REQUEST_METHOD'] === 'GET')
     $reponse = '1';
   }
 
-  echo json_encode($reponse);
+  echo json_encode($reponse);*/
+
+  $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
+  $statement = $pdo->prepare("SELECT email FROM APPARTIENT WHERE idfGroupe = :idf");
+  $statement->setFetchMode(PDO::FETCH_ASSOC);
+  $statement->bindValue(":idf", $_GET['idf']);
+  $statement->execute() or die(print_r($statement->errorInfo(), true));
+  $data = $statement->fetchAll();
+  echo json_encode($data);
 }

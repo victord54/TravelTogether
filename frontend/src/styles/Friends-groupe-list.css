@@ -17,20 +17,17 @@
     padding-right: 5px;
 }
 
-.creer-groupe-wrapper button{
-    margin-top: 8px;
-    height: 35px;
-    width: 200px;
-}
 
-.creer-groupe-wrapper button:hover{
+.button-list-grp * {
     margin-top: 8px;
     background-color:#FCA311;
 }
 
-.creer-groupe-wrapper button a{
-    text-decoration: none;
-    color:black;
+.button-list-grp:hover * {
+    background-color: #FCA311;
+    color: white;
+    top: 100;
+    transition-duration: 0s ;
 }
 
 .wrapper-titre-bouton {

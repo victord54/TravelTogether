@@ -9,6 +9,7 @@ import Offer from "../components/Offer";
 function Profil() {
     const [offers, setOffers] = useState({ statut: "", offers: [] });
     const [index, setIndex] = useState(0);
+    const [canDeleteAccount, setCanDeleteAccount] = useState(null);
 
     //Fonction qui affiche les informations du profil
     function affichageProfil() {
@@ -80,7 +81,7 @@ function Profil() {
                             </button>
                         </Link>
                         <br />
-                        {offers.offers.length === 0 ? (
+                        {canDeleteAccount ? (
                             <Link to="../delete-account">
                                 <button className="Button_profil">
                                     Supprimer mon compte
@@ -144,8 +145,31 @@ function Profil() {
         });
     }
 
+    async function getCanDeleteAccount() {
+        setCanDeleteAccount("chargement");
+        await axios.get(url_api.url + "/delete_account", {
+            params : {
+                email : localStorage.getItem("mail")
+            }
+        }).then(function (reponse) {
+            if(reponse.data === false || reponse.data === true) {
+                setCanDeleteAccount(reponse.data);
+                console.log(reponse.data);
+            } else {
+                console.log(reponse.data);
+            }
+        }).catch(function (error) {
+            console.log("Error :" + error);
+        });
+    }
+
     var historique = <></>;
 
+    if(canDeleteAccount == null) {
+        getCanDeleteAccount();
+    } else if (canDeleteAccount === "chargement") {
+        return <h1>Chargement de votre profil....</h1>
+    }
     if (offers.statut === "") {
         getNbOffres();
         historique = (

@@ -38,21 +38,21 @@ function Home() {
     if (!auth) {
         return (
             <main>
-                <h1  class="slogan">Voyageons ensemble à moindre coût</h1>
-                <div class="mainPicture">
+                <h1  className="slogan">Voyageons ensemble à moindre coût</h1>
+                <div className="mainPicture">
                     <img
-                        class="home_image"  
+                        className="home_image"  
                         src={mens}
                         alt="mens"
                     />
                     <img
-                        class="home_image"  
+                        className="home_image"  
                         src={car}
                         alt="car"  
                     />
                 </div>
-                <div class="presentation_frame">
-                    <div class="presentation_box">
+                <div className="presentation_frame">
+                    <div className="presentation_box">
                     <img
                         src={certificate}
                         alt="certificate"
@@ -65,7 +65,7 @@ function Home() {
                         de vous assurez de voyager en bonne compagnie.
                     </p>
                     </div>
-                    <div class="presentation_box">
+                    <div className="presentation_box">
                     <img 
                         src={time}
                         alt="time"
@@ -80,7 +80,7 @@ function Home() {
                         de retrouver tous vos trajets simplement.
                     </p>
                     </div>
-                    <div class="presentation_box">
+                    <div className="presentation_box">
                     <img 
                         src={coins}
                         alt="coins"
@@ -102,15 +102,13 @@ function Home() {
         return (
             <main>
                 {auth ? (
-                    <p>
-                        Bienvenue {localStorage.getItem("nom")}{" "}
-                        {localStorage.getItem("prenom")} !
-                    </p>
+                    <h1  className="slogan">Bienvenue {localStorage.getItem("nom")}{" "}
+                        {localStorage.getItem("prenom")} !</h1>
                 ) : (
                     <p> Bienvenue !</p>
                 )}
                 <article>
-                    <p>Aucune offre disponible</p>
+                    <p class="rien">Aucune offre disponible ! </p>
                 </article>
             </main>
         );

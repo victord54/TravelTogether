@@ -113,16 +113,13 @@ function Login() {
                         width="32"
                     />
                 </span>
-                <br />
                 <p className="error">{error}</p>
                 <br />
-                <div className="button-wrap">
                     <button type="submit" className="button-connexion">
                         Se connecter
                     </button> 
-                </div>
                 <br />
-                    <Link to="../RecupCompte" className="under-button">Recupérer son compte</Link >
+                    <Link to="../RecupCompte" className="under-button">Recupérer son compte</Link>
             </form>
         </div>
     );

@@ -2,20 +2,30 @@ ul {
     list-style: none;
 }
 
-.buttonsNavAdmin {
+
+
+.buttonsNavAdmin * {
     display: list-item;
     float: right;
-    padding: 8px;
-    background-color: #dddddd;
+    background-color: #14213D;
     padding: 10px;
-    margin-right:3px;
+    color: white;
+    border-radius: 20px;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    transition-duration: 0s ;
 }
 
-.buttonsNavAdmin:hover {
-    background-color: #89ced6;
-    padding: 10px;
+.buttonsNavAdmin:hover * {
+    background-color: #FCA311;
+    color: white;
+    top: 100;
+    transition-duration: 0s ;
 }
 
-.buttonsNavAdmin :disabled {
+.buttonsNavAdmin :disabled * {
     background-color: #dddddd4f;
 }
