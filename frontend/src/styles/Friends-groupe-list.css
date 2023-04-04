@@ -62,3 +62,41 @@
     color:black;
     text-decoration: none;
 }
+
+.nav_Button{
+    display: inline-flex;
+    width: 100%;
+}
+
+.nav_Button li{
+    background-color: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    transition-duration: 0s ;
+    margin: 0 2% 0 2% ;
+}
+
+.buttons_Nav button{
+    color: inherit;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    background-color: #14213D;
+}
+
+.buttons_Nav:hover button {
+    background-color: #FCA311;
+    color: inherit;
+    color: white;
+    transition-duration: 0s ;
+}
+
+.centre{
+    text-align: left;
+    align-items: left;
+    float:right;
+    margin-right: 2em;
+}
