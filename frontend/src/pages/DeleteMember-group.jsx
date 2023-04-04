@@ -55,7 +55,7 @@ function DeleteMember_group()
         });
   }
 
-  if(isReplied) return <Navigate replace to="../friends-group-list"/>;
+  if(isReplied) return <Navigate replace to={"../groupe/" + id}/>;
   else
     if (isLoaded){
       return (

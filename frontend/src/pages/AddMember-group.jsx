@@ -98,7 +98,7 @@ function AddMember_group()
     sendDataToServer();
   }
 
-  if(isReplied) return <Navigate replace to="../friends-group-list"/>;
+  if(isReplied) return <Navigate replace to={"../groupe/" + id}/>;
   else
     return (
         <div className="form-box">
