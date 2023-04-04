@@ -48,7 +48,7 @@ function AdminPage() {
         return (<h1>Chargement...</h1>)
     } else {
         var indexList = [];
-        for(var i = 1; i <= Math.ceil(users.size/10); i++) indexList.push(i);
+        for(var i = 1; i < Math.ceil(users.size/10); i++) indexList.push(i);
         var indexBar = <nav className="index-bar">
             {indexList.map((val) => <button className="index-button" disabled={val==users.charged+1} value={(val-1)*10} key={val} onClick={getUsersIndex}>{val}</button>)}
         </nav>;
