@@ -23,13 +23,28 @@
         return $res;
     }  
 
+    function getMoyenne($pdo, $mail) {
+        $statement = $pdo->prepare("SELECT avg(valeur) as moyenne FROM NOTE WHERE email = :mail");
+        $statement->bindValue(":mail", $mail);
+        $statement->execute();
+        $data = $statement->fetch();
+    
+        if(count($data) > 0) {
+            return $data["moyenne"];
+        }
+        return -1;
+    }
+
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-        $statement = $pdo->prepare("SELECT *, ABS(TIME_TO_SEC(o.heureDepart) - TIME_TO_SEC(:heure)) as diffTemps FROM OFFRE o JOIN UTILISATEUR USING(email)
-        WHERE annule = 0 AND dateDepart = :dateDepart AND nbPlaceDisponible >= :nbPlaceDisponible AND
-        (idfOffre in (SELECT idfOffre FROM OFFREPUBLIC)
-        OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE JOIN GROUPE USING (idfGroupe) WHERE
-        idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)))
+        $statement = $pdo->prepare("SELECT *, ABS(TIME_TO_SEC(o.heureDepart) - TIME_TO_SEC(:heure)) as diffTemps, DATEDIFF(dateDepart, :dateDepart) as test  FROM OFFRE o JOIN UTILISATEUR USING(email)
+        WHERE annule = 0 
+        AND DATEDIFF(dateDepart, :dateDepart) = 0 
+        AND nbPlaceDisponible >= :nbPlaceDisponible 
+        AND
+            (idfOffre in (SELECT idfOffre FROM OFFREPUBLIC)
+            OR idfOffre in (SELECT idfOffre FROM OFFREPRIVEE JOIN GROUPE USING (idfGroupe) WHERE
+            idfGroupe in (SELECT idfGroupe FROM APPARTIENT WHERE email = :email)))
         AND
         (idfOffre in (
             SELECT idfOffre
@@ -40,8 +55,8 @@
                 WHERE P2.ville = :villeArrivee AND P1.position < P2.position
             )
         )   OR (villeDepart = :villeDepart AND :villeArrivee in (SELECT ville FROM PASSE_PAR WHERE idfOffre = o.idfOffre))
-            OR (villeArrivee = :villeArrivee AND :villeDepart in (SELECT ville FROM PASSE_PAR WHERE idfOffre = o.idfOffre)))
-            OR(villeDepart = :villeDepart AND (villeArrivee = :villeArrivee))
+            OR (villeArrivee = :villeArrivee AND :villeDepart in (SELECT ville FROM PASSE_PAR WHERE idfOffre = o.idfOffre))
+            OR(villeDepart = :villeDepart AND (villeArrivee = :villeArrivee)))
         ORDER BY diffTemps");
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->bindValue(":dateDepart", $_GET['dateDepart']);
@@ -72,6 +87,7 @@
                 $data[$index]["inter"][$indexVille] = $test;
             }
             $data[$index]["nbPlaceDisponible"] = getNbPlacesDispo($pdo, $data[$index]["idfOffre"], $data[$index]["nbPlaceDisponible"]);
+            $data[$index]["note"] = getMoyenne($pdo, $offer["email"]);
         }
         
         $reponse = $data;

@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $villeArrivee = getCity($data["villeArrivee"]);
         $data["villeArrivee"] = $villeArrivee;
 
-        $statement = $pdo->prepare("SELECT interesse, statutReponse FROM NOTIFICATION WHERE idfOffre = :idfOffre AND typeNotif = 'Reponse';");
+        $statement = $pdo->prepare("SELECT interesse, statutReponse FROM NOTIFICATION WHERE idfOffre = :idfOffre AND typeNotif = 'Reponse' AND statutReponse != 'annuler'");
         $statement->bindValue(":idfOffre", $_GET['idfOffre']);
         $statement->execute();
         $rep = $statement->fetchAll();
