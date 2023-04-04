@@ -27,12 +27,19 @@ function AdminDeleteUser() {
     }
 
     async function sendDataToServer() {
-        const formData = new FormData();
-        formData.append("email", id);
+        let formValue = new FormData();
+        formValue.append("password", formValues.mdp);
+        formValue.append("mailAdmin", localStorage.getItem("mail"));
+        formValue.append("mail", id);
         await axios
-            .post(url_api.url + "/delete_user", formData)
+            .post(url_api.url + "/delete_user", formValue)
             .then(function (response) {
-                setIsReplied(true);
+                console.log(response.data);
+                if (response.data === 1) {
+                    setIsReplied(true);
+                } else {
+                    setFormErrors({mdp : "Mot de passe incorrect."});
+                }
             })
             .catch(function (error) {
                 console.log("Error :" + error);
@@ -46,61 +53,33 @@ function AdminDeleteUser() {
         if (!data.mdp) {
             errors.mdp = "Aucun mot de passe saisie.";
         } else {
-            await axios
-                .get(url_api.url + "/delete_user", {
-                    params: {
-                        password: formValues.mdp,
-                        mail: localStorage.getItem("mail"),
-                    },
-                })
-                .then(function (response) {
-                    if (response.data === "1") {
-                        setLoaded(true);
-                    } else {
-                        errors.mdp =
-                            "Le mots de passe saisie n'est pas correct.";
-                    }
-                })
-                .catch(function (error) {
-                    console.log("Error :" + error);
-                });
+            sendDataToServer();
         }
 
         return errors;
     }
+    if(isReplied) return <Navigate replace to="../admin-page" />;
+    return (
+        <div className="form-box">
+            <h1 className="suppression-titre">Suppression de l'utilisateur {id}</h1>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="password"
+                    name="mdp"
+                    placeholder="Saisir le mots de passe pour confirmer"
+                    value={formValues.mdp}
+                    onChange={handleChange}
+                ></input>
+                <p className="error-form">{formErrors.mdp}</p>
 
-    if (
-        isLoaded &&
-        isSubmit &&
-        !isReplied &&
-        Object.keys(formErrors).length === 0
-    ) {
-        sendDataToServer();
-    }
-
-    if (isReplied) return <Navigate replace to="/" />;
-    else
-        return (
-            <div className="form-box">
-                <h1 className="suppression-titre">Suppression de l'utilisateur {id}</h1>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="password"
-                        name="mdp"
-                        placeholder="Saisir le mots de passe pour confirmer"
-                        value={formValues.mdp}
-                        onChange={handleChange}
-                    ></input>
-                    <p className="error-form">{formErrors.mdp}</p>
-
-                    <div className="button-forms-wrap">
-                        <button type="submit" className="formulaire-submit">
-                            Valider
-                        </button>
-                    </div>
-                </form>
-            </div>
-        );
+                <div className="button-forms-wrap">
+                    <button type="submit" className="formulaire-submit">
+                        Valider
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
 }
 
 export default AdminDeleteUser;
