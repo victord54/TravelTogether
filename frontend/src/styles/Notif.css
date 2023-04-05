@@ -4,7 +4,7 @@ section {
 
 a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .titre {
@@ -17,8 +17,9 @@ a {
 .date {
     margin-top: 0;
     font-style: italic;
+    color: white;
 }
 
 .non_lue {
-    background-color: rgb(208, 101, 111);
+    background-color: #14213D;
 }
