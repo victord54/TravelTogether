@@ -68,7 +68,7 @@ function Groupe() {
     return (
         <div className="groupe-centre">
             {navBar}
-            <br/><br/><br/>
+            <br></br><br></br><br></br><br></br><br></br>
             {Group(groupe.value)}
         </div>
     );

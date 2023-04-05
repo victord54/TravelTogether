@@ -102,13 +102,16 @@ function Home() {
         return (
             <main>
                 {auth ? (
-                    <h1  className="slogan">Bienvenue {localStorage.getItem("nom")}{" "}
-                        {localStorage.getItem("prenom")} !</h1>
+                    <p className="bienvenue">
+                        Bienvenue {localStorage.getItem("nom")}{" "}
+                        {localStorage.getItem("prenom")} !
+                    </p>
                 ) : (
                     <p> Bienvenue !</p>
                 )}
                 <article>
-                    <p class="rien">Aucune offre disponible ! </p>
+                    <h3 className="oups">Oups ! il semblerait qu’il n’y ait aucun trajet ici !</h3>
+
                 </article>
             </main>
         );
