@@ -50,7 +50,7 @@ function DeleteAccount() {
     return (
     <div className="form--connexion-box">
     <h1 className="bienvenue">Supprimer votre compte</h1>
-    <p>Attention ! Cette action est irréversible.</p>
+    <p className="center">Attention ! Cette action est irréversible.</p>
     <form onSubmit={handleSubmit}>
       <input
         type="mail"
