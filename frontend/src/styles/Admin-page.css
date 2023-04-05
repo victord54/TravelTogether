@@ -7,16 +7,11 @@ ul {
 .buttonsNavAdmin * {
     display: list-item;
     float: right;
+    color: white;
     background-color: #14213D;
     padding: 10px;
     margin-right:3px;
     border-radius: 20px;
-}
-
-.buttonsNavAdmin:hover {
-    background-color: #FCA311;
-    padding: 10px;
-
 }
 
 .buttonsNavAdmin :disabled * {
