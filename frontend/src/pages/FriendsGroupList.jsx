@@ -35,15 +35,15 @@ function Friends_groupe_list() {
     }
     if (groupes.values.length === 0)
         return (
-            <div>
-                <nav>
-                    <ul>
-                        <Link to="../create-group"><button className="button_classical">Créer un groupe</button></Link>
-
-                    </ul>
-                </nav>
+            <div className="centre2">
                 <h1>Vos groupes d'amis</h1>
                 <p>Vous n'êtes dans aucun groupe d'amis</p>
+                <nav>
+                    
+                        <Link to="../create-group"><button className="button_classical">Créer un groupe</button></Link>
+
+                
+                </nav>
             </div>
         );
     else

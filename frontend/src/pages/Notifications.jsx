@@ -97,6 +97,8 @@ function Notifications() {
                 return "Modification d'une offre";
             case "Annulation":
                 return "Annulation d'une offre";
+            case "AnnulationParticipation":
+                return "Annulation d'une participation";
             default:
                 return "";
         }
@@ -304,7 +306,7 @@ function Notifications() {
                 </div>
             );
         } else {
-            return <p className="rien">Vous n'avez pas de notifications pour le moment</p>;
+            return <p className="oups">Vous n'avez pas de notifications pour le moment</p>;
         }
     }
 }

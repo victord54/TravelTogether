@@ -99,3 +99,8 @@ form {
     color: #FCA311;
 }
 
+.center{
+    text-align: center;
+    align-items: left;
+}
+

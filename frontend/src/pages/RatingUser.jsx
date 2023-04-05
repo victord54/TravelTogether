@@ -87,7 +87,7 @@ function RatingUser() {
     if (isLoaded) {
         return (
             <>
-                <h1>Notez les participants du trajet</h1>
+                <h1 className="titre">Notez les participants du trajet</h1>
                 <form className="rating_form" onSubmit={handleSubmit}>
                     {users.map((user, index) => {
                         return (
@@ -130,7 +130,7 @@ function RatingUser() {
                             </div>
                         );
                     })}
-                    <button type="submit" className="formulaire-submit">
+                    <button type="submit" className="formulaire_submit">
                         Valider
                     </button>
                 </form>

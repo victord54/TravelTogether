@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   $information = $data["interesse"].' a annulé sa participation à votre trajet';
-  $statement = $pdo->prepare("INSERT INTO NOTIFICATION(typeNotif, dateNotif, notifie, interesse, informations) VALUES('Resultat', :dateNotif, :notifie, :interesse, :informations)");
+  $statement = $pdo->prepare("INSERT INTO NOTIFICATION(typeNotif, dateNotif, notifie, interesse, informations) VALUES('AnnulationParticipation', :dateNotif, :notifie, :interesse, :informations)");
   $statement->bindValue(':dateNotif', date('y-m-d'));
   $statement->bindValue(':notifie', $data["notifie"]);
   $statement->bindValue(':interesse', $data["interesse"]);

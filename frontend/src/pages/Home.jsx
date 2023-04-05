@@ -118,7 +118,7 @@ function Home() {
     else
         return (
             <main>
-                <p>
+                <p className="bienvenue2">
                     Bienvenue {localStorage.getItem("nom")}{" "}
                     {localStorage.getItem("prenom")} !
                 </p>

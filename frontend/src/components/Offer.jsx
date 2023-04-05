@@ -140,7 +140,7 @@ function Offer(data, adminMode = false) {
             {info}
             {dateD < dateAuj ? (
                 <Link to={"/rating-user/" + data["idfOffre"]}>
-                    <button>Noter les participants</button>
+                    <button className="bouton-annuler">Noter les participants</button>
                 </Link>
             ) : (
                 <>{placedispo}{annulerParticipation}{adminMode ? (<Link to={"/admin-delete-offer/"+data["idfOffre"]}><button>Supprimer l'offre</button></Link>) : (<></>)}</>
