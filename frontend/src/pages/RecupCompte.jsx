@@ -18,7 +18,7 @@ function RecupCompte() {
     const { setAuth } = useAuth();
     const navigate = useNavigate();
     const [passwordIsVisible, setPasswordIsVisible] = useState(false);
-    const [isInputFocused, setInputFocused] = useState(false);
+    const [isInputFocused, setInputFocused] = useState({});
     const [hasSub, setHasSub] = useState(0);
 
     //source https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -96,19 +96,12 @@ function RecupCompte() {
         setInputValues({ ...formValues, [e.target.name]: e.target.value });
     }
 
-    useEffect(() => {
-        if(!isInputFocused){
-        password.current.focus();
-    }else{
-        password2.current.focus();
-    }
-    })
 
     function handleClick(){
-        setInputFocused(true);
+        setInputFocused(1);
     }
     function handleClick2(){
-        setInputFocused(false);
+        setInputFocused(2);
     }
 
     //utilisation de autofocus pour contourner la perte de focus liee a la facon dont j'ai implementee, le temps de pouvoir correctement tester la suite
@@ -174,7 +167,7 @@ function RecupCompte() {
                                 id="password"
                                 value={formValues.password}
                                 onChange={handleChange}
-                                onClick={handleClick2}
+                                onClick={handleClick}
                             ></input>
                             <br />
                             <input
@@ -184,7 +177,7 @@ function RecupCompte() {
                                 name="password2"
                                 value={formValues.password2}
                                 onChange={handleChange}
-                                onClick={handleClick}
+                                onClick={handleClick2}
                             ></input>
                             <br />
                         
@@ -198,6 +191,14 @@ function RecupCompte() {
         );}
     }
 
+        
+    useEffect(() => {
+        if(isInputFocused == 1){
+        password.current.focus();
+    }else if (isInputFocused == 2){
+        password2.current.focus();
+    }
+    })
 
     /**
      * Fonction qui permet de récupérer les informations de l'utilisateur si celui-ci existe et que le mot de passe et le mail correspondent.
