@@ -80,8 +80,8 @@ function Modif_group() {
         return <Navigate replace to="../friends-group-list" />;
     } else
         return (
-            <div className="form-box">
-                <h1 className="creation-titre">Modification d'un groupe</h1>
+            <div className="form_box">
+                <h1 className="inscription-titre">Modification d'un groupe</h1>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -91,7 +91,7 @@ function Modif_group() {
                     ></input>
                     <p className="error-form">{formErrors.group}</p>
                     <div className="button-forms-wrap">
-                        <button type="submit" className="formulaire-submit">
+                        <button type="submit" className="formulaire_submit">
                             Valider
                         </button>
                     </div>

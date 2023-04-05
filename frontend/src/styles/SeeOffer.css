@@ -14,13 +14,16 @@ textarea{
 }
 
 .bouton-annuler {
-    background-color: #b7a9eb;
+    display: block;
     color: white;
+    border-radius: 20px;
+    background-color: #14213D;
+
     margin: 5px 0 5px 0;
     padding: 14px 20px;
     border: none;
     cursor: pointer;
-    transition: all 0.5s;
+    transition: all 0s;
     width: 50%;
 
     margin-left: auto;
@@ -28,7 +31,6 @@ textarea{
 }
 
 .bouton-annuler:hover {
-    background-color: rgb(235, 225, 225);
-    color: #2b2c2b;
-    border: 1px solid #000000;
+    background-color: #FCA311;
+    transition: all 0s;
 }

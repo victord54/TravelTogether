@@ -20,17 +20,7 @@
 
 .button-list-grp * {
     margin-top: 8px;
-    height: 50px;
-    width: 200px;
-    border-radius: 20px;
-    background-color: #14213D;
-    color: white;
-    margin: 5px 0 5px 0;
-    padding: 14px 20px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.5s;
-    transition-duration: 0s ;
+    background-color:#FCA311;
 }
 
 .button-list-grp:hover * {
@@ -50,15 +40,21 @@
 
 .groupe-box {
     margin-bottom: 10px;
-    border: 2px solid grey;
+    border: 2px solid #14213D;
     border-radius: 10px;
     vertical-align: top;
     background-color: rgba(240, 240, 240, 0.5);
 }
 
 .titre-groupe {
+    font-size: 1.7em;
+    color: #FCA311;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
     vertical-align: top;
+    margin-left: 0.5em;
     padding: 0px 10px 0px 10px;
+    border: #14213D;
+    border-bottom : 2px solid #14213D;
 }
 
 .membre-list {
@@ -70,6 +66,66 @@
     text-decoration: none;
 }
 
-.groupe-centre {
-    margin: 5px 15px 5px 15px;
+.nav_Button{
+    display: inline-flex;
+    width: 100%;
 }
+
+.nav_Button li{
+    background-color: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    transition-duration: 0s ;
+    margin: 0 2% 0 2% ;
+}
+
+.buttons_Nav button{
+    color: inherit;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
+    background-color: #14213D;
+}
+
+.buttons_Nav:hover button {
+    background-color: #FCA311;
+    color: inherit;
+    color: white;
+    transition-duration: 0s ;
+}
+
+.button_classical{
+    
+    color: white;
+    border: none;
+    border-radius: 20px;
+    background-color: #14213D;
+}
+
+.button_classical:hover {
+    background-color: inherit;
+    background-color: #FCA311;
+    transition-duration: 0s ;
+}
+
+.centre{
+    text-align: left;
+    align-items: left;
+    float:right;
+    margin-right: 2em;
+}
+
+@media screen and (max-width: 800px) {
+    .creer-groupe-wrapper button{
+        margin-top: 8px;
+        height: 35px;
+        width: 150px;
+    }
+    .nav_Button li{
+        margin: 0 1% 0 1% ;
+    }
+}
+
