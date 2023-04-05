@@ -304,7 +304,7 @@ function Notifications() {
                 </div>
             );
         } else {
-            return <p className="rien">Vous n'avez pas de notifications pour le moment</p>;
+            return <p className="oups">Vous n'avez pas de notifications pour le moment</p>;
         }
     }
 }

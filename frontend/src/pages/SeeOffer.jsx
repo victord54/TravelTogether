@@ -141,11 +141,11 @@ function SeeOffer() {
                     form = <p>Vous avez déjà répondu à cette offre.</p>
                     let statut = offers.offer["reponses"][index]["statutReponse"];
                     if(statut == 'attente') {
-                        form = <p className="rien">Vous avez déjà répondu à cette offre.</p>
+                        form = <p className="oups">Vous avez déjà répondu à cette offre.</p>
                     } if (statut == 'accepter') {
-                        form = <p className="rien">Vous avez déjà été accepté pour cette offre.</p>
+                        form = <p className="oups">Vous avez déjà été accepté pour cette offre.</p>
                     } if (statut == 'refuser'){
-                        form = <p className="rien">Vous avez déjà été refusé pour cette offre.</p>
+                        form = <p className="oups">Vous avez déjà été refusé pour cette offre.</p>
                     }
                 }
         }
