@@ -52,9 +52,12 @@ function Groupe() {
                     <Link to={"../addmember-group/" + id}><button>Ajouter un nouveau membre</button></Link>
                     </li>
                     
+                    {groupe.value.members === '' ? <></> 
+                    :
                     <li className='buttons_Nav'>
                     <Link to={"../deletemember-group/" + id}><button>Supprimer un membre</button></Link>
                     </li>
+                    }
 
                     <li className='buttons_Nav'>
                     <Link to={"../modif-group/" + id}><button>Modifier ce groupe</button></Link>
@@ -68,7 +71,7 @@ function Groupe() {
     return (
         <div className="groupe-centre">
             {navBar}
-            <br/><br/><br/>
+            <br></br><br></br><br></br><br></br><br></br>
             {Group(groupe.value)}
         </div>
     );

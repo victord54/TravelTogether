@@ -109,16 +109,16 @@ function ModifyOffer() {
     if(offer.statut === "") {
         load_data();
         return(
-            <div className="form-box">
-                <h1 className="creation-titre">Modification de l'offre</h1>
+            <div className="form_box">
+                <h1 className="titre">Modification de l'offre</h1>
                 <p>Chargement des informations sur l'offre...</p>
             </div>
         );
     }
 
     return (
-            <div className="form-box">
-                <h1 className="creation-titre">Modification de l'offre</h1>
+            <div className="form_box">
+                <h1 className="titre">Modification de l'offre</h1>
                 <form onSubmit={handleSubmit}>
                     <div>Date de départ* : </div>
                     <input
@@ -171,7 +171,7 @@ function ModifyOffer() {
                     <br />
                     <br />
                     <div className="button-forms-wrap">
-                        <button type="submit" className="formulaire-submit">
+                        <button type="submit" className="formulaire_submit">
                             Valider
                         </button>
                     </div>
