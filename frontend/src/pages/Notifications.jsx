@@ -97,6 +97,8 @@ function Notifications() {
                 return "Modification d'une offre";
             case "Annulation":
                 return "Annulation d'une offre";
+            case "AnnulationParticipation":
+                return "Annulation d'une participation";
             default:
                 return "";
         }
