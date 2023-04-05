@@ -22,6 +22,7 @@
     justify-content: center;
 }
 
+
 .formulaire_submit {
     border-radius: 20px;
     background-color: #14213D;
@@ -62,7 +63,9 @@ label {
     margin: 15px 8px 5px 15px;
 }
 
-input:not(.not-text-input) {
+
+
+.selectMember, input:not(.not-text-input) {
     background: transparent;
     padding: 1em;
     margin-bottom: 2em;

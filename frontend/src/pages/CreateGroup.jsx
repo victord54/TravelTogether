@@ -51,7 +51,7 @@ function Create_group() {
                     //console.log("exists");
                     
                     setIsLoaded(false);
-                    errors.group = "Vous avez un nom de groupe de ce nom deja existant.";
+                    errors.group = "Ce nom de groupe est déjà existant.";
                     setFormErrors(errors);
                     return errors;
                 }else{
@@ -78,8 +78,8 @@ function Create_group() {
         return <Navigate replace to={"/groupe/" + formValues.group} />;
     } else
         return (
-            <div className="form-box">
-                <h1 className="creation-titre">Création d'un nouveau groupe</h1>
+            <div className="form_box">
+                <h1 className="inscription-titre">Création d'un nouveau groupe</h1>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -89,7 +89,7 @@ function Create_group() {
                     ></input>
                     <p className="error-form">{formErrors.group}</p>
                     <div className="button-forms-wrap">
-                        <button type="submit" className="formulaire-submit">
+                        <button type="submit" className="formulaire_submit">
                             Valider
                         </button>
                     </div>

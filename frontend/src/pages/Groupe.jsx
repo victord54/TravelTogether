@@ -10,7 +10,6 @@ function Groupe() {
     const [groupe, setGroupes] = useState({ value: null, state: null });
 
     async function getGroupes() {
-        // On récupère tout les groupes où l'utilisateur appartient (ou dirige).
         var reponse = await axios.get(url_api.url + "/friends_group", {
             params: {
                 idfGroupe: id,
@@ -44,32 +43,34 @@ function Groupe() {
         navBar = (
 
             <nav>
-                    <ul className='navButton'><li className='buttonsNav'>
-                    <Link to={"../delete-group/" + id}>Supprimer ce groupe</Link>
+                <div className="centre">
+                    <ul className='nav_Button'><li className='buttons_Nav'>
+                    <Link to={"../delete-group/" + id}><button>Supprimer ce groupe</button></Link>
                     </li>
 
-                    <li className='buttonsNav'>
-                    <Link to={"../addmember-group/" + id}>Ajouter un nouveau membre</Link>
+                    <li className='buttons_Nav'>
+                    <Link to={"../addmember-group/" + id}><button>Ajouter un nouveau membre</button></Link>
                     </li>
-
-                    <li className='buttonsNav'>
-                    <Link to={"../deletemember-group/" + id}>Supprimer un membre</Link>
+                    
+                    <li className='buttons_Nav'>
+                    <Link to={"../deletemember-group/" + id}><button>Supprimer un membre</button></Link>
                     </li>
+                    }
+                    
 
-                    <li className='buttonsNav'>
-                    <Link to={"../modif-group/" + id}>Modifier ce groupe</Link>
+                    <li className='buttons_Nav'>
+                    <Link to={"../modif-group/" + id}><button>Modifier ce groupe</button></Link>
                     </li></ul>
-                
+                </div>
             </nav>
           
         );
         
     }
     return (
-        <div>
+        <div className="groupe-centre">
             {navBar}
-            <br></br>
-            <h1>{groupe.value["nomDeGroupe"]}</h1>
+            <br/><br/><br/>
             {Group(groupe.value)}
         </div>
     );

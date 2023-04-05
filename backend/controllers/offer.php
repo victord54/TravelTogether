@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $villeArrivee = getCity($data["villeArrivee"]);
         $data["villeArrivee"] = $villeArrivee;
 
-        $statement = $pdo->prepare("SELECT interesse, statutReponse FROM NOTIFICATION WHERE idfOffre = :idfOffre AND typeNotif = 'Reponse';");
+        $statement = $pdo->prepare("SELECT interesse, statutReponse FROM NOTIFICATION WHERE idfOffre = :idfOffre AND typeNotif = 'Reponse' AND statutReponse != 'annuler'");
         $statement->bindValue(":idfOffre", $_GET['idfOffre']);
         $statement->execute();
         $rep = $statement->fetchAll();
@@ -172,8 +172,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $reponse = $data; 
     } else {
         // Offres du main
+        /*$statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND (email = :email OR 
+        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse not in ('refuser', 'annuler'))) ORDER BY DateDepart LIMIT 10");*/
         $statement = $pdo->prepare("SELECT * FROM OFFRE JOIN UTILISATEUR USING(email) WHERE annule = 0 AND dateDepart > :dateDepart AND (email = :email OR 
-        idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE interesse = :email AND statutReponse not in ('refuser', 'annuler'))) ORDER BY DateDepart LIMIT 10");
+        idfOffre in (SELECT idfOffre FROM OFFREPUBLIC) OR idfOffre in (SELECT idfOffre from OFFREPRIVEE where idfGroupe in (SELECT idfGroupe from APPARTIENT where email = :email))) ORDER BY DateDepart LIMIT 10");
         $statement->bindValue(":email", $_GET['email']);
         $statement->bindValue(":dateDepart", date('Y-m-d H:i:s'));
         $statement->execute();

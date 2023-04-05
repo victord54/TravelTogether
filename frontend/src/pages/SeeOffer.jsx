@@ -5,6 +5,7 @@ import Offer from "../components/Offer";
 import {useParams, Link} from "react-router-dom";
 import "../styles/SeeOffer.css";
 import "../styles/NavButton.css";
+import {useNavigate} from "react-router-dom";
 
 function SeeOffer() {
     const initialValue = {
@@ -13,6 +14,7 @@ function SeeOffer() {
     };
 
     let { id } = useParams();
+    const navigate = useNavigate();
     const [offers, setOffers] = useState({statut : "", offer : null});
     const [formValues, setInputValues] = useState(initialValue);
     const [error, setError] = useState(null);
@@ -69,6 +71,7 @@ function SeeOffer() {
                     }
                 }else{
                     setError(null);
+                    navigate("/");
                 }
             })
             .catch(function (error) {
@@ -130,14 +133,19 @@ function SeeOffer() {
                         <textarea name="messageFalcutatif" id="messageFalcutatif" value={formValues.messageFalcutatif} onChange={handleChange}></textarea>
                         </label>
                         <div className='button-forms-wrap'>
-                            <button type="submit" className="formulaire-submit">Répondre à l'offre</button>
+                            <button type="submit" className="formulaire_submit">Répondre à l'offre</button>
                         </div>
                         <p className="error">{error}</p>
                     </form>;
                 } else if(index != -1) {
+                    form = <p>Vous avez déjà répondu à cette offre.</p>
                     let statut = offers.offer["reponses"][index]["statutReponse"];
-                    if(statut != 'refuser') {
-                        // Code de Dan (mais en fait non? -Simon)
+                    if(statut == 'attente') {
+                        form = <p className="rien">Vous avez déjà répondu à cette offre.</p>
+                    } if (statut == 'accepter') {
+                        form = <p className="rien">Vous avez déjà été accepté pour cette offre.</p>
+                    } if (statut == 'refuser'){
+                        form = <p className="rien">Vous avez déjà été refusé pour cette offre.</p>
                     }
                 }
         }

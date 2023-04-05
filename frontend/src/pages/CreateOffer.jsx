@@ -347,7 +347,7 @@ function Create_offer() {
                 errors.inter =
                     "La ville : " +
                     city +
-                    " n'est pas cirrectement remplie : nom-de-la-ville (codePostal).";
+                    " n'est pas correctement remplie : nom-de-la-ville (codePostal).";
             } else {
                 var nomInter = matchInter[1];
                 var cPInter = matchInter[2];

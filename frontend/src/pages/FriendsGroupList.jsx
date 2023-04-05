@@ -38,7 +38,8 @@ function Friends_groupe_list() {
             <div>
                 <nav>
                     <ul>
-                        <Link to="../create-group">Créer un groupe</Link>
+                        <Link to="../create-group"><button className="button_classical">Créer un groupe</button></Link>
+
                     </ul>
                 </nav>
                 <h1>Vos groupes d'amis</h1>
@@ -51,9 +52,7 @@ function Friends_groupe_list() {
                 <div className="wrapper-titre-bouton">
                     <div className="vos-groupes">Vos groupes d'amis</div>
                     <div className="creer-groupe-wrapper">
-                        <button>
-                            <Link to="../create-group">Créer un groupe</Link>
-                        </button>
+                            <Link to="../create-group"><button className="button_classical">Créer un groupe</button></Link>
                     </div>
                 </div>
                 <br />
