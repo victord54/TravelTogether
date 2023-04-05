@@ -43,7 +43,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $data2 = $statement->fetchAll();
     //echo json_encode($data2[0]["interesse"]);
 
-    if (strcmp($data["ref"], "accepte")) {
+    if (strcmp($data["ref"], "accepter")== 0) {
         $statement = $pdo->prepare("SELECT numTel FROM UTILISATEUR WHERE email=:mail");
         $statement->bindValue(":mail", $data['email']);
         $statement->execute();
@@ -92,7 +92,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
         json_encode("sending");
     }
 
-    } else {
+    } if (strcmp($data["ref"], "refuser") == 0){
         $info = "Votre demande de participation a été refusée";
         $statement->bindValue(":info", $info);
         $statement->bindValue(":statut", "refuser");
