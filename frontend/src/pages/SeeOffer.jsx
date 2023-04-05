@@ -146,8 +146,8 @@ function SeeOffer() {
     let date = new Date(offers.offer["dateDepart"]);
     if(localStorage.getItem("mail") === offers.offer["email"] && date > ajd) {
         buttons = (<ul className='navButton'>
-        <li className='buttonsNav'><Link to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></li>
-        <li className='buttonsNav'><Link to={"../delete-offer/" + offers.offer["idfOffre"]}>Supprimer l'offre</Link></li></ul>);
+        <li ><Link className='buttonsNav' to={"../modify-offer/" + offers.offer["idfOffre"]}>Modifier l'offre</Link></li>
+        <li ><Link className='buttonsNav' to={"../delete-offer/" + offers.offer["idfOffre"]}>Supprimer l'offre</Link></li></ul>);
     }
     return (
         <main>
