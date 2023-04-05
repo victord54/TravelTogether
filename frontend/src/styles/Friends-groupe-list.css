@@ -103,6 +103,8 @@
     border: none;
     border-radius: 20px;
     background-color: #14213D;
+    margin: 5px 0 5px 0;
+    padding: 14px 20px;
 }
 
 .button_classical:hover {
@@ -118,14 +120,17 @@
     margin-right: 2em;
 }
 
+.centre2{
+    text-align: center;
+    align-items: center;
+    float:none;
+}
+
 @media screen and (max-width: 800px) {
-    .creer-groupe-wrapper button{
-        margin-top: 8px;
-        height: 35px;
-        width: 150px;
-    }
     .nav_Button li{
         margin: 0 1% 0 1% ;
     }
+
+
 }
 
