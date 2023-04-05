@@ -39,6 +39,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $statement->bindValue(":mail", $_POST['mail']);
                     $statement->execute() or die(print_r($statement->errorInfo(), true));
 
+                    $statement = $pdo->prepare("SELECT idfOffre FROM OFFRE WHERE email = :email AND dateDepart > :dateDepart AND annule = 0");
+                    $statement->bindValue(":email", $_POST['mail']);
+                    $statement->bindValue(":dateDepart", date('Y-m-d H:i:s'));
+                    $statement->execute() or die(print_r($statement->errorInfo(), true));
+                    $data = $statement->fetchAll();
+
+                    foreach($data as $offre) {
+                        $statement = $pdo->prepare("UPDATE OFFRE SET annule = 1 WHERE idfOffre = :idfOffre");
+                        $statement->bindValue(":idfOffre", $offre["idfOffre"]);
+                        $statement->execute() or die(print_r($statement->errorInfo(), true));
+                    }
+
                     // Supprimer l'utilisateur
                     $statement = $pdo->prepare("UPDATE UTILISATEUR SET nom = 'Utilisateur', prenom = 'Supprimé', notificationParMail = 0, estSupprime = 1, photo = :photo WHERE email = :mail");
                     $statement->bindValue(":mail", $_POST['mail']);
@@ -49,13 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo json_encode(1);
             } catch (PDOException $e) {
                 $pdo->rollBack();
-                echo json_encode(0);
+                echo json_encode([$e->getMessage(), $e->getLine()]);
             }
         } else {
-            echo json_encode(0);
+            echo json_encode(3);
         }
     } else {
-        echo json_encode(0);
+        echo json_encode(4);
     }
 
 }
