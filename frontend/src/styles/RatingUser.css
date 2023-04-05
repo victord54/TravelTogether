@@ -1,22 +1,32 @@
+.rating_form{
+    align-items: center;
+}
+
 .star_button_pair {
     width: fit-content;
     min-width: 3vw;
     padding: 1vh 1vw;
     border-radius: 25px;
-    margin-top: 2wh;
     margin-bottom: 2vh;
     margin-left: 1vw;
 
 }
 
 .user_stars {
-    margin-left: 1vw;
     padding: 1vh 1vw;
-    margin-bottom: 5vh;
-    width: fit-content;
     display: flex;
-    border: 3px solid beige;
-    border-radius: 25px;
+    border: 3px solid #14213D;
+    border-radius: 20px;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
+    accent-color: #FCA311;
+    margin : 5vh 25% 5vh 25%;
+    
+
+}
+
+@media screen and (max-width: 1112px) {
+    .user_stars {
+        margin : 5vh 15% 5vh 15%;
+    }
 }

@@ -122,7 +122,7 @@ function RatingUser() {
                                         </div>
                                     );
                                 })}
-                                <button
+                                <button className="buttonsNav"
                                     onClick={(e) => handleDelete(e, user.email)}
                                 >
                                     Supprimer
