@@ -117,7 +117,7 @@ function Search_offer() {
     var searchForm =(
     <div className="form_box">
         <form onSubmit={handleSubmit}>
-            <h1 className="offer_titre">
+            <h1 className="titre">
                     Recherche d'offres
             </h1>
             <div>Date de départ* : </div>

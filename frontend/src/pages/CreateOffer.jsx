@@ -418,7 +418,7 @@ function Create_offer() {
         return (
             <div>
                 <div className="form_box">
-                    <h1 className="offer_titre">Création de l'offre</h1>
+                    <h1 className="titre">Création de l'offre</h1>
                     <form onSubmit={handleSubmit}>
                         <div>Lieu de départ* :</div>
                         <input
