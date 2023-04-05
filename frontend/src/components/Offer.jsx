@@ -143,7 +143,7 @@ function Offer(data, adminMode = false) {
                     <button className="bouton-annuler">Noter les participants</button>
                 </Link>
             ) : (
-                <>{placedispo}{annulerParticipation}{adminMode ? (<Link to={"/admin-delete-offer/"+data["idfOffre"]}><button>Supprimer l'offre</button></Link>) : (<></>)}</>
+                <>{placedispo}{annulerParticipation}{adminMode ? (<Link to={"/admin-delete-offer/"+data["idfOffre"]}><button className="bouton-annuler">Supprimer l'offre</button></Link>) : (<></>)}</>
             )}
         </section>
     );
