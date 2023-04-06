@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && $_GET["pass"] == "0") {
     $data = $statement->fetch();
     if($data){
         $mail = instanciateMailer();
-        $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
+        $mail->setFrom('trialling028@outlook.fr', 'Recuperation de compte TravelTogether');
         // Recipient, the name can also be stated
         $mail->addAddress($_GET["mail"], "name");
         $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against

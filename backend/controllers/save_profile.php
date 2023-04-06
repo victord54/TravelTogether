@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     $mail = instanciateMailer();
-    $mail->setFrom('trialling027@outlook.fr', 'Modification de compte TravelTogether');
+    $mail->setFrom('trialling028@outlook.fr', 'Modification de compte TravelTogether');
         // Recipient, the name can also be stated
     $mail->addAddress($_POST['mail'], "Utilisateur TravelTogether");
     $mail->Subject = ("Une modification de votre compte a eu lieu"); //save temporary code in localstorage to compare against

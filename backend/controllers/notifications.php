@@ -79,7 +79,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
         if($notif["notificationParMail"] == 1){
         $mail = instanciateMailer();
-        $mail->setFrom('trialling027@outlook.fr', 'Notification de voyage TravelTogether');
+        $mail->setFrom('trialling028@outlook.fr', 'Notification de voyage TravelTogether');
         // Recipient, the name can also be stated
         $mail->addAddress($data2[0]["interesse"], "Utilisateur TravelTogether");
         $mail->Subject = ("Votre demande de voyage TravelTogether"); //save temporary code in localstorage to compare against
@@ -99,7 +99,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
 
         if($notif["notificationParMail"] == 1){
         $mail = instanciateMailer();
-        $mail->setFrom('trialling027@outlook.fr', 'Notification de voyage TravelTogether');
+        $mail->setFrom('trialling028@outlook.fr', 'Notification de voyage TravelTogether');
         // Recipient, the name can also be stated
         $mail->addAddress($data2[0]["interesse"], "Utilisateur TravelTogether");
         $mail->Subject = ("Votre demande de voyage TravelTogether"); //save temporary code in localstorage to compare against

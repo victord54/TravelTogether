@@ -63,12 +63,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if($notif["notificationParMail"] == 1){
                 $mail = instanciateMailer();
-                $mail->setFrom('trialling027@outlook.fr', 'Recuperation de compte TravelTogether');
+                $mail->setFrom('trialling028@outlook.fr', 'Recuperation de compte TravelTogether');
                 // Recipient, the name can also be stated
-                $mail->addAddress("randomynot02@gmail.com", "name");
-                $mail->Subject = ("Code de recuperation de compte"); //save temporary code in localstorage to compare against
+                $mail->addAddress($data["email"], "Utilisateur TravelTogether");
+                $mail->Subject = ("Notification mail TravelTogether"); //save temporary code in localstorage to compare against
                 // HTML content
-                $mail->Body = 'email';
+                $mail->Body = 'Vous avez une nouvelle notification sur votre compte TravelTogether.';
                 $mail->CharSet = 'UTF-8';
                 $mail->Encoding = 'base64';
         
