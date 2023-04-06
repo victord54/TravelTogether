@@ -3,7 +3,7 @@ include 'header.php';
 
 if($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['delete'])) {
     $pdo = new PDO('mysql:host=localhost;dbname=travel_together;charset=utf8', $login, $password);
-    $statement = $pdo->prepare("SELECT * FROM OFFRE WHERE (email = :mail OR idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE statutReponse IN ('attente', 'accepter') AND interesse = 0))
+    $statement = $pdo->prepare("SELECT * FROM OFFRE WHERE (email = :mail OR idfOffre in (SELECT idfOffre FROM NOTIFICATION WHERE statutReponse IN ('attente', 'accepter') AND interesse = NULL))
     AND (dateDepart > :dateDepart OR (dateDepart = :dateDepart AND heureDepart >= :heureDepart)) 
     AND annule = 0");
     $statement->bindValue(":mail", $_GET['email']);
